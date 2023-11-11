@@ -1,4 +1,4 @@
-import { registerCommands } from '../../../pruebas-cypress/cypress/support/commands'
+import { registerCommands } from '../../support/commands'
 registerCommands()
 let user = 'xxxxxxxx'
 let passw = 'xxxxxxxxxx'
