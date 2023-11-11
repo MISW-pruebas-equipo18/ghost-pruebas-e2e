@@ -31,6 +31,6 @@ export function registerCommands(){
       cy.get('input[name=password]').type(passw)
       cy.contains('Sign in →').click()
       cy.url().should('include', '/dashboard')
-      cy.wait(1000)
+      cy.wait(100)
   });
 }
