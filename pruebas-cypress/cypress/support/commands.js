@@ -24,11 +24,11 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 export function registerCommands(){
-    Cypress.Commands.add('login', () =>
+    Cypress.Commands.add('login', (user,passw) =>
     { 
         cy.visit('http://localhost:2368/ghost/')
-        cy.get('input[name=identification]').type('eg.romeror1@uniandes.edu.co')
-        cy.get('input[name=password]').type('GioR2023@@')
+        cy.get('input[name=identification]').type(user)
+        cy.get('input[name=password]').type(passw)
         cy.contains('Sign in →').click()
         cy.url().should('include', '/dashboard')
         cy.wait(1000)
