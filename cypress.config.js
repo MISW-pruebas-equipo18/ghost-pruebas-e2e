@@ -15,7 +15,8 @@ module.exports = defineConfig({
       "base_url" : "http://localhost:2368/",
       "user":'dejahvuuu@gmail.com',
       "passw":'Gu4c4m4y0.2023',
-      "url_staff":'http://localhost:2368/ghost/#/settings/staff',
+      "url_staff":'http://localhost:2368/ghost/#/settings/staff',  
+      "url_members":'http://localhost:2368/ghost/#/members',
     }    
   },
 });

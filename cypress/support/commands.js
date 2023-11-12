@@ -40,4 +40,10 @@ export function registerCommands(){
     const selector = `[data-testId="${testId}"]`
     cy.get(selector)
   })
+
+  Cypress.Commands.add('getByTestInput', (testInput) => {
+    const log = Cypress.log({ name: 'getByTestInput', message: testInput })
+    const selector = `[data-test-input="${testInput}"]`
+    cy.get(selector)
+  })  
 }
