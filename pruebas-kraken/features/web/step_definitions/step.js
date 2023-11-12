@@ -43,7 +43,7 @@ When('I go to new post view', async function () {
     await newPostButton.click();
 });
 
-When('I write a new post with title {string} and body {string}', async function (title, body) {
+When('I write a post with title {string} and body {string}', async function (title, body) {
     let titleInput = await this.driver.$('textarea.gh-editor-title');
     await titleInput.setValue(title);
 
@@ -67,12 +67,18 @@ When('I publish the post', async function () {
     await publishButton3.click();
 });
 
-When('I go back to posts view', async function () {
+When('I update the post', async function () {
+    let updatebutton = await this.driver.$('button[data-test-button="publish-save"]');
+    await updatebutton.click();
+});
+
+When('I go back to editor view', async function () {
     let back1 = await this.driver.$('button.gh-publish-back-button')
     await back1.click();
+});
 
+When('I go back to posts view', async function () {
     let back2 = await this.driver.$('a[href="#/posts/"]')
-    await this.driver.pause(1000);
     await back2.click();
 });
 
@@ -88,6 +94,35 @@ Then('I should see a post with title {string}', async function (title) {
     for (let titleElement of titleElements) {
         if (await titleElement.getText() == title) {
             found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+Then ('I should not see a post with title {string}', async function (title) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.false;
+});
+
+When('I click on the post with title {string}', async function (title) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+            await titleElement.click();
             break;
         }
     }
