@@ -6,11 +6,7 @@ Feature: Kraken Scenarios
 Scenario: Pruebas exploratorias
 
   # Escenario 1: Publicar y editar un Post
-  Given I navigate to page "http://localhost:2368/ghost/#/signin"
-  And I wait for 2 seconds
-  And I login with "<USERNAME>" user and "<PASSWORD>" password
-  And I wait for 2 seconds
-  And Title is "Dashboard"
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 2 seconds
   When I go to posts view
   And I wait for 2 seconds
@@ -24,7 +20,7 @@ Scenario: Pruebas exploratorias
   Then I should see a post with title "Test Post scenario 1"
   And I wait for 5 seconds
   # Tear down
-  And I delete the post with title "Test Post scenario 1" 
+  And I delete all remaining posts
   And I wait for 2 seconds
   And I logout
   And I wait for 2 seconds

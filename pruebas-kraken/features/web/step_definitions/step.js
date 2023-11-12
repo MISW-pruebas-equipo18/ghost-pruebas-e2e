@@ -1,7 +1,10 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { assert, expect } = require('chai');
 
-When('I login with {kraken-string} user and {kraken-string} password', async function (username, password) {
+Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password', async function (username, password) {
+    await this.driver.url('http://localhost:2368/ghost/#/signin');
+    await this.driver.pause(2000);
+
     let userInput = await this.driver.$('#identification');
     await userInput.setValue(username);
 
@@ -10,6 +13,10 @@ When('I login with {kraken-string} user and {kraken-string} password', async fun
 
     let loginButton = await this.driver.$('button.login');
     await loginButton.click();
+
+    await this.driver.pause(2000);
+    let currentTitle = await this.driver.$('h2.gh-canvas-title'); 
+    expect(await currentTitle.getText()).to.equal('Dashboard');
 });
 
 Then('I logout', async function () {
@@ -17,6 +24,7 @@ Then('I logout', async function () {
     await avatarButton.click();
 
     let signoutButton = await this.driver.$('a[href="#/signout/"]');
+    await this.driver.pause(2000);
     await signoutButton.click();
 });
 
@@ -108,4 +116,28 @@ When('I delete the post with title {string}', async function (title) {
     }
 
     expect(found).to.be.true;
+
+    let notificationClose = await this.driver.$('button[class="gh-notification-close"]');
+    await notificationClose.click();
+});
+
+Then('I delete all remaining posts', async function () {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    for (let titleElement of titleElements) {
+        let parent = await titleElement.$('../..');
+        // Right click parent
+        await parent.click({ button: 'right' });
+
+        let deleteButton = await this.driver.$('span[class="red"]');
+        await deleteButton.click();
+
+        let confirmButton = await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
+        await confirmButton.click();
+        
+        await this.driver.pause(500);
+
+        let notificationClose = await this.driver.$('button[class="gh-notification-close"]');
+        await notificationClose.click();
+    }
 });
