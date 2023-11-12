@@ -1,9 +1,7 @@
 Feature: Kraken Scenarios
 
-# http://localhost:2368/ghost/
-
 @user1 @web
-Scenario: Pruebas exploratorias
+Scenario: Pruebas extremo a extremo
 
   # Escenario 1: Publicar y editar un Post
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
@@ -98,3 +96,38 @@ Scenario: Pruebas exploratorias
   And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
+
+  # Escenario 5: Crear un tag
+  Given I navigate to page "http://localhost:2368/ghost/#/signin"
+  And I wait for 5 seconds
+  And I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 5 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create a new tag with name "kraken" and description "tag creado desde kraken" and color "a51d2d"
+  And I wait for 2 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  Then I validate tag with name "kraken"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  # Escenario 6: editar un tag
+  Given I navigate to page "http://localhost:2368/ghost/#/signin"
+  And I wait for 5 seconds
+  And I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 5 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I validate tag with name "kraken"
+  When I selected tag with name "kraken"
+  And I update tag with new name "ajuste"
+  And I go to list tags view
+  Then I validate tag with name "ajuste"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+  

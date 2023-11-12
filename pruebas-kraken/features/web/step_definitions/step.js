@@ -176,3 +176,79 @@ Then('I delete all remaining posts', async function () {
         await notificationClose.click();
     }
 });
+
+/**************************************************************************************************** INICIO TAGS **/
+When('I go to list tags view', async function () {
+    let tagsLink = await this.driver.$('a[href="#/tags/"]'); 
+    await tagsLink.click();
+});
+
+When('I go to new tags view', async function () {
+    let newtagsButton = await this.driver.$('a[href="#/tags/new/"]');
+    await newtagsButton.click();
+});
+
+When('I create a new tag with name {string} and description {string} and color {string}', async function (name, description, color) {
+    let nameInput = await this.driver.$('#tag-name');
+    await nameInput.setValue(name);
+
+    /*let colorInput = await this.driver.$('input[class="gh-input"]');
+    await colorInput.setValue(color);*/
+
+    let descriptionInput = await this.driver.$('#tag-description');
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(description);
+
+    let saveButton =  await this.driver.$('button[class="gh-btn gh-btn-primary gh-btn-icon ember-view"]');
+    saveButton.click();
+    await this.driver.pause(1000);
+
+});
+
+Then('I validate tag with name {string}', async function (nameTag) {
+    
+    let tagsElements = await this.driver.$$('h3.gh-tag-list-name');
+
+    let found = false;
+    for (let name of tagsElements) {
+        if (await name.getText() == nameTag) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+
+When('I selected tag with name {string}', async function (nameTag) {
+    let tagElements = await this.driver.$$('h3.gh-tag-list-name');
+
+    let found = false;
+    for (let tagElement of tagElements) {
+        if (await tagElement.getText() == nameTag) {
+            found = true;
+            await tagElement.click();
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I update tag with new name {string}', async function (newName) {
+    let nameInput = await this.driver.$('#tag-name');
+    await nameInput.setValue(newName);
+    await this.driver.pause(1000);
+
+    let saveButton =  await this.driver.$('button[class="gh-btn gh-btn-primary gh-btn-icon ember-view"]');
+    saveButton.click();
+    await this.driver.pause(1000);
+
+});
+
+
+/**************************************************************************************************** FIN TAGS **/
+
+
