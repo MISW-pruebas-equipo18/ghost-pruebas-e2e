@@ -101,6 +101,11 @@ Then('I should see a post with title {string} and status {string}', async functi
     expect(found).to.be.true;
 });
 
+Then('I should see {int} posts', async function (count) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+    expect(titleElements.length).to.equal(count);
+});
+
 Then ('I should not see a post with title {string}', async function (title) {
     let titleElements = await this.driver.$$('h3.gh-content-entry-title');
 
