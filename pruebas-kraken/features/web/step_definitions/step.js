@@ -49,10 +49,11 @@ When('I write a post with title {string} and body {string}', async function (tit
 
     // Wait 1 second
     
+    await this.driver.pause(500);
     let bodyInput = await this.driver.$('div[class="kg-prose"] > p');
     bodyInput.click();
 
-    await this.driver.pause(1000);
+    await this.driver.pause(500);
     await bodyInput.setValue(body);
 });
 
@@ -82,18 +83,17 @@ When('I go back to posts view', async function () {
     await back2.click();
 });
 
-Then('I should see a post with title {string}', async function (title) {
-    // let titleElement = await this.driver.$('h3.gh-content-entry-title');
-    // expect(await titleElement.getText()).to.equal(title);
-
+Then('I should see a post with title {string} and status {string}', async function (title, status) {
     let titleElements = await this.driver.$$('h3.gh-content-entry-title');
-
-    // console.log('titleElements', titleElements);
 
     let found = false;
     for (let titleElement of titleElements) {
         if (await titleElement.getText() == title) {
             found = true;
+
+            let statusElement = await titleElement.$('..').$('p:nth-child(3)');
+            statusElement = await statusElement.getText();
+            expect(statusElement).to.equal(status);
             break;
         }
     }
