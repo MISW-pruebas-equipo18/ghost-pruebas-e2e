@@ -8,7 +8,16 @@ Navege a la carpeta `pruebas-kraken` (la carpeta padre de este archivo) y ejecut
 npm install
 ```
 
-## 2. Configurar el proyecto
+## 2. Correr ghost localmente
+
+Debe installar ghost utilizando el siguiente tutorial: [Como desplegar Ghost de forma local](https://thesoftwaredesignlab.github.io/AutTestingCodelabs/ghost-local-deployment/index.html#0).
+Una vez instalado, utilice el siguiente comando para correr ghost localmente:
+
+```bash
+ghost start
+```
+
+## 3. Configurar el proyecto
 
 La única configuración necesaria es agregar las credenciales de acceso en el proyecto.
 Para ello, debe copiar el archivo `properties.json.example`, renombrarlo a `properties.json` y agregar las credenciales de acceso en el archivo.
@@ -22,7 +31,7 @@ vim properties.json # o el editor de texto de su preferencia
 
 Finalmente, cambiar el valor de las llaves `"USERNAME"` y `"PASSWORD"` por las credenciales de acceso.
 
-## 3. Ejecutar las pruebas del proyecto
+## 4. Ejecutar las pruebas del proyecto
 
 Ejecute el siguiente comando para ejecutar el proyecto:
 
@@ -32,3 +41,4 @@ Ejecute el siguiente comando para ejecutar el proyecto:
 
 Esto ejecutará las pruebas del proyecto y generará un reporte en la carpeta `reports`.
 Para ver el reporte, abra el archivo `reports/<id>/index.html`.
+
