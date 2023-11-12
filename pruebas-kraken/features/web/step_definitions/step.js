@@ -28,6 +28,87 @@ Then('I logout', async function () {
     await signoutButton.click();
 });
 
+When('I go to profile view', async function () {
+    let avatarButton = await this.driver.$('div[class="pe-all"] > div:first-child');
+    await avatarButton.click();
+
+    await this.driver.pause(1000);
+    let profileButton = await this.driver.$('a[data-test-nav="user-profile"]');
+    await profileButton.click();
+});
+
+When('I submit the password update form', async function () {
+    let submitButton = await this.driver.$('fieldset[class="user-details-form"] > div:last-child > button');
+    await submitButton.click();
+});
+
+When('I update my password with empty fields', async function () {
+    let oldPasswordInput = await this.driver.$('#user-password-old');
+    await oldPasswordInput.setValue('');
+
+    let newPasswordInput = await this.driver.$('#user-password-new');
+    await newPasswordInput.setValue('');
+
+    let newPasswordInput2 = await this.driver.$('#user-new-password-verification');
+    await newPasswordInput2.setValue('');
+});
+
+Then('I should see an empty password fields error message', async function () {
+    let errorElement = await this.driver.$('p[data-test-error="user-old-pass"]');
+    expect(await errorElement.getText()).to.equal('Your current password is required to set a new one');
+    
+    let errorElement2 = await this.driver.$('p[data-test-error="user-new-pass"]');
+    expect(await errorElement2.getText()).to.equal('Sorry, passwords can\'t be blank');   
+});
+
+When('I update my password with a wrong old password', async function () {
+    let oldPasswordInput = await this.driver.$('#user-password-old');
+    await oldPasswordInput.setValue('wrong');
+
+    let newPasswordInput = await this.driver.$('#user-password-new');
+    await newPasswordInput.setValue('2Xm51Ur{T;E2'); // 
+
+    let newPasswordInput2 = await this.driver.$('#user-new-password-verification');
+    await newPasswordInput2.setValue('2Xm51Ur{T;E2');
+});
+
+Then('I should see a message that the old password is wrong', async function () {
+    let errorElement = await this.driver.$('div[class="gh-alert-content"]');
+    expect(await errorElement.getText()).to.equal('Your password is incorrect.');
+});
+
+When('I update my password with a new insecure password', async function () {
+    let oldPasswordInput = await this.driver.$('#user-password-old');
+    await oldPasswordInput.setValue('mypass');
+
+    let newPasswordInput = await this.driver.$('#user-password-new');
+    await newPasswordInput.setValue('1234567890');
+
+    let newPasswordInput2 = await this.driver.$('#user-new-password-verification');
+    await newPasswordInput2.setValue('1234567890');
+});
+
+Then('I should see a password security error message', async function () {
+    let errorElement = await this.driver.$('p[data-test-error="user-new-pass"]');
+    expect(await errorElement.getText()).to.equal('Sorry, you cannot use an insecure password.');
+});
+
+When('I update my password with a short new password', async function () {
+    let oldPasswordInput = await this.driver.$('#user-password-old');
+    await oldPasswordInput.setValue('mypass');
+
+    let newPasswordInput = await this.driver.$('#user-password-new');
+    await newPasswordInput.setValue('wrong');
+
+    let newPasswordInput2 = await this.driver.$('#user-new-password-verification');
+    await newPasswordInput2.setValue('wrong');
+});
+
+Then('I should see a password length error message', async function () {
+    let errorElement = await this.driver.$('p[data-test-error="user-new-pass"]');
+    expect(await errorElement.getText()).to.equal('Password must be at least 10 characters long.');
+});
+
 When('Title is {string}', async function (pageTitle) {
    let currentTitle = await this.driver.$('h2.gh-canvas-title'); 
    expect(await currentTitle.getText()).to.equal(pageTitle);

@@ -99,42 +99,70 @@ Scenario: Pruebas exploratorias
   # And I logout
   # And I wait for 5 seconds
 
-  # Escenario 4: Verificar el Listado de Posts Inicial
+  # # Escenario 4: Verificar el Listado de Posts Inicial
+  # Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  # And I wait for 2 seconds
+  # When I go to posts view
+  # And I delete all remaining posts
+  # And I wait for 2 seconds
+  # Then I should see 0 posts
+  # And I wait for 5 seconds
+  # When I go to new post view
+  # And I wait for 2 seconds
+  # And I write a post with title "Test Post scenario 4.1" and body "Test Body scenario 4.1"
+  # And I wait for 2 seconds
+  # And I publish the post
+  # And I wait for 2 seconds
+  # And I go back to editor view
+  # And I wait for 1 seconds
+  # And I go back to posts view
+  # Then I should see 1 posts
+  # And I wait for 2 seconds
+  # And I go to new post view
+  # And I wait for 2 seconds
+  # And I write a post with title "Test Post scenario 4.1 DRAFT" and body "Test Body scenario 4.2 DRAFT"
+  # And I wait for 2 seconds
+  # And I go back to posts view
+  # And I wait for 2 seconds
+  # Then I should see 2 posts
+  # And I wait for 2 seconds
+  # When I delete the post with title "Test Post scenario 4.1"
+  # And I wait for 2 seconds
+  # Then I should see 1 posts
+  # # Tear down
+  # And I delete all remaining posts
+  # And I wait for 2 seconds
+  # And I logout
+  # And I wait for 5 seconds
+
+
+
+
+  # Escenario 15: Cambio de contraseña, datos incorrectos
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 2 seconds
-  When I go to posts view
-  And I delete all remaining posts
+  When I go to profile view
   And I wait for 2 seconds
-  Then I should see 0 posts
-  And I wait for 5 seconds
-  When I go to new post view
+  And I update my password with empty fields
+  And I submit the password update form
   And I wait for 2 seconds
-  And I write a post with title "Test Post scenario 4.1" and body "Test Body scenario 4.1"
+  Then I should see an empty password fields error message
   And I wait for 2 seconds
-  And I publish the post
+  When I update my password with a wrong old password
+  And I submit the password update form
   And I wait for 2 seconds
-  And I go back to editor view
-  And I wait for 1 seconds
-  And I go back to posts view
-  Then I should see 1 posts
+  Then I should see a message that the old password is wrong
   And I wait for 2 seconds
-  And I go to new post view
+  When I update my password with a new insecure password
+  And I submit the password update form
   And I wait for 2 seconds
-  And I write a post with title "Test Post scenario 4.1 DRAFT" and body "Test Body scenario 4.2 DRAFT"
+  Then I should see a password security error message
   And I wait for 2 seconds
-  And I go back to posts view
+  When I update my password with a short new password
+  And I submit the password update form
   And I wait for 2 seconds
-  Then I should see 2 posts
+  Then I should see a password length error message
   And I wait for 2 seconds
-  When I delete the post with title "Test Post scenario 4.1"
-  And I wait for 2 seconds
-  Then I should see 1 posts
   # Tear down
-  And I delete all remaining posts
-  And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
-
-
-
-
