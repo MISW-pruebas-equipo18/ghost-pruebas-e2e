@@ -8,7 +8,21 @@ Navege a la carpeta `pruebas-kraken` (la carpeta padre de este archivo) y ejecut
 npm install
 ```
 
-## 2. Ejecutar las pruebas del proyecto
+## 2. Configurar el proyecto
+
+La única configuración necesaria es agregar las credenciales de acceso en el proyecto.
+Para ello, debe copiar el archivo `properties.json.example`, renombrarlo a `properties.json` y agregar las credenciales de acceso en el archivo.
+
+Puede realizar esto ejecutando el siguiente comando:
+
+```bash
+cp properties.json.example properties.json
+vim properties.json # o el editor de texto de su preferencia
+```
+
+Finalmente, cambiar el valor de las llaves `"USERNAME"` y `"PASSWORD"` por las credenciales de acceso.
+
+## 3. Ejecutar las pruebas del proyecto
 
 Ejecute el siguiente comando para ejecutar el proyecto:
 
