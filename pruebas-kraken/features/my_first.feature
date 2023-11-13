@@ -250,3 +250,16 @@ Scenario: Pruebas exploratorias
   And I logout
   And I wait for 5 seconds
 
+  # Escenario 20: Staff, los comentarios deberian estar activos en la seccion de
+  # notificaciones de correo del profile del owner
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 2 seconds
+  When I go to staff view
+  And I wait for 2 seconds
+  And I click on view owner profile button
+  And I wait for 2 seconds
+  Then I should see that the comments are enabled
+  And I wait for 2 seconds
+  # Tear down
+  And I logout
+  And I wait for 5 seconds

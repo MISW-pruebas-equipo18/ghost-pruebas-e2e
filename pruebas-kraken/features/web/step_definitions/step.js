@@ -406,3 +406,13 @@ When('I revoke all invitations', async function () {
         await notificationClose.click();
     }
 });
+
+When('I click on view owner profile button', async function () {
+    let ownerButton = await this.driver.$('span[data-test-role-name]');
+    await ownerButton.click();
+});
+
+Then('I should see that the comments are enabled', async function () {
+    let commentsCheckbox = await this.driver.$('input[data-test-checkbox="comment-notifications"]');
+    expect(await commentsCheckbox.isSelected()).to.be.true;
+});
