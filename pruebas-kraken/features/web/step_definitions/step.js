@@ -302,7 +302,14 @@ Then('I should see a member with name {string} and email {string}', async functi
         if (await member.$('h3').getText() == name) {
             let emailElement = await member.$('p');
             emailElement = await emailElement.getText();
-            expect(emailElement).to.equal(email);
+            expect(emailElement).to.equal(email);            
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
 
 /**************************************************************************************************** INICIO TAGS **/
 When('I go to list tags view', async function () {
