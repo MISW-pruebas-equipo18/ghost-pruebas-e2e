@@ -5,12 +5,13 @@ registerCommands()
 
 describe ('Edit members', function(){
 
+    const user = {
+        currentEmail: 'josebocanegra@uniandes.edu.co',
+        newEmail: 'jbnegra@gmail.com', 
+    };
+
     it('edit current member', function(){
-        const user = {
-            currentEmail: 'josebocanegra@uniandes.edu.co',
-            newEmail: 'jbnegra@gmail.com', 
-        };
-        
+      
         cy.on('uncaught:exception', (err, runnable) => {
             return false
         })
@@ -24,6 +25,6 @@ describe ('Edit members', function(){
 
     it('Verify edit member', function(){
         cy.visit(Cypress.env('url_members'))
-        cy.contains('jbnegra@gmail.com').should('be.visible')
+        cy.contains(user.newEmail).should('be.visible')
     });
 });
