@@ -96,12 +96,10 @@ Scenario: Pruebas extremo a extremo
   And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
-
+  
   # Escenario 5: Crear un tag
-  Given I navigate to page "http://localhost:2368/ghost/#/signin"
-  And I wait for 5 seconds
-  And I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
-  And I wait for 5 seconds
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 2 seconds
   When I go to list tags view
   And I wait for 2 seconds
   And I go to new tags view
@@ -116,9 +114,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 6: editar un tag
-  Given I navigate to page "http://localhost:2368/ghost/#/signin"
-  And I wait for 5 seconds
-  And I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 5 seconds
   And I go to list tags view
   And I wait for 2 seconds
@@ -132,9 +128,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 7: eliminar un tag
-  Given I navigate to page "http://localhost:2368/ghost/#/signin"
-  And I wait for 5 seconds
-  And I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 5 seconds
   And I go to list tags view
   And I wait for 2 seconds

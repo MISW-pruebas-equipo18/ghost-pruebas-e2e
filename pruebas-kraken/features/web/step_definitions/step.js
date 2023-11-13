@@ -3,7 +3,7 @@ const { assert, expect } = require('chai');
 
 Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password', async function (username, password) {
     await this.driver.url('http://localhost:2368/ghost/#/signin');
-    await this.driver.pause(2000);
+    await this.driver.pause(5000);
 
     let userInput = await this.driver.$('#identification');
     await userInput.setValue(username);
