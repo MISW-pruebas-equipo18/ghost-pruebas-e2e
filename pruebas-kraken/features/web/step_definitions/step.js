@@ -317,6 +317,21 @@ When('I save the new member', async function() {
     await saveButton.click();
 });
 
+When('I click on the member with name {string}', async function (name) {
+    let members = await this.driver.$$('table[class="gh-list"] > tbody > tr > a:first-child > div > div');
+
+    let found = false;
+    for (let member of members) {
+        if (await member.$('h3').getText() == name) {
+            found = true;
+            await member.click();  
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
 When('I delete all remaining members', async function () {
     let members = await this.driver.$$('table[class="gh-list"] > tbody > tr');
 
