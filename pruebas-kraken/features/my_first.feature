@@ -1,11 +1,9 @@
 Feature: Kraken Scenarios
 
-# http://localhost:2368/ghost/
-
 @user1 @web
-Scenario: Pruebas exploratorias
+Scenario: Pruebas extremo a extremo
 
-  # Escenario 1: Publicar y editar un Post
+# Escenario 1: Publicar y editar un Post
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 2 seconds
   When I go to posts view
@@ -136,7 +134,101 @@ Scenario: Pruebas exploratorias
   And I wait for 5 seconds
 
 
+  # Escenario 5: Crear un tag
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create a new tag with name "kraken" and description "tag creado desde kraken" and color "a51d2d"
+  And I wait for 2 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  Then I validate tag with name "kraken"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
 
+  # Escenario 6: editar un tag
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 5 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I validate tag with name "kraken"
+  When I selected tag with name "kraken"
+  And I update tag with new name "ajuste"
+  And I go to list tags view
+  Then I validate tag with name "ajuste"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  # Escenario 7: eliminar un tag
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 5 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I validate tag with name "ajuste"
+  When I selected tag with name "ajuste"
+  And I delete tag with name "ajuste"
+  And I go to list tags view
+  Then I validate delete tag with name "ajuste"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  # Escenario 9: publicar una página
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 2 seconds
+  And I go to list pages view
+  And I wait for 2 seconds
+  When I go to new pages view
+  And I wait for 2 seconds
+  And I create new pages with title "Pagina desde kraken" and body "contenido aletorio para este campo de pagina"
+  And I wait for 2 seconds
+  And I publish the pages
+  And I wait for 2 seconds
+  And I go back to editor pages
+  And I wait for 2 seconds
+  And I go back to list pages view
+  And I wait for 5 seconds
+  Then I should see a post with title "Pagina desde kraken" and status "Published"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  # Escenario 11: editar una página
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 2 seconds
+  And I go to list pages view
+  And I wait for 2 seconds
+  And I validate pages with name "Pagina desde kraken"
+  When I selected pages with name "Pagina desde kraken"
+  And I update pages with new title "Modificado desde kraken"
+  And I wait for 2 seconds
+  And I go back to list pages view
+  And I validate pages with name "Modificado desde kraken"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  # Escenario 12: des-publicar una página
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 2 seconds
+  And I go to list pages view
+  And I wait for 2 seconds
+  And I validate pages with name "Modificado desde kraken"
+  When I selected pages with name "Modificado desde kraken"
+  And I unpublish the pages
+  And I wait for 2 seconds
+  And I go back to list pages view
+  And I wait for 2 seconds
+  Then I should see a pages with title "Modificado desde kraken"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+  
 
   # Escenario 15: Cambio de contraseña, datos incorrectos
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
@@ -263,3 +355,4 @@ Scenario: Pruebas exploratorias
   # Tear down
   And I logout
   And I wait for 5 seconds
+  
