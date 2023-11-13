@@ -350,3 +350,59 @@ When('I delete all remaining members', async function () {
         await confirmButton.click();
     }
 });
+
+When('I go to staff view', async function () {
+    let settingsButton = await this.driver.$('a[href="#/settings/"]');
+    await settingsButton.click();
+
+    let staffButton = await this.driver.$('a[href="#/settings/staff/"]');
+    await staffButton.click();
+});
+
+When('I click on invite people button' , async function () {
+    await this.driver.$('button[data-test-button="invite-staff-user"]').click();
+});
+
+When('I fill the invite form for an admin user with email {string}', async function (email) {
+    let emailInput = await this.driver.$('input[name="email"]');
+    await emailInput.setValue(email);
+
+    let adminOption = await this.driver.$('div[data-test-option="Administrator"]');
+    await adminOption.click();
+});
+
+When('I click on send invitation now button', async function () {
+    let sendButton = await this.driver.$('button[data-test-button="send-user-invite"]');
+    await sendButton.click();
+});
+
+When('I reload the page', async function () {
+    await this.driver.refresh();
+});
+
+Then('I should see a new invited user with email {string}', async function (email) {
+    let users = await this.driver.$$('h3[data-test-email]');
+    let found = false;
+
+    for (let user of users) {
+        if (await user.getText() == email) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I revoke all invitations', async function () {
+    let users = await this.driver.$$('a[data-test-revoke-button]');
+
+    for (let user of users) {
+        await user.click();
+
+        await this.driver.pause(500);
+
+        let notificationClose = await this.driver.$('button[data-test-button="close-notification"]');
+        await notificationClose.click();
+    }
+});

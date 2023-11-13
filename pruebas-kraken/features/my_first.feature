@@ -201,34 +201,52 @@ Scenario: Pruebas exploratorias
   # And I logout
   # And I wait for 5 seconds
 
-  # Escenario 18: Editar un miembro, dato de correo
+  # # Escenario 18: Editar un miembro, dato de correo
+  # Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  # And I wait for 2 seconds
+  # When I go to members view
+  # And I wait for 2 seconds
+  # And I click on new member button
+  # And I fill a new member with name "Test Member" and email "member@uniandes.edu.co"
+  # And I wait for 2 seconds
+  # And I save the new member
+  # And I wait for 2 seconds
+  # And I go to members view
+  # And I wait for 2 seconds
+  # And I click on the member with name "Test Member"
+  # And I wait for 2 seconds
+  # And I fill a new member with name "Test Member" and email "edited-member@uniandes.edu.co"
+  # And I wait for 2 seconds
+  # And I save the new member
+  # And I wait for 2 seconds
+  # And I go to members view
+  # And I wait for 2 seconds
+  # Then I should see a member with name "Test Member" and email "edited-member@uniandes.edu.co"
+  # And I wait for 2 seconds
+  # # Tear down
+  # And I delete all remaining members
+  # And I wait for 2 seconds
+  # And I logout
+  # And I wait for 5 seconds
 
+  # Escenario 19: Staff, Invitar un miembro al staff
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 2 seconds
-  When I go to members view
+  When I go to staff view
   And I wait for 2 seconds
-  And I click on new member button
-  And I fill a new member with name "Test Member" and email "member@uniandes.edu.co"
+  And I click on invite people button
   And I wait for 2 seconds
-  And I save the new member
+  And I fill the invite form for an admin user with email "new-member@uniandes.edu.co"
   And I wait for 2 seconds
-  And I go to members view
-  And I wait for 2 seconds
-  And I click on the member with name "Test Member"
-  And I wait for 2 seconds
-  And I fill a new member with name "Test Member" and email "edited-member@uniandes.edu.co"
-  And I wait for 2 seconds
-  And I save the new member
-  And I wait for 2 seconds
-  And I go to members view
-  And I wait for 2 seconds
-  Then I should see a member with name "Test Member" and email "edited-member@uniandes.edu.co"
+  And I click on send invitation now button
+  And I wait for 5 seconds
+  And I reload the page
+  And I wait for 5 seconds
+  Then I should see a new invited user with email "new-member@uniandes.edu.co"
   And I wait for 2 seconds
   # Tear down
-  And I delete all remaining members
+  And I revoke all invitations
   And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
-
-
 
