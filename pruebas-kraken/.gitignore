@@ -1,0 +1,4 @@
+node_modules/
+properties.json
+reports/*/
+!reports/.gitkeep
