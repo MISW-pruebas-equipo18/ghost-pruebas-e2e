@@ -140,7 +140,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
   And I logout
   And I wait for 5 seconds
-  
+
   # Escenario 9: publicar una página
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 2 seconds
@@ -172,6 +172,22 @@ Scenario: Pruebas extremo a extremo
   And I wait for 2 seconds
   And I go back to list pages view
   And I validate pages with name "Modificado desde kraken"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  # Escenario 12: des-publicar una página
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 2 seconds
+  And I go to list pages view
+  And I wait for 2 seconds
+  And I validate pages with name "Modificado desde kraken"
+  When I selected pages with name "Modificado desde kraken"
+  And I unpublish the pages
+  And I wait for 2 seconds
+  And I go back to list pages view
+  And I wait for 2 seconds
+  Then I should see a pages with title "Modificado desde kraken"
   And I wait for 5 seconds
   And I logout
   And I wait for 5 seconds

@@ -390,3 +390,37 @@ When('I update pages with new title {string}', async function (newTitle) {
     await this.driver.pause(1000);
 
 });
+
+
+When('I unpublish the pages', async function () {
+    let publishButton = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-unpublish-trigger"]')
+    await publishButton.click();
+    await this.driver.pause(1000);
+
+    let publishButton2 = await this.driver.$('button[data-test-button="revert-to-draft"]');
+    await publishButton2.click();
+    await this.driver.pause(1000);
+
+});
+
+
+Then('I should see a pages with title {string}', async function (title) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+
+            /*let statusElement = await titleElement.$('..').$('p:nth-child(3)');
+            statusElement = await statusElement.getText();
+            expect(statusElement).to.equal(status);
+            break;*/
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+
