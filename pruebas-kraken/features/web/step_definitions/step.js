@@ -248,6 +248,38 @@ When('I update tag with new name {string}', async function (newName) {
 
 });
 
+When('I delete tag with name {string}', async function (name) {
+    
+    let deleteButton =  await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon"]');
+    deleteButton.click();
+    await this.driver.pause(1000);
+
+    let confirmButton =  await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
+    confirmButton.click();
+    await this.driver.pause(1000);
+
+});
+
+
+Then('I validate delete tag with name {string}', async function (nameTag) {
+    
+    let tagsElements = await this.driver.$$('h3.gh-tag-list-name');
+    let found = false;
+
+    
+    for (let name of tagsElements) {
+        if (await name.getText() == nameTag) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.false;
+});
+
+
+
+
 
 /**************************************************************************************************** FIN TAGS **/
 

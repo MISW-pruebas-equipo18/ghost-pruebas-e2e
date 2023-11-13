@@ -3,7 +3,7 @@ Feature: Kraken Scenarios
 @user1 @web
 Scenario: Pruebas extremo a extremo
 
-  # Escenario 1: Publicar y editar un Post
+# Escenario 1: Publicar y editar un Post
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 2 seconds
   When I go to posts view
@@ -127,6 +127,22 @@ Scenario: Pruebas extremo a extremo
   And I update tag with new name "ajuste"
   And I go to list tags view
   Then I validate tag with name "ajuste"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  # Escenario 7: eliminar un tag
+  Given I navigate to page "http://localhost:2368/ghost/#/signin"
+  And I wait for 5 seconds
+  And I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  And I wait for 5 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I validate tag with name "ajuste"
+  When I selected tag with name "ajuste"
+  And I delete tag with name "ajuste"
+  And I go to list tags view
+  Then I validate delete tag with name "ajuste"
   And I wait for 5 seconds
   And I logout
   And I wait for 5 seconds
