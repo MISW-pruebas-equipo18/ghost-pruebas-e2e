@@ -4,6 +4,7 @@ registerCommands()
 let user = Cypress.config('user')
 let passw = Cypress.config('passw')
 let postTitle = "Este es un post de prueba para eliminación"
+
 describe ('Crear post, editarlo y eliminarlo, verificar que no aparezca de nuevo', function(){
     it('Ingreso a la opción de post', function(){
         cy.createEditPost(user,passw,postTitle)

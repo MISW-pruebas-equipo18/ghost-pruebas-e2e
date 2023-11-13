@@ -41,9 +41,11 @@ describe ('Validate incorrect change of password', function(){
         cy.contains('Sign out').click()
         cy.url().should('include', '/signin')
 
+        cy.get('input[name=identification]').clear()
+        cy.get('input[name=password]').clear()
         cy.get('input[name=identification]').type(user)
         cy.get('input[name=password]').type(newPassword)
-        cy.contains('Sign in →').click()
+        cy.get('button.gh-btn-login').click()
 
         cy.get('button').should('contain', 'Retry')
         cy.contains('Retry').click()

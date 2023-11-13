@@ -32,7 +32,7 @@ export function registerCommands(){
       cy.get('input[name=password]').clear()
       cy.get('input[name=identification]').type(user)
       cy.get('input[name=password]').type(passw)
-      cy.contains('Sign in →').click()
+      cy.get('button.gh-btn-login').click()
       cy.url().should('include', '/dashboard')
       cy.wait(100)
   });
