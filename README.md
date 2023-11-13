@@ -16,6 +16,7 @@ Run test
 npm run cy:open
 ```
 Funcionalidades probadas
+--------------------------------------------
 ![Screenshot_30](https://github.com/MISW-pruebas-equipo18/ghost-pruebas-e2e/assets/142247170/7cb11e43-3fa8-4876-9fec-b400d3a69cf1)
 
 
