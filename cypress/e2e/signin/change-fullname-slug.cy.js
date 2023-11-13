@@ -48,9 +48,8 @@ describe ('Change Full Name', function(){
         cy.get('div.gh-user-avatar.relative').click()
         cy.get('h4').should('contain', FullName)
         cy.wait(2000)
-    });
 
-    it('Go to reset full name', () => {
+        //Go to reset full name
         //Accedemos al OWNER que se liste
         cy.get('span.user-list-item-figure').click()
         cy.get('input[id=user-name]').clear()

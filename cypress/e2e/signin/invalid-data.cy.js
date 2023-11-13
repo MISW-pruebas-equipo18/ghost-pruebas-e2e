@@ -11,28 +11,24 @@ describe ('Validate Sig in Restrictions', function(){
         cy.contains('Sign in →').click()
         cy.wait(100)
         cy.get('button').should('contain', 'Retry')
-    });
-
-    it('Intento de ingreso con campo usuario vacio', function(){    
+    
+        //Intento de ingreso con campo usuario vacio
         cy.get('input[name=identification]').clear()
         cy.contains('Retry').click()
         cy.get('button').should('contain', 'Retry')
-    });
-
-    it('Intento de ingreso con contraseña vacia', function(){    
+    
+        //Intento de ingreso con contraseña vacia
         cy.get('input[name=password]').clear()
         cy.contains('Retry').click()
         cy.get('button').should('contain', 'Retry')
-    });
-
-    it('Credenciales muy largas', function(){    
+    
+        //Credenciales muy largas
         cy.get('input[name=identification]').type("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz")
         cy.get('input[name=password]').type("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz")
         cy.contains('Retry').click()
         cy.get('button').should('contain', 'Retry')
-    });
-
-    it('Ingreso con credenciales válidas', function(){    
+    
+        //Ingreso con credenciales válidas
         cy.get('input[name=identification]').clear()
         cy.get('input[name=password]').clear()
         cy.get('input[name=identification]').type(user)
