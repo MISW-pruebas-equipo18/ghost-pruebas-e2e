@@ -262,3 +262,76 @@ Then('I delete all remaining posts', async function () {
         await notificationClose.click();
     }
 });
+
+When('I update my slug name with {string}', async function (slug) {
+    let slugInput = await this.driver.$('input[id="user-slug"]');
+    await slugInput.setValue(slug);
+
+    let saveButton = await this.driver.$('button[data-test-save-button]');
+    await saveButton.click();
+})
+
+Then('I should see that the profile URL ends with {string}', async function (slug) {
+    let url = await this.driver.getUrl();
+    expect(url.endsWith(slug)).to.be.true;
+});
+
+When('I go to members view', async function () {
+    let membersPage = await this.driver.$('a[href="#/members/"]');
+    await membersPage.click();
+});
+
+When('I click on new member button', async function () {
+    let newMemberButton = await this.driver.$('a[href="#/members/new/"]');
+    await newMemberButton.click();
+});
+
+When('I fill a new member with name {string} and email {string}', async function (name, email) {
+    let nameInput = await this.driver.$('input[name="name"]');
+    await nameInput.setValue(name);
+
+    let emailInput = await this.driver.$('input[name="email"]');
+    await emailInput.setValue(email);
+});
+
+Then('I should see a member with name {string} and email {string}', async function (name, email) {
+    let members = await this.driver.$$('table[class="gh-list"] > tbody > tr > a:first-child > div > div');
+
+    let found = false;
+    for (let member of members) {
+        if (await member.$('h3').getText() == name) {
+            let emailElement = await member.$('p');
+            emailElement = await emailElement.getText();
+            expect(emailElement).to.equal(email);
+
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I save the new member', async function() {
+    let saveButton = await this.driver.$('button[data-test-button="save"]');
+    await saveButton.click();
+});
+
+When('I delete all remaining members', async function () {
+    let members = await this.driver.$$('table[class="gh-list"] > tbody > tr');
+
+    let found = false;
+    for (let member of members) {
+        found = true;
+        await member.click();  
+
+        let configButton = await this.driver.$('button[data-test-button="member-actions"]');
+        await configButton.click();
+
+        let deleteButton = await this.driver.$('span[class="red"]');
+        await deleteButton.click();
+
+        let confirmButton = await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
+        await confirmButton.click();
+    }
+});
