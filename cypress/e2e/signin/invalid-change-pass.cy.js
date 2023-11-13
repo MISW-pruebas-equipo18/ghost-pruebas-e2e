@@ -35,9 +35,7 @@ describe ('Validate incorrect change of password', function(){
         cy.contains('Change Password').click()
         cy.get('button').should('contain', 'Retry')
         
-    });
-
-    it('Logout and try sig in', () => {
+        //Logout and try sig in
         //Deslogearse
         cy.get('div.gh-user-avatar.relative').click()
         cy.contains('Sign out').click()
@@ -50,9 +48,8 @@ describe ('Validate incorrect change of password', function(){
         cy.get('button').should('contain', 'Retry')
         cy.contains('Retry').click()
         cy.get('button').should('contain', 'Retry')
-    });
-
-    it('sig in', () => {
+    
+        //sig in
         cy.login(user,passw)
         cy.url().should('include', '/dashboard')
     });

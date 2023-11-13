@@ -11,9 +11,8 @@ describe ('Validate change of password', function(){
     it('Change Password', function(){
         changePassw()
         cy.url().should('include', '/signin')
-    });
-
-    it('Reset Password', function(){
+    
+        //Reset Password
         reset = true
         changePassw()
         cy.url().should('include', '/signin')

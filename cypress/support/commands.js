@@ -26,7 +26,7 @@
 export function registerCommands(){
   Cypress.Commands.add('login', (user,passw) =>
   { 
-      cy.visit('http://localhost:2368/ghost/')
+      cy.visit('http://localhost:2368/ghost/#/signin')
       cy.wait(1000)
       cy.get('input[name=identification]').type(user)
       cy.get('input[name=password]').type(passw)

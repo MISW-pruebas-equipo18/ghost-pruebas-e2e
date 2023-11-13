@@ -5,7 +5,6 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:2368/',
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
-    testIsolation: false,
     user:'eg.romeror1@uniandes.edu.co',
     passw:'GioR2023@@',
     newPassw:'GioR2023@@',
