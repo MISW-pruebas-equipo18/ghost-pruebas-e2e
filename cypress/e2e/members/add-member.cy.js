@@ -2,8 +2,15 @@ import { registerCommands } from '../../support/commands'
 
 registerCommands()
 
+let user = Cypress.env('user')
+let passw = Cypress.env('passw')
 
 describe ('Add members', function(){
+
+    before(( ) => {
+        cy.login(user,passw)
+        cy.url().should('include', '/dashboard')
+    })    
 
     it('Add new member', function(){
         const user = {
