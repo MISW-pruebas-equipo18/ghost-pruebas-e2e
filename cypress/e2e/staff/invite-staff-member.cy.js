@@ -5,7 +5,6 @@ registerCommands()
 let user = Cypress.env('user')
 let passw = Cypress.env('passw')
 
-
 describe ('Invite member staff', function(){
     before(( ) => {
         cy.login(user,passw)

@@ -2,8 +2,15 @@ import { registerCommands } from '../../support/commands'
 
 registerCommands()
 
+let user = Cypress.env('user')
+let passw = Cypress.env('passw')
 
 describe ('Add tag', function(){
+
+    before(( ) => {
+        cy.login(user,passw)
+        cy.url().should('include', '/dashboard')
+    })    
 
     const tag = {
         oldName: 'Social',
