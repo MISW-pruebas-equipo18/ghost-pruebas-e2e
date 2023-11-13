@@ -14,7 +14,7 @@ Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} pass
     let loginButton = await this.driver.$('button.login');
     await loginButton.click();
 
-    await this.driver.pause(2000);
+    await this.driver.pause(3000);
     let currentTitle = await this.driver.$('h2.gh-canvas-title'); 
     expect(await currentTitle.getText()).to.equal('Dashboard');
 });
@@ -277,10 +277,76 @@ Then('I validate delete tag with name {string}', async function (nameTag) {
     expect(found).to.be.false;
 });
 
-
-
-
-
 /**************************************************************************************************** FIN TAGS **/
 
+/**************************************************************************************************** INICIO PAGES **/
+When('I go to list pages view', async function () {
+    let pagesLink = await this.driver.$('a[href="#/pages/"]'); 
+    await pagesLink.click();
+});
+
+When('I go back to editor pages', async function () {
+    let pagesLink1 = await this.driver.$('button.gh-back-to-editor') 
+    await pagesLink1.click();
+});
+
+
+When('I go back to list pages view', async function () {
+    let pagesLink2 = await this.driver.$('a[href="#/pages/"]')
+    await pagesLink2.click();
+});
+
+
+
+
+
+When('I go to new pages view', async function () {
+    let newPagesButton = await this.driver.$('a[href="#/editor/page/"]');
+    await newPagesButton.click();
+});
+
+When('I create new pages with title {string} and body {string}', async function (title, body) {
+    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    await titleInput.setValue(title);
+    await this.driver.pause(1000);
+
+    let bodyInput = await this.driver.$('div[class="kg-prose"] > p');
+    bodyInput.click();
+
+    await this.driver.pause(1000);
+    await bodyInput.setValue(body);
+});
+
+When('I publish the pages', async function () {
+    let publishButton = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-publish-trigger"]')
+    await publishButton.click();
+    await this.driver.pause(1000);
+
+    let publishButton2 = await this.driver.$('button[data-test-button="continue"]');
+    await publishButton2.click();
+    await this.driver.pause(1000);
+
+    let publishButton3 = await this.driver.$('button[data-test-button="confirm-publish"]');
+    await publishButton3.click();
+    await this.driver.pause(1000);
+});
+
+
+Then('I should see a pages with title {string} and status {string}', async function (title, status) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+
+            let statusElement = await titleElement.$('..').$('p:nth-child(3)');
+            statusElement = await statusElement.getText();
+            expect(statusElement).to.equal(status);
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
 
