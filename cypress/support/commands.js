@@ -34,4 +34,16 @@ export function registerCommands(){
       cy.url().should('include', '/dashboard')
       cy.wait(100)
   });
+
+  Cypress.Commands.add('getByTestId', (testId) => {
+    const log = Cypress.log({ name: 'getByTestId', message: testId })
+    const selector = `[data-testId="${testId}"]`
+    cy.get(selector)
+  })
+
+  Cypress.Commands.add('getByTestInput', (testInput) => {
+    const log = Cypress.log({ name: 'getByTestInput', message: testInput })
+    const selector = `[data-test-input="${testInput}"]`
+    cy.get(selector)
+  })  
 }
