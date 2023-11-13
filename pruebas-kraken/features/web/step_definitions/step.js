@@ -350,3 +350,43 @@ Then('I should see a pages with title {string} and status {string}', async funct
     expect(found).to.be.true;
 });
 
+Then('I validate pages with name {string}', async function (title) {
+    
+    let pagesElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titlePage of pagesElements) {
+        if (await titlePage.getText() == title) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I selected pages with name {string}', async function (title) {
+    let pagesElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titlePage of pagesElements) {
+        if (await titlePage.getText() == title) {
+            found = true;
+            await titlePage.click();
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I update pages with new title {string}', async function (newTitle) {
+    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    await titleInput.setValue(newTitle);
+    await this.driver.pause(1000);
+
+    let saveButton =  await this.driver.$('button[class="gh-btn gh-btn-editor gh-editor-save-trigger green ember-view"]');
+    saveButton.click();
+    await this.driver.pause(1000);
+
+});
