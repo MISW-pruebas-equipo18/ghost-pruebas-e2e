@@ -8,7 +8,7 @@ module.exports = defineConfig({
     user:'eg.romeror1@uniandes.edu.co',
     testIsolation: false,
     passw:'GioR2023@@',
-    newPassw:'GioR2023*',
+    newPassw:'GioR2023**',
     setupNodeEvents(on, config) {
       // implement node event listeners here
     }, 
