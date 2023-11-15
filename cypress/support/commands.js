@@ -27,13 +27,20 @@ export function registerCommands(){
   Cypress.Commands.add('login', (user,passw) =>
   { 
       cy.visit('http://localhost:2368/ghost/#/signin')
-      cy.wait(1000)
+      cy.wait(3000)
       cy.get('input[name=identification]').clear()
       cy.get('input[name=password]').clear()
       cy.get('input[name=identification]').type(user)
       cy.get('input[name=password]').type(passw)
       cy.get('button.gh-btn-login').click()
       cy.url().should('include', '/dashboard')
+      cy.wait(100)
+  });
+
+  Cypress.Commands.add('logout', () =>
+  {
+      cy.get('div.gh-user-avatar.relative').click()
+      cy.contains('Sign out').click()
       cy.wait(100)
   });
 
