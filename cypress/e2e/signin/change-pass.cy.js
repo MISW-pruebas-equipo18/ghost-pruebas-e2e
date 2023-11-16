@@ -48,7 +48,7 @@ function changePassw()
     cy.wait(1000)
     cy.screenshot('SignIn/change-pass/P3_owner')
 
-    //Diligenciamos los campos y guardadmos
+    //Diligenciamos los campos y guardamos
     cy.get('input[id=user-password-old]').type(passw)
     cy.get('input[id=user-password-new]').type(newPassw)
     cy.get('input[id=user-new-password-verification]').type(newPassw)
@@ -59,5 +59,6 @@ function changePassw()
 
     //Deslogearse
     cy.logout()
+    cy.url().should('include', '/signin')
     cy.screenshot('SignIn/change-pass/Logout')
 }  

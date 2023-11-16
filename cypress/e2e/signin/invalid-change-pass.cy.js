@@ -52,6 +52,7 @@ describe ('Validate incorrect change of password', function(){
     
     it('P5: Logout', () => {
         cy.logout()
+        cy.url().should('include', '/signin')
         cy.screenshot('SignIn/invalid-change-pass/P5_Logout')
     });
 
@@ -79,5 +80,6 @@ describe ('Validate incorrect change of password', function(){
 
 after(() => {
     cy.logout()
+    cy.url().should('include', '/signin')
     cy.screenshot('SignIn/invalid-change-pass/Logout')
   });   
