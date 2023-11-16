@@ -63,5 +63,6 @@ describe ('Validate Sig in Restrictions', function(){
 
   after(() => {
     cy.logout()
+    cy.url().should('include', '/signin')
     cy.screenshot('SignIn/invalid-data/P6_LogOut')
   });   

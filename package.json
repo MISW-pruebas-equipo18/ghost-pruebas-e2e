@@ -5,7 +5,8 @@
     "author": "Grupo Pruebas MISO",
     "scripts": {
       "cy:open": "cypress open",
-      "cy:run": "cypress run"
+      "cy:run": "cypress run",
+      "cy:headless": "npx cypress run --headless"
     },  
     "devDependencies": {
       "cypress": "^13.5.0"
