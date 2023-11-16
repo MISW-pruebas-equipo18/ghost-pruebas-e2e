@@ -39,20 +39,24 @@ export function registerCommands(){
 
   Cypress.Commands.add('logout', () =>
   {
-      cy.get('div.gh-user-avatar.relative').click()
+      cy.get('svg.w3.mr1.fill-darkgrey').click()
       cy.contains('Sign out').click()
-      cy.wait(100)
   });
 
-  Cypress.Commands.add('createEditPost', (user,passw,postTitle) =>
+  Cypress.Commands.add('createEditPost', (user,passw,postTitle,postPrefix) =>
   { 
     cy.login(user,passw)
+    cy.screenshot('Post/'+postPrefix+'/P1_Login')
+
     cy.contains('Posts').click()
     cy.url().should('include', '/posts')
-    
+    cy.screenshot('Post/'+postPrefix+'/P2_Posts')
+
     //publicación de post con datos vacios
     cy.contains('New post').click()
     cy.url().should('include', '/editor/post')
+    cy.screenshot('Post/'+postPrefix+'/P3_Editor')
+
     cy.get('textarea.gh-editor-title').type("Prueba")
     cy.get('textarea.gh-editor-title').clear()
     cy.get('div.kg-prose').type("Prueba")
@@ -60,15 +64,20 @@ export function registerCommands(){
     cy.wait(2000)
     cy.contains('Publish').click()
     cy.wait(1000)
+    cy.screenshot('Post/'+postPrefix+'/P4_Publish')
     cy.contains('Publish and email').click()
     cy.wait(1000)
+    cy.screenshot('Post/'+postPrefix+'/P5_PublishOnly')
     cy.contains('Publish only').click()
+    cy.screenshot('Post/'+postPrefix+'/P6_FinalReview')
     cy.contains('Continue, final review →').click()
     cy.wait(1000)
+    cy.screenshot('Post/'+postPrefix+'/P7_PublishNow')
     cy.contains('Publish post, right now').click()
     cy.wait(1000)
     cy.get('span.green').should('contain', "Boom. It’s out there.")
     cy.get('div.gh-post-bookmark-title').should('contain', "(Untitled)")
+    cy.screenshot('Post/'+postPrefix+'/P8_PublishedNull')
     cy.contains('Back to editor').click()
 
     cy.get('textarea.gh-editor-title').type(postTitle)
@@ -76,6 +85,7 @@ export function registerCommands(){
     cy.contains('Update').click()
     cy.wait(1000)
     cy.get('span.gh-notification-title').should('contain', "Updated")
+    cy.screenshot('Post/'+postPrefix+'/P9_Update')
   });
 
   Cypress.Commands.add('getByTestId', (testId) => {
