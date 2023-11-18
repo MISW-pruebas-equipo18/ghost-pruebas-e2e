@@ -1,4 +1,7 @@
 import { registerCommands } from '../../support/commands'
+import homePage from '../../pages/homePage'
+import settingsPage from '../../pages/settingsPage'
+import staffPage from '../../pages/staffPage'
 
 registerCommands()
 
@@ -8,7 +11,7 @@ let newPassw = "newPassw"
 
 before(() => {
     //Login in Application
-    cy.login(user,passw)
+    cy.loginAdmin(user,passw)
     cy.url().should('include', '/dashboard')
     cy.screenshot('SignIn/invalid-change-pass/Login')
 });
@@ -19,33 +22,25 @@ describe ('Validate incorrect change of password', function(){
     let newPassword = newPassw
 
     it('P1: Ingreso al menú settings', () => {
-        //Ingresamos al area de Staff a través del menú Settings del usuario
-        cy.get('a[id=ember34]').click()
+        homePage.goToSettings()
         cy.url().should('include', '/settings')
         cy.screenshot('SignIn/invalid-change-pass/P1_Settings')
-        cy.wait(1000)
     });
 
     it('P2: Ingreso al menú Staff', () => {
-        cy.contains('Staff').click()
-        cy.wait(2000)
+        settingsPage.goToStaff()
         cy.url().should('include', '/staff')
         cy.screenshot('SignIn/invalid-change-pass/P2_Staff')
     });
 
     it('P3: Ingreso al OWNER', () => {
-        //Accedemos al OWNER que se liste
-        cy.get('span.user-list-item-figure').click()
-        cy.wait(1000)
+        staffPage.goToOwner()
         cy.screenshot('SignIn/invalid-change-pass/P3_Owner')
     });
 
     it('P4: Diligenciamiento de información', () => {
         //Diligenciamos los campos y guardadmos
-        cy.get('input[id=user-password-old]').type(newPassword)
-        cy.get('input[id=user-password-new]').type(oldPassw)
-        cy.get('input[id=user-new-password-verification]').type(oldPassw)
-        cy.contains('Change Password').click()
+        staffPage.changePass(newPassword,oldPassw)
         cy.get('button').should('contain', 'Retry')
         cy.screenshot('SignIn/invalid-change-pass/P4_Diligenciamiento')
     });
@@ -57,22 +52,16 @@ describe ('Validate incorrect change of password', function(){
     });
 
     it('P6: Try Signin', () => {
-        cy.get('input[name=identification]').clear()
-        cy.get('input[name=password]').clear()
-        cy.get('input[name=identification]').type(user)
-        cy.get('input[name=password]').type(newPassword)
-        cy.get('button.gh-btn-login').click()
+        cy.loginAdmin(user,newPassword)
         cy.get('button').should('contain', 'Retry')
-
         cy.contains('Retry').click()
         cy.get('button').should('contain', 'Retry')
-
         cy.screenshot('SignIn/invalid-change-pass/P6_Try_Signin')
     }); 
     
     it('P7: Signin', () => {
         //sig in
-        cy.login(user,passw)
+        cy.loginAdmin(user,passw)
         cy.url().should('include', '/dashboard')
         cy.screenshot('SignIn/invalid-change-pass/P7_Signin')
     });
@@ -81,5 +70,5 @@ describe ('Validate incorrect change of password', function(){
 after(() => {
     cy.logout()
     cy.url().should('include', '/signin')
-    cy.screenshot('SignIn/invalid-change-pass/Logout')
-  });   
+    cy.screenshot('SignIn/invalid-data/P6_LogOut')
+  });  
