@@ -4,11 +4,13 @@
     "description": "Boilerplate for cypress project",
     "author": "Grupo Pruebas MISO",
     "scripts": {
-      "cy:open": "cypress open",
-      "cy:run": "cypress run"
-    },  
+        "cy:open": "cypress open",
+        "cy:run": "cypress run",
+        "cy:headless": "npx cypress run --headless"
+    },
     "devDependencies": {
-      "cypress": "^13.5.0"
+        "@faker-js/faker": "^8.3.1",
+        "cypress": "^13.5.0",
+        "faker": "^6.6.6"
     }
-  }
-  
+}

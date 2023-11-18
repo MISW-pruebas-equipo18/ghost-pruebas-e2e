@@ -1,4 +1,7 @@
 import { registerCommands } from '../../support/commands'
+import homePage from '../../pages/homePage'
+import settingsPage from '../../pages/settingsPage'
+import staffPage from '../../pages/staffPage'
 
 registerCommands()
 
@@ -9,62 +12,73 @@ let FullName ="PRUEBAS AUTOMATIZADAS"
 let Slug = "pruebas-automatizadas"
 let oldSlug = ""
 
+before(() => {
+    //Login in Application
+    cy.loginAdmin(user,passw)
+    cy.url().should('include', '/dashboard')
+    cy.screenshot('SignIn/invalid-change-pass/Login')
+});
+
 describe ('Change Full Name', function(){
 
-    it('Go to new full name', () => {
-
-        //Login in Application
-        cy.login(user,passw)
-        cy.url().should('include', '/dashboard')
-        
-        //Ingresamos al area de Staff a través del menú Settings del usuario
-        cy.get('a[id=ember34]').click()
-        cy.wait(2000)
+    it('P1: Ingreso al menú settings', () => {
+        homePage.goToSettings()
         cy.url().should('include', '/settings')
+        cy.screenshot('SignIn/change-fullname/P1_Settings')
+    });
 
-        cy.contains('Staff').click()
-        cy.wait(2000)
+    it('P2: Ingreso al menú Staff', () => {
+        settingsPage.goToStaff()
         cy.url().should('include', '/staff')
+        cy.screenshot('SignIn/change-fullname/P2_Staff')
+    });
 
-        //Accedemos al OWNER que se liste
-        cy.get('span.user-list-item-figure').click()
+    it('P3: Ingreso al OWNER', () => {
+        staffPage.goToOwner()
+        cy.screenshot('SignIn/change-fullname/P3_Owner')
+    });
 
+    it('P4: Diligenciamiento de información', () => {
         //Diligenciamos los campos y guardadmos
         let oldFullName = "";
-        cy.get('input[id=user-name]')
-        .invoke('val')
+        staffPage.elements.name().invoke('val')
         .then(sometext => {
             oldFullName = sometext
             
-            if(oldFullName == null || oldFullName == ""){
-                console.log(oldFullName);
-                oldFullName="Ghost Owner"
-            }
-    
-            cy.get('input[id=user-name]').clear()
-            cy.get('input[id=user-name]').type(FullName)
-            cy.contains('Save').click()
-            cy.contains('Staff').click()
+            //Cambian el nombre del usuario
+            staffPage.changeFullName(FullName)    
+            staffPage.goToStaff()
             cy.url().should('include', '/staff')
-            cy.get('h3').should('contain', FullName)
-    
-            cy.get('div.gh-user-avatar.relative').click()
-            cy.get('h4').should('contain', FullName)
+            staffPage.elements.activeUsers().should('contain', FullName)
+            //cy.get('h3').should('contain', FullName)
+            cy.screenshot('SignIn/change-fullname/P4_StaffUpdated')
+
+            homePage.goToUserOptions()
+            homePage.elements.userOptionsUser().should('contain', FullName)
+            cy.screenshot('SignIn/change-fullname/P5_StaffUpdated2')
             cy.wait(2000)
     
             //Go to reset full name
             //Accedemos al OWNER que se liste
-            cy.get('span.user-list-item-figure').click()
-            cy.get('input[id=user-name]').clear()
-            cy.get('input[id=user-name]').type(oldFullName)
-            cy.contains('Save').click()
-            cy.contains('Staff').click()
+            staffPage.goToOwner()
+
+            //Cambian el nombre del usuario
+            staffPage.changeFullName(oldFullName)    
+            staffPage.goToStaff()
             cy.url().should('include', '/staff')
-            cy.get('h3').should('contain', oldFullName)
+            staffPage.elements.activeUsers().should('contain', oldFullName)
+            cy.screenshot('SignIn/change-fullname/P6_StaffOldUpdated')
     
-            cy.get('div.gh-user-avatar.relative').click()
-            cy.get('h4').should('contain', oldFullName)
+            homePage.goToUserOptions()
+            homePage.elements.userOptionsUser().should('contain', oldFullName)
+            cy.screenshot('SignIn/change-fullname/P6_StaffOldUpdated2')
         })
     }); 
 
 });
+
+after(() => {
+    cy.logout()
+    cy.url().should('include', '/signin')
+    cy.screenshot('SignIn/change-fullname/Logout')
+  });  
