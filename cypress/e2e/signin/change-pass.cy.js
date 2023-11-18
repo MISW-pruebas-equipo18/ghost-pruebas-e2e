@@ -1,4 +1,7 @@
 import { registerCommands } from '../../support/commands'
+import homePage from '../../pages/homePage'
+import settingsPage from '../../pages/settingsPage'
+import staffPage from '../../pages/staffPage'
 
 registerCommands()
 
@@ -9,7 +12,7 @@ let oldPassw = Cypress.config('passw')
 
 beforeEach(() => {
     //Login in Application
-    cy.login(user,passw)
+    cy.loginAdmin(user,passw)
     cy.url().should('include', '/dashboard')
     cy.screenshot('SignIn/change-pass/Login')
 });
@@ -33,26 +36,20 @@ describe ('Validate change of password', function(){
 function changePassw()
 {    
     //Ingresamos al area de Staff a través del menú Settings del usuario
-    cy.get('a[id=ember34]').click()
+    homePage.goToSettings()
     cy.url().should('include', '/settings')
-    cy.wait(1000)
     cy.screenshot('SignIn/change-pass/P1_settings')
 
-    cy.contains('Staff').click()
-    cy.wait(2000)
+    settingsPage.goToStaff()
     cy.url().should('include', '/staff')
     cy.screenshot('SignIn/change-pass/P2_staff')
     
     //Accedemos al OWNER que se liste
-    cy.get('span.user-list-item-figure').click()
-    cy.wait(1000)
+    staffPage.goToOwner()
     cy.screenshot('SignIn/change-pass/P3_owner')
 
     //Diligenciamos los campos y guardamos
-    cy.get('input[id=user-password-old]').type(passw)
-    cy.get('input[id=user-password-new]').type(newPassw)
-    cy.get('input[id=user-new-password-verification]').type(newPassw)
-    cy.contains('Change Password').click()
+    staffPage.changePass(passw,newPassw)
     cy.wait(1000)
     cy.url().should('include', '/staff')
     cy.wait(1000)

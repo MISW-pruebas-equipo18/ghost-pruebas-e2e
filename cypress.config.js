@@ -5,11 +5,12 @@ module.exports = defineConfig({
   chromeWebSecurity: false,
   e2e: {
     baseUrl: 'http://localhost:2368/',
+    baseUrlv2: 'http://localhost:3001/',
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     user:'eg.romeror1@uniandes.edu.co',
-    testIsolation: false,
     passw:'GioR2023@@',
     newPassw:'GioR2023**',
+    testIsolation: false,
     setupNodeEvents(on, config) {
       // implement node event listeners here
     }, 
