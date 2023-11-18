@@ -1,46 +1,19 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import loginPage from '../pages/loginPage'
+import homePage from '../pages/homePage'
+
+let urlGhostAdmin = Cypress.config('baseUrl')
 export function registerCommands(){
-  Cypress.Commands.add('login', (user,passw) =>
+  
+  Cypress.Commands.add('loginAdmin', (user,passw) =>
   { 
-      cy.visit('http://localhost:2368/ghost/#/signin')
+      cy.visit(urlGhostAdmin + 'ghost/')
       cy.wait(3000)
-      cy.get('input[name=identification]').clear()
-      cy.get('input[name=password]').clear()
-      cy.get('input[name=identification]').type(user)
-      cy.get('input[name=password]').type(passw)
-      cy.get('button.gh-btn-login').click()
-      cy.url().should('include', '/dashboard')
-      cy.wait(100)
+      loginPage.login(user,passw)
   });
 
   Cypress.Commands.add('logout', () =>
   {
-      cy.get('svg.w3.mr1.fill-darkgrey').click()
-      cy.contains('Sign out').click()
+      homePage.logout()
   });
 
   Cypress.Commands.add('createEditPost', (user,passw,postTitle,postPrefix) =>
