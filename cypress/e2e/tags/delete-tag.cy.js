@@ -1,13 +1,15 @@
 import {faker} from '@faker-js/faker';
-import { registerCommands } from '../../support/commands'
 
-registerCommands()
+import { registerCommands } from '../../support/commands'
 import tagPage from '../../pages/tagPage'
 import homePage from '../../pages/homePage'
 
+
+registerCommands()
+
 let user = Cypress.config('user')
 let passw = Cypress.config('passw')
-let postPrefix = "add-tag"
+let postPrefix = "delete-tag"
 let tagName= ""
 
 before(() => {
@@ -17,7 +19,7 @@ before(() => {
     cy.screenshot('Tag/'+ postPrefix +'/Login')
 });
 
-describe ('Add tag', function(){   
+describe ('Delete Tag', function(){
 
     it('Create Tag', function(){
         homePage.goToTags()
@@ -28,11 +30,21 @@ describe ('Add tag', function(){
         cy.screenshot('Tag/'+ postPrefix +'/P1_CreateTag')
     });
 
-    it('Verify new Tag', function(){
+    it('Verify Tag', function(){
         tagPage.returnToTags()
         tagPage.elements.tagItem().should('contain', tagName)
         cy.screenshot('Tag/'+ postPrefix +'/P2_VerifyTag')
     });
+
+    it('Delete Tag', function(){
+        tagPage.deleteTag(tagName)
+    });
+
+    it('Verify No Exists Tag', function(){
+        tagPage.elements.tagItem().should('not.contain', tagName)
+        cy.screenshot('Tag/'+ postPrefix +'/P3_VerifyTag')
+    });
+    
 });
 
 after(() => {
