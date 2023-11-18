@@ -24,7 +24,7 @@ describe ('Delete Tag', function(){
     it('Create Tag', function(){
         homePage.goToTags()
         cy.screenshot('Tag/'+ postPrefix +'/P0_GoToTags')
-        tagName= faker.lorem.word()
+        tagName= faker.lorem.word() + "ToDelete"
         tagPage.createTag(tagName, tagName, faker.lorem.sentence())
         tagPage.elements.viewActions().should('contain', "Saved")
         cy.screenshot('Tag/'+ postPrefix +'/P1_CreateTag')
