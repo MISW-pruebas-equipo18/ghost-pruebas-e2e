@@ -3,7 +3,7 @@ class homePage {
         userOptions: () => cy.get('svg.w3.mr1.fill-darkgrey'),
         signOut: () => cy.get('a[href="#/signout/"]'),
         settings: () => cy.get('a[href="#/settings/"]'),
-        posts: () => cy.get('a[href="#/posts/"]'),
+        posts: () => cy.contains('a', 'Posts'),
         pages: () => cy.get('a[href="#/pages/"]'),
         tags: () => cy.get('a[href="#/tags/"]'),
         userOptionsUser: () => cy.get('h4.gh-user-name'),

@@ -1,5 +1,4 @@
 import { registerCommands } from '../../support/commands'
-import homePage from '../../pages/homePage'
 registerCommands()
 let user = Cypress.config('user')
 let passw = Cypress.config('passw')

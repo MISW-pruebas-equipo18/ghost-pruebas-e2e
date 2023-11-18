@@ -5,6 +5,7 @@ class postPage{
         content: () => cy.get('div.kg-prose'),
         publish: () => cy.contains('Publish'),
         returnPost: () => cy.contains('Posts'),
+        returnEditor: () => cy.contains('Editor'),
         postTitle: () => cy.get('h3.gh-content-entry-title'),
         postContent: () => cy.get('div.gh-content-entry-excerpt'),
         postOptions: () => cy.get('button.post-settings'),
@@ -22,16 +23,30 @@ class postPage{
         notificationPublished: () => cy.get('span.gh-notification-title'),
         buttonClose: () => cy.get('button[data-test-button="close-notification"]'),
         postSettings: () => cy.get('button.settings-menu-toggle'),
+        postListItem: () => cy.get('li.gh-posts-list-item'),
+        unPublish: () => cy.contains('Unpublish'),
+        unPublishConfirm: () => cy.get('button.gh-revert-to-draft'),
     }
 
     updatePost(title,content){
-        this.elements.title().clear()
-        this.elements.title().type(title)
-        this.elements.content().clear()
-        this.elements.content().type(content)
+        this.fillPost(title,content)
         this.elements.publish().click()
         this.elements.updateButton().click()
-    }     
+    }   
+
+    createAndPublishPost(title,content){
+        this.fillPost(title,content)
+        this.elements.publish().click()
+        this.goToPublishType()
+        this.publishOnly()
+        this.goToContinuePublish()
+        this.goConfirmPublish()
+    }
+
+    updateAndPublishPost(title,content){
+        this.fillPost(title,content)
+        this.elements.publish().click()
+    }
 
     newPost(){
         this.elements.newPost().click()
@@ -43,6 +58,13 @@ class postPage{
         this.elements.content().type("Prueba")
         this.elements.content().clear()
         this.elements.publish().click()
+    }
+
+    fillPost(title,content){
+        this.elements.title().clear()
+        this.elements.title().type(title)
+        this.elements.content().clear()
+        this.elements.content().type(content)
     }
 
     publishOnly(){
@@ -73,6 +95,10 @@ class postPage{
         this.elements.returnPost().click()
     }
 
+    goreturnEditor(){
+        this.elements.returnEditor().click()
+    }
+
     goToPostSettings(){
         this.elements.postSettings().click()
     }
@@ -80,6 +106,18 @@ class postPage{
     deletePost(){
         this.elements.postDelete().click()
         this.elements.postDeleteConfirm().click()
+    }
+
+    openDraftPost(postTitle){
+        cy.contains(postTitle).click()
+    }
+
+    goToUnpublish(){
+        this.elements.unPublish().click()
+    }
+
+    confirmunPublish(){
+        this.elements.unPublishConfirm().click()
     }
 }
 

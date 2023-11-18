@@ -28,7 +28,6 @@ export function registerCommands(){
 
     //publicación de post con datos vacios
     postPage.newPost()
-    //cy.contains('New post').click()
     cy.url().should('include', '/editor/post')
     cy.screenshot('Post/'+postPrefix+'/P3_Editor')
 
@@ -39,19 +38,15 @@ export function registerCommands(){
     postPage.goToPublishType()
     cy.screenshot('Post/'+postPrefix+'/P5_PublishOnly')
 
-    //cy.contains('Publish only').click()
     postPage.publishOnly()
     cy.screenshot('Post/'+postPrefix+'/P6_FinalReview')
     
-    //cy.contains('Continue, final review →').click()
     postPage.goToContinuePublish()
     cy.screenshot('Post/'+postPrefix+'/P7_PublishNow')
 
     postPage.goConfirmPublish()
-    //cy.get('span.green').should('contain', "Boom. It’s out there.")
     postPage.elements.titleComplete().should('contain', "Boom. It’s out there.")
 
-    //cy.get('div.gh-post-bookmark-title').should('contain', "(Untitled)")
     postPage.elements.completeBrookmark().should('contain', "(Untitled)")
     cy.screenshot('Post/'+postPrefix+'/P8_PublishedNull')
 
