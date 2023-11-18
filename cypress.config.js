@@ -5,11 +5,16 @@ module.exports = defineConfig({
   chromeWebSecurity: false,
   e2e: {
     baseUrl: 'http://localhost:2368/',
-    baseUrlv2: 'http://localhost:3001/',
+    baseUrlv2: 'https://grupo-miso.ghost.io/',
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     user:'eg.romeror1@uniandes.edu.co',
     passw:'GioR2023@@',
     newPassw:'GioR2023**',
+    userv2:'albertogalvis@protonmail.com',
+    passwv2:'Gu4c4m4y0.2024',
+    newPasswv2:'Pruebas123*',
+    uservisitor:'dejahvuuu@gmail.com',
+    passwordvisitor: 'Gu4c4m4y0.2023',
     testIsolation: false,
     setupNodeEvents(on, config) {
       // implement node event listeners here
