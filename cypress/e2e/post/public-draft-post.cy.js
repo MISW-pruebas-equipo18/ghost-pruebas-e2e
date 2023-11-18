@@ -1,3 +1,4 @@
+import {faker} from '@faker-js/faker';
 import postPage from '../../pages/postPage'
 import homePage from '../../pages/homePage'
 import { registerCommands } from '../../support/commands'
@@ -5,7 +6,7 @@ import { registerCommands } from '../../support/commands'
 registerCommands()
 let user = Cypress.config('user')
 let passw = Cypress.config('passw')
-let postTitle = "Este es borrador de post para prueba"
+let postTitle = faker.lorem.words()
 
 before(() => {
     //Login in Application
