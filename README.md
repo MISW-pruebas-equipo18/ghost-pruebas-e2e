@@ -5,24 +5,104 @@ This repository stores tests for Ghost performed in Cypress and Kraken.
 [README Kraken](./pruebas-kraken/README.md)
 
 
-## How to use Cypress
+## Cypress Versions 
 
-Install
+Versión xx.xxx
+
+## Ghost Versions 
+
+| Tecnología      | Versión       | Descripción |
+|---------------|------------------|---------------|
+| Ghost versión inicial | Ghost 5.68.0 |  |
+| Ghost-cli versión inicial | Ghost-Cli 1.25.2 |  |
+| Ghost versión inicial | Ghost 5.68.0 |  |
+| Ghost nueva versión | Ghost 5.73.2+ | [https://grupo-miso.ghost.io/](https://grupo-miso.ghost.io/) |
+| Noje JS | v18.18.2 | nvm install 18 |
+| Noje JS | v18.18.2 | nvm install 18 |
+| npm | v9.8.1 | nvm install 18 |
+| Faker | v9.8.1 | npm install @faker-js/faker --save-dev |
 
 ```bash
 npm install
 ```
 
-Run test
+## Ghost URL's
+Para mayor facilidad en la ejecución de pruebas, se comparten URL's a sitios en funcionamiento con las versiones de Ghost utilizadas para la ejecución de pruebas E2E
+* Ghost 5.68.0
+* [Ghost 5.73.2](https://grupo-miso.ghost.io/)
 
+## Run test
+### Ejecución gráfica
 ```bash
 npm run cy:open
+npx cypress open
 ```
-Note:
-En el archivo cypress.config.js se debe especificar en los 2 lugares donde aparecen el user y el password del ghost local que tengan los tutores para prueba tanto en las variables de e2e como en las variables anidadas de la variable env 
+### Ejecución headless
 ```bash
-cypress.config.js
+npx cypress run --headless  
 ```
+### Ejecución headless por funcionalidades 
+```bash
+npx cypress run --headless  --spec 'cypress/e2e/signin/*'
+npx cypress run --headless  --spec 'cypress/e2e/post/*'
+npx cypress run --headless  --spec 'cypress/e2e/page/*'
+npx cypress run --headless  --spec 'cypress/e2e/tags/*'
+npx cypress run --headless  --spec 'cypress/e2e/staff/*'
+npx cypress run --headless  --spec 'cypress/e2e/members/*'
+```
+## Configuración
+La siguiente es la configuración a tener en cuenta para el archivo cypress.config.js 
+
+| Tecnología      | Especificación       |
+|---------------|------------------|
+| baseUrl | Url de la versión inicial de Ghost |
+| baseUrlv2 | Url de la nueva versión de Ghost para pruebas de regresión |
+| specPattern | Llave de configuración para establecer el orden de ejecución de los escenarios de prueba  |
+| user | Usuario de la versión inicial de Ghost para el login |
+| passw | Password del usuario de la versión inicial de Ghost para el login |
+| newPassw | Nuevo password a asignar al usuario de la versión inicial de Ghost para pruebas de cambio de contraseña |
+| userv2 | Usuario de la nueva versión de Ghost para el login en pruebas de regresión |
+| passwv2 | Password del usuario de la nueva versión de Ghost para el login y pruebas de regresión |
+| newPasswv2 | Nuevo password a asignar al usuario de la nueva versión de Ghost para pruebas de regresión |
+| testIsolation | Deshabilitar el aislamiento de pruebas en las pruebas de un extremo a otro para describir si un conjunto de pruebas debe ejecutarse en un contexto de navegador limpio o no, para este caso lo deshabilitamos con el objetivo de manejar el Login y el Logout entre archivos de prueba |
+
+```bash
+e2e: {
+    baseUrl: 'http://localhost:2368/',
+    baseUrlv2: 'https://grupo-miso.ghost.io/',
+    specPattern: [
+      "cypress/e2e/signin/invalid-data.cy.js",
+      "cypress/e2e/signin/invalid-change-pass.cy.js",
+      "cypress/e2e/signin/change-pass.cy.js",
+      "cypress/e2e/signin/change-fullname-slug.cy.js",
+      "cypress/e2e/post/public-edit-post.cy.js",
+      "cypress/e2e/post/public-edit-delete-post.cy.js",
+      "cypress/e2e/post/public-draft-post.cy.js",
+      "cypress/e2e/post/public-and-unpublish-post.cy.js",
+      "cypress/e2e/page/new-page.cy.js",
+      "cypress/e2e/tags/add-tag.cy.js",
+      "cypress/e2e/tags/delete-tag.cy.js",
+      "cypress/e2e/tags/assign-tag.cy.js",
+      "cypress/e2e/tags/edit-tag.cy.js",
+      "cypress/e2e/staff/invite-staff-member.cy.js",
+      "cypress/e2e/staff/verify-comments-staff-member.cy.js",
+      "cypress/e2e/members/add-member.cy.js",
+      "cypress/e2e/members/edit-member.cy.js"
+    ],
+    user:'userGhostv1',
+    passw:'passGhostv1',
+    newPassw:'newpassGhostv1',
+    userv2:'userGhostNewVersion',
+    passwv2:'passGhostNewVersion',
+    newPasswv2:'newpassGhostNewVersion',
+    uservisitor:'user',
+    passwordvisitor: 'pass',
+    testIsolation: false,
+    setupNodeEvents(on, config) {
+      // implement node event listeners here
+    }
+```
+
 
 Funcionalidades probadas
 --------------------------------------------
