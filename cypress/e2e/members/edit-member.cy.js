@@ -2,13 +2,13 @@ import { registerCommands } from '../../support/commands'
 
 registerCommands()
 
-let user = Cypress.env('user')
-let passw = Cypress.env('passw')
+let user = Cypress.config('user')
+let passw = Cypress.config('passw')
 
 describe ('Edit members', function(){
 
     before(( ) => {
-        cy.login(user,passw)
+        cy.loginAdmin(user,passw)
         cy.url().should('include', '/dashboard')
     })    
 

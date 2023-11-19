@@ -10,6 +10,7 @@ class staffPage{
         staff: () => cy.contains('Staff'),
         changePasswordButton: () => cy.contains('Change Password'),
         activeUsers: () => cy.get('section.gh-main-section.gh-active-users '),
+        btnCloseNotification: () => cy.get('button.gh-notification-close'),
     }
 
     goToOwner() {
@@ -32,6 +33,10 @@ class staffPage{
     goToStaff(){
         this.elements.staff().click()
     }   
+
+    closeNotification(){
+        this.elements.btnCloseNotification().click()
+    }
 }
 
 module.exports = new staffPage();
