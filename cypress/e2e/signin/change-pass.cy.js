@@ -50,6 +50,7 @@ function changePassw()
 
     //Diligenciamos los campos y guardamos
     staffPage.changePass(passw,newPassw)
+    staffPage.closeNotification()
     cy.wait(1000)
     cy.url().should('include', '/staff')
     cy.wait(1000)
