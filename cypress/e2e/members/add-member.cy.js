@@ -1,36 +1,48 @@
 import { registerCommands } from '../../support/commands'
+import memberPage from '../../pages/memberPage'
+import {faker} from '@faker-js/faker';
 
 registerCommands()
 
-let user = Cypress.env('user')
-let passw = Cypress.env('passw')
+let user = Cypress.config('user')
+let passw = Cypress.config('passw')
+let userMember = faker.internet.displayName()
+let userEmail = faker.internet.email() 
 
-describe ('Add members', function(){
+before(() => {
+    //Login in Application
+    cy.loginAdmin(user,passw)
+    cy.url().should('include', '/dashboard')
+    cy.screenshot('members/add-members/login')
+});
 
-    before(( ) => {
-        cy.login(user,passw)
-        cy.url().should('include', '/dashboard')
-    })    
+describe ('Add members', function(){  
 
-    it('Add new member', function(){
-        const user = {
-            name: 'Jose Bocanegra',
-            email: 'josebocanegra@uniandes.edu.co'
-        };
-        
+    it('P1: Add new member', function(){
         cy.on('uncaught:exception', (err, runnable) => {
             return false
         })
+        // Given
         cy.visit(Cypress.env('url_members'))
-        cy.contains('New member').click()
+        // When
+        memberPage.addNewMember()
         cy.wait(1000)
-        cy.getByTestInput('member-name').type(user.name)
-        cy.getByTestInput('member-email').type(user.email)
-        cy.contains('Save').click()
-    });
-
-    it('Verify new member', function(){
+        
+        memberPage.typeUsername(userMember)
+        memberPage.typeUseremail(userEmail)
+        memberPage.saveNewMember()
+        cy.wait(1000)
+        // Then
         cy.visit(Cypress.env('url_members'))
-        cy.contains('josebocanegra@uniandes.edu.co').should('be.visible')
+        cy.wait(1000)
+        memberPage.visibleMember(userMember)
+        cy.screenshot('members/add-members.cy.js/P1_add_new_member')
+
     });
 });
+
+after(() => {
+    cy.logout()
+    cy.url().should('include', '/signin')
+    cy.screenshot('members/add-members/logout')
+}); 
