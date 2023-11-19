@@ -3,6 +3,7 @@ Feature: Kraken Scenarios
 @user1 @web
 Scenario: Pruebas extremo a extremo
 
+
 # Escenario 1: Publicar y editar un Post
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
   And I wait for 2 seconds
@@ -208,7 +209,8 @@ Scenario: Pruebas extremo a extremo
   And I update pages with new title "Modificado desde kraken"
   And I wait for 2 seconds
   And I go back to list pages view
-  And I validate pages with name "Modificado desde kraken"
+  And I wait for 2 seconds
+  Then I validate pages with name "Modificado desde kraken"
   And I wait for 5 seconds
   And I logout
   And I wait for 5 seconds
@@ -355,4 +357,3 @@ Scenario: Pruebas extremo a extremo
   # Tear down
   And I logout
   And I wait for 5 seconds
-  

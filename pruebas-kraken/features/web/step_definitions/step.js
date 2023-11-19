@@ -1,29 +1,33 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { assert, expect } = require('chai');
 
+const { pagesLogin } = require('./pages/loginPage');
+const { pagesMenu } = require('./pages/menuPage');
+const { pageTags } = require('./pages/tagsPage');
+const { fpages } = require('./pages/page');
+
+
 Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password', async function (username, password) {
-    await this.driver.url('http://localhost:2368/ghost/#/signin');
+    await this.driver.url(pagesLogin.urlLogin);
     await this.driver.pause(5000);
 
-    let userInput = await this.driver.$('#identification');
+    let userInput = await this.driver.$(pagesLogin.userInput);
     await userInput.setValue(username);
-
-    let passwordInput = await this.driver.$('#password');
+    let passwordInput = await this.driver.$(pagesLogin.passwordInput);
     await passwordInput.setValue(password);
 
-    let loginButton = await this.driver.$('button.login');
+    let loginButton = await this.driver.$(pagesLogin.loginButton);
     await loginButton.click();
-
     await this.driver.pause(3000);
-    let currentTitle = await this.driver.$('h2.gh-canvas-title'); 
+
+    let currentTitle = await this.driver.$(pagesMenu.tituloDashboard); 
     expect(await currentTitle.getText()).to.equal('Dashboard');
 });
 
 Then('I logout', async function () {
-    let avatarButton = await this.driver.$('div[class="pe-all"] > div:first-child');
+    let avatarButton = await this.driver.$(pagesMenu.avatarButton);
     await avatarButton.click();
-
-    let signoutButton = await this.driver.$('a[href="#/signout/"]');
+    let signoutButton = await this.driver.$(pagesMenu.signoutButton);
     await this.driver.pause(2000);
     await signoutButton.click();
 });
@@ -313,28 +317,25 @@ Then('I should see a member with name {string} and email {string}', async functi
 
 /**************************************************************************************************** INICIO TAGS **/
 When('I go to list tags view', async function () {
-    let tagsLink = await this.driver.$('a[href="#/tags/"]'); 
+    let tagsLink = await this.driver.$(pagesMenu.tags); 
     await tagsLink.click();
 });
 
 When('I go to new tags view', async function () {
-    let newtagsButton = await this.driver.$('a[href="#/tags/new/"]');
+    let newtagsButton = await this.driver.$(pageTags.newButton);
     await newtagsButton.click();
 });
 
 When('I create a new tag with name {string} and description {string} and color {string}', async function (name, description, color) {
-    let nameInput = await this.driver.$('#tag-name');
+    let nameInput = await this.driver.$(pageTags.nameInput);
     await nameInput.setValue(name);
 
-    /*let colorInput = await this.driver.$('input[class="gh-input"]');
-    await colorInput.setValue(color);*/
-
-    let descriptionInput = await this.driver.$('#tag-description');
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
     descriptionInput.click();
     await this.driver.pause(1000);
     await descriptionInput.setValue(description);
 
-    let saveButton =  await this.driver.$('button[class="gh-btn gh-btn-primary gh-btn-icon ember-view"]');
+    let saveButton =  await this.driver.$(pageTags.saveButton);
     saveButton.click();
     await this.driver.pause(1000);
 
@@ -342,7 +343,7 @@ When('I create a new tag with name {string} and description {string} and color {
 
 Then('I validate tag with name {string}', async function (nameTag) {
     
-    let tagsElements = await this.driver.$$('h3.gh-tag-list-name');
+    let tagsElements = await this.driver.$$(pageTags.tagsElements);
 
     let found = false;
     for (let name of tagsElements) {
@@ -355,8 +356,67 @@ Then('I validate tag with name {string}', async function (nameTag) {
     expect(found).to.be.true;
 });
 
+When('I selected tag with name {string}', async function (nameTag) {
+    let tagElements = await this.driver.$$(pageTags.select);
+
+    let found = false;
+    for (let tagElement of tagElements) {
+        if (await tagElement.getText() == nameTag) {
+            found = true;
+            await tagElement.click();
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I update tag with new name {string}', async function (newName) {
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(newName);
+    await this.driver.pause(1000);
+
+    let saveButton =  await this.driver.$(pageTags.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+
+});
+
+When('I delete tag with name {string}', async function (name) {
+    
+    let deleteButton =  await this.driver.$(pageTags.deleteButton);
+    deleteButton.click();
+    await this.driver.pause(1000);
+
+    let confirmButton =  await this.driver.$(pageTags.confirmButton);
+    confirmButton.click();
+    await this.driver.pause(1000);
+
+});
+
+
+Then('I validate delete tag with name {string}', async function (nameTag) {
+    
+    let tagsElements = await this.driver.$$(pageTags.tagsElements);
+    let found = false;
+
+    
+    for (let name of tagsElements) {
+        if (await name.getText() == nameTag) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.false;
+});
+
+/**************************************************************************************************** FIN TAGS **/
+
+/**************************************************************************************************** INICIO MEMBER **/
+
 When('I save the new member', async function() {
-    let saveButton = await this.driver.$('button[data-test-button="save"]');
+    let saveButton = await this.driver.$(pageTags.saveButton);
     await saveButton.click();
 });
 
@@ -375,20 +435,6 @@ When('I click on the member with name {string}', async function (name) {
     expect(found).to.be.true;
 });
 
-When('I selected tag with name {string}', async function (nameTag) {
-    let tagElements = await this.driver.$$('h3.gh-tag-list-name');
-
-    let found = false;
-    for (let tagElement of tagElements) {
-        if (await tagElement.getText() == nameTag) {
-            found = true;
-            await tagElement.click();
-            break;
-        }
-    }
-
-    expect(found).to.be.true;
-});
 
 When('I delete all remaining members', async function () {
     let members = await this.driver.$$('table[class="gh-list"] > tbody > tr');
@@ -450,133 +496,6 @@ Then('I should see a new invited user with email {string}', async function (emai
 
     expect(found).to.be.true;
 });
-When('I update tag with new name {string}', async function (newName) {
-    let nameInput = await this.driver.$('#tag-name');
-    await nameInput.setValue(newName);
-    await this.driver.pause(1000);
-
-    let saveButton =  await this.driver.$('button[class="gh-btn gh-btn-primary gh-btn-icon ember-view"]');
-    saveButton.click();
-    await this.driver.pause(1000);
-
-});
-
-When('I delete tag with name {string}', async function (name) {
-    
-    let deleteButton =  await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon"]');
-    deleteButton.click();
-    await this.driver.pause(1000);
-
-    let confirmButton =  await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
-    confirmButton.click();
-    await this.driver.pause(1000);
-
-});
-
-
-Then('I validate delete tag with name {string}', async function (nameTag) {
-    
-    let tagsElements = await this.driver.$$('h3.gh-tag-list-name');
-    let found = false;
-
-    
-    for (let name of tagsElements) {
-        if (await name.getText() == nameTag) {
-            found = true;
-            break;
-        }
-    }
-
-    expect(found).to.be.false;
-});
-
-/**************************************************************************************************** FIN TAGS **/
-
-/**************************************************************************************************** INICIO PAGES **/
-When('I go to list pages view', async function () {
-    let pagesLink = await this.driver.$('a[href="#/pages/"]'); 
-    await pagesLink.click();
-});
-
-When('I go back to editor pages', async function () {
-    let pagesLink1 = await this.driver.$('button.gh-back-to-editor') 
-    await pagesLink1.click();
-});
-
-
-When('I go back to list pages view', async function () {
-    let pagesLink2 = await this.driver.$('a[href="#/pages/"]')
-    await pagesLink2.click();
-});
-
-
-
-
-
-When('I go to new pages view', async function () {
-    let newPagesButton = await this.driver.$('a[href="#/editor/page/"]');
-    await newPagesButton.click();
-});
-
-When('I create new pages with title {string} and body {string}', async function (title, body) {
-    let titleInput = await this.driver.$('textarea.gh-editor-title');
-    await titleInput.setValue(title);
-    await this.driver.pause(1000);
-
-    let bodyInput = await this.driver.$('div[class="kg-prose"] > p');
-    bodyInput.click();
-
-    await this.driver.pause(1000);
-    await bodyInput.setValue(body);
-});
-
-When('I publish the pages', async function () {
-    let publishButton = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-publish-trigger"]')
-    await publishButton.click();
-    await this.driver.pause(1000);
-
-    let publishButton2 = await this.driver.$('button[data-test-button="continue"]');
-    await publishButton2.click();
-    await this.driver.pause(1000);
-
-    let publishButton3 = await this.driver.$('button[data-test-button="confirm-publish"]');
-    await publishButton3.click();
-    await this.driver.pause(1000);
-});
-
-
-Then('I should see a pages with title {string} and status {string}', async function (title, status) {
-    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
-
-    let found = false;
-    for (let titleElement of titleElements) {
-        if (await titleElement.getText() == title) {
-            found = true;
-
-            let statusElement = await titleElement.$('..').$('p:nth-child(3)');
-            statusElement = await statusElement.getText();
-            expect(statusElement).to.equal(status);
-            break;
-        }
-    }
-
-    expect(found).to.be.true;
-});
-
-Then('I validate pages with name {string}', async function (title) {
-    
-    let pagesElements = await this.driver.$$('h3.gh-content-entry-title');
-
-    let found = false;
-    for (let titlePage of pagesElements) {
-        if (await titlePage.getText() == title) {
-            found = true;
-            break;
-        }
-    }
-
-    expect(found).to.be.true;
-});
 
 When('I revoke all invitations', async function () {
     let users = await this.driver.$$('a[data-test-revoke-button]');
@@ -600,8 +519,95 @@ Then('I should see that the comments are enabled', async function () {
     let commentsCheckbox = await this.driver.$('input[data-test-checkbox="comment-notifications"]');
     expect(await commentsCheckbox.isSelected()).to.be.true;
 });
+
+/**************************************************************************************************** FIN MEMBER **/
+
+
+/**************************************************************************************************** INICIO PAGES **/
+When('I go to list pages view', async function () {
+    let pagesLink = await this.driver.$(pagesMenu.pagesLink); 
+    await pagesLink.click();
+});
+
+When('I go back to editor pages', async function () {
+    let pagesLink1 = await this.driver.$(fpages.btnEditor) 
+    await pagesLink1.click();
+});
+
+
+When('I go back to list pages view', async function () {
+    let pagesLink2 = await this.driver.$(fpages.list)
+    await pagesLink2.click();
+});
+
+
+When('I go to new pages view', async function () {
+    let newPagesButton = await this.driver.$(fpages.newButton);
+    await newPagesButton.click();
+});
+
+When('I create new pages with title {string} and body {string}', async function (title, body) {
+    let titleInput = await this.driver.$(fpages.titleInput);
+    await titleInput.setValue(title);
+    await this.driver.pause(1000);
+
+    let bodyInput = await this.driver.$(fpages.bodyInput);
+    bodyInput.click();
+
+    await this.driver.pause(1000);
+    await bodyInput.setValue(body);
+});
+
+When('I publish the pages', async function () {
+    let publishButton = await this.driver.$(fpages.publishButton)
+    await publishButton.click();
+    await this.driver.pause(1000);
+
+    let publishButton2 = await this.driver.$(fpages.continueButton);
+    await publishButton2.click();
+    await this.driver.pause(1000);
+
+    let publishButton3 = await this.driver.$(fpages.confirmButton);
+    await publishButton3.click();
+    await this.driver.pause(1000);
+});
+
+
+Then('I should see a pages with title {string} and status {string}', async function (title, status) {
+    let titleElements = await this.driver.$$(fpages.pagesElements);
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+
+            let statusElement = await titleElement.$('..').$(fpages.statusElement);
+            statusElement = await statusElement.getText();
+            expect(statusElement).to.equal(status);
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+Then('I validate pages with name {string}', async function (title) {
+    
+    let pagesElements = await this.driver.$$(fpages.pagesElements);
+
+    let found = false;
+    for (let titlePage of pagesElements) {
+        if (await titlePage.getText() == title) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
 When('I selected pages with name {string}', async function (title) {
-    let pagesElements = await this.driver.$$('h3.gh-content-entry-title');
+    let pagesElements = await this.driver.$$(fpages.pagesElements);
 
     let found = false;
     for (let titlePage of pagesElements) {
@@ -616,11 +622,11 @@ When('I selected pages with name {string}', async function (title) {
 });
 
 When('I update pages with new title {string}', async function (newTitle) {
-    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    let titleInput = await this.driver.$(fpages.titleInput);
     await titleInput.setValue(newTitle);
     await this.driver.pause(1000);
 
-    let saveButton =  await this.driver.$('button[class="gh-btn gh-btn-editor gh-editor-save-trigger green ember-view"]');
+    let saveButton =  await this.driver.$(fpages.saveButton);
     saveButton.click();
     await this.driver.pause(1000);
 
@@ -628,11 +634,11 @@ When('I update pages with new title {string}', async function (newTitle) {
 
 
 When('I unpublish the pages', async function () {
-    let publishButton = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-unpublish-trigger"]')
+    let publishButton = await this.driver.$(fpages.unpublishButton)
     await publishButton.click();
     await this.driver.pause(1000);
 
-    let publishButton2 = await this.driver.$('button[data-test-button="revert-to-draft"]');
+    let publishButton2 = await this.driver.$(fpages.draftButton);
     await publishButton2.click();
     await this.driver.pause(1000);
 
@@ -640,7 +646,7 @@ When('I unpublish the pages', async function () {
 
 
 Then('I should see a pages with title {string}', async function (title) {
-    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+    let titleElements = await this.driver.$$(fpages.pagesElements);
 
     let found = false;
     for (let titleElement of titleElements) {
@@ -657,5 +663,13 @@ Then('I should see a pages with title {string}', async function (title) {
 
     expect(found).to.be.true;
 });
+
+
+
+
+
+
+
+
 
 
