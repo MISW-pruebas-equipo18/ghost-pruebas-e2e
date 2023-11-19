@@ -1,14 +1,17 @@
 import {faker} from '@faker-js/faker';
-import { registerCommands } from '../../support/commands'
 
-registerCommands()
+import { registerCommands } from '../../support/commands'
 import tagPage from '../../pages/tagPage'
 import homePage from '../../pages/homePage'
+import pagePage from '../../pages/pagePage';
+
+registerCommands()
 
 let user = Cypress.config('user')
 let passw = Cypress.config('passw')
-let postPrefix = "add-tag"
+let postPrefix = "assign-tag"
 let tagName= ""
+let pageName= ""
 
 before(() => {
     //Login in Application
@@ -17,7 +20,7 @@ before(() => {
     cy.screenshot('Tag/'+ postPrefix +'/Login')
 });
 
-describe ('Add tag', function(){   
+describe ('Assign Tag to Page', function(){
 
     it('Create Tag', function(){
         homePage.goToTags()
@@ -28,11 +31,26 @@ describe ('Add tag', function(){
         cy.screenshot('Tag/'+ postPrefix +'/P1_CreateTag')
     });
 
-    it('Verify new Tag', function(){
+    it('Verify Tag', function(){
         tagPage.returnToTags()
         tagPage.elements.tagItem().should('contain', tagName)
         cy.screenshot('Tag/'+ postPrefix +'/P2_VerifyTag')
     });
+
+    it('Asign Tag', function(){
+        homePage.goToPages()
+        pageName= faker.lorem.word()
+        pagePage.createPage(pageName, faker.lorem.sentence())
+        cy.screenshot('Tag/'+ postPrefix +'/P3_CreatePage')
+
+        pagePage.goToPageEditor()
+        pagePage.returnToPages()
+        pagePage.addTag(tagName,pageName)
+        cy.screenshot('Tag/'+ postPrefix +'/P4_AssignTag')
+
+        pagePage.returnToPages()
+    });
+    
 });
 
 after(() => {
