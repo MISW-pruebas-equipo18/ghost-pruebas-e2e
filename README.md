@@ -13,9 +13,9 @@ Versión xx.xxx
 
 | Tecnología      | Versión       | Descripción |
 |---------------|------------------|---------------|
-| Ghost versión inicial | Ghost 5.68.0 |  |
+| Ghost versión inicial | Ghost 5.27.0 |  |
 | Ghost-cli versión inicial | Ghost-Cli 1.25.2 |  |
-| Ghost versión inicial | Ghost 5.68.0 |  |
+| Ghost versión inicial | Ghost 5.27.0 | [http://localhost:3001/ghost/#/signin](http://localhost:3001/ghost/#/signin) consultar sección Despliegue de Ghost en Docker |
 | Ghost nueva versión | Ghost 5.73.2+ | [https://grupo-miso.ghost.io/](https://grupo-miso.ghost.io/) |
 | Noje JS | v18.18.2 | nvm install 18 |
 | Noje JS | v18.18.2 | nvm install 18 |
@@ -25,11 +25,36 @@ Versión xx.xxx
 ```bash
 npm install
 ```
-
 ## Ghost URL's
 Para mayor facilidad en la ejecución de pruebas, se comparten URL's a sitios en funcionamiento con las versiones de Ghost utilizadas para la ejecución de pruebas E2E
-* Ghost 5.68.0
+* Ghost 5.27.0 consultar sección Despliegue de Ghost en Docker
 * [Ghost 5.73.2](https://grupo-miso.ghost.io/)
+
+## Despliegue de Ghost en Docker
+Para realizar la ambientación de la version Ghost 5.27 se utilizara la imagen docker del repositorio de Ghost siga los siguientes pasos y ejecute los comandos con permisos de administrador según su SO:
+
+1. Debe contar con el servicio docker instalado en su maquina, el presente paso a paso se hizo con la versión: Docker Engine - Community 24.0.7
+```bash
+sudo docker info
+```
+2. verifique las imagenes presente en docker y detenga los contenedores relacionados a imagenes Ghost en caso de tener alguna.
+listar las imagenes docker:
+```bash
+sudo docker images
+```
+listar los contenedores en ejecución:
+```bash
+sudo docker ps 
+```
+3. obtener la imagen de ghost V.5.27 en modo desarrollo:    
+
+```bash
+sudo docker run -d --name ghost_5.27 -e NODE_ENV=development -e url=http://localhost:3001 -p 3001:2368 ghost:5.27
+```
+4. Al finalizar la importación de la imagen y creación del contenedor el sitio: [http://localhost:3001/ghost/#/signin](http://localhost:3001/ghost/#/signin) estara disponible
+5. Realice la creación del usuario administrador con el correo y clave de su preferencia, recuerde que estos datos se deben configurar en los archivos de las herramientas cypress y kraken para lograr hacer la ejecución de los escenarios.
+
+Nota: Estos pasos fueron desarrollados en Ubuntu 22.04
 
 ## Run test
 ### Ejecución gráfica
