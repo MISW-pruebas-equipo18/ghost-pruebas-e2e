@@ -9,6 +9,7 @@ const { fpages } = require('./pages/page');
 
 Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password and {kraken-string} url', async function (username, password, urlLogin) {
     await this.driver.url(urlLogin);
+
     await this.driver.pause(5000);
 
     let userInput = await this.driver.$(pagesLogin.userInput);
@@ -23,6 +24,16 @@ Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} pass
     let currentTitle = await this.driver.$(pagesMenu.tituloDashboard); 
     expect(await currentTitle.getText()).to.equal('Dashboard');
 });
+
+async function closeNotification() {
+    try {
+        await this.driver.pause(500);
+        let notificationClose = await this.driver.$('button[class="gh-notification-close"]');
+        await notificationClose.click();
+    } catch (error) {
+        console.log('No notification found');
+    }
+}
 
 Then('I logout', async function () {
     let avatarButton = await this.driver.$(pagesMenu.avatarButton);
@@ -41,75 +52,90 @@ When('I go to profile view', async function () {
     await profileButton.click();
 });
 
+When('I click on change password button', async function () {
+    let changePasswordButton = await this.driver.$('//span[text()="Change password"]');
+    await changePasswordButton.click();
+
+    let oldPasswordInput = await this.driver.$('//label[text()="Old password"]')
+    oldPasswordInput.scrollIntoView();
+});
+
+When('I go back to profile', async function () {
+    let saveButton = await this.driver.$('//span[text()="Save & close"]');
+    await saveButton.click();
+});
+
+When('I go back to dashboard view', async function () {
+    let dashboardButton = await this.driver.$('button[data-testid="exit-settings"]');
+    await dashboardButton.click();
+});
+
 When('I submit the password update form', async function () {
-    let submitButton = await this.driver.$('fieldset[class="user-details-form"] > div:last-child > button');
-    await submitButton.click();
+    let changePasswordButton = await this.driver.$('button[class="cursor-pointer bg-red text-white hover:bg-red-400 inline-flex items-center justify-center whitespace-nowrap rounded text-sm transition font-bold  h-[34px] px-4 "]');
+    await changePasswordButton.click();
 });
 
 When('I update my password with empty fields', async function () {
-    let oldPasswordInput = await this.driver.$('#user-password-old');
+    let oldPasswordInput = await this.driver.$('//label[text()="Old password"]').$('..').$('input');
     await oldPasswordInput.setValue('');
 
-    let newPasswordInput = await this.driver.$('#user-password-new');
+    let newPasswordInput = await this.driver.$('//label[text()="New password"]').$('..').$('input');
     await newPasswordInput.setValue('');
 
-    let newPasswordInput2 = await this.driver.$('#user-new-password-verification');
+    let newPasswordInput2 = await this.driver.$('//label[text()="Verify password"]').$('..').$('input');
     await newPasswordInput2.setValue('');
 });
 
 Then('I should see an empty password fields error message', async function () {
-    let errorElement = await this.driver.$('p[data-test-error="user-old-pass"]');
+    let errorElement = await this.driver.$('span[class="mt-1 inline-block text-xs text-red dark:text-red-500 order-3"]');
     expect(await errorElement.getText()).to.equal('Your current password is required to set a new one');
-    
-    let errorElement2 = await this.driver.$('p[data-test-error="user-new-pass"]');
-    expect(await errorElement2.getText()).to.equal('Sorry, passwords can\'t be blank');   
 });
 
 When('I update my password with a wrong old password', async function () {
-    let oldPasswordInput = await this.driver.$('#user-password-old');
+    let oldPasswordInput = await this.driver.$('//label[text()="Old password"]').$('..').$('input');
     await oldPasswordInput.setValue('wrong');
 
-    let newPasswordInput = await this.driver.$('#user-password-new');
+    let newPasswordInput = await this.driver.$('//label[text()="New password"]').$('..').$('input');
     await newPasswordInput.setValue('2Xm51Ur{T;E2'); // 
 
-    let newPasswordInput2 = await this.driver.$('#user-new-password-verification');
+    let newPasswordInput2 = await this.driver.$('//label[text()="Verify password"]').$('..').$('input');
     await newPasswordInput2.setValue('2Xm51Ur{T;E2');
 });
 
 Then('I should see a message that the old password is wrong', async function () {
-    let errorElement = await this.driver.$('div[class="gh-alert-content"]');
+    let errorElement = await this.driver.$('div[data-testid="toast-error"] > div');
     expect(await errorElement.getText()).to.equal('Your password is incorrect.');
 });
 
 When('I update my password with a new insecure password', async function () {
-    let oldPasswordInput = await this.driver.$('#user-password-old');
+    let oldPasswordInput = await this.driver.$('//label[text()="Old password"]').$('..').$('input');
     await oldPasswordInput.setValue('mypass');
 
-    let newPasswordInput = await this.driver.$('#user-password-new');
+    let newPasswordInput = await this.driver.$('//label[text()="New password"]').$('..').$('input');
     await newPasswordInput.setValue('1234567890');
 
-    let newPasswordInput2 = await this.driver.$('#user-new-password-verification');
+    let newPasswordInput2 = await this.driver.$('//label[text()="Verify password"]').$('..').$('input');
     await newPasswordInput2.setValue('1234567890');
 });
 
 Then('I should see a password security error message', async function () {
-    let errorElement = await this.driver.$('p[data-test-error="user-new-pass"]');
+    let errorElement = await this.driver.$('span[class="mt-1 inline-block text-xs text-red dark:text-red-500 order-3"]');
     expect(await errorElement.getText()).to.equal('Sorry, you cannot use an insecure password.');
 });
 
 When('I update my password with a short new password', async function () {
-    let oldPasswordInput = await this.driver.$('#user-password-old');
+    let oldPasswordInput = await this.driver.$('//label[text()="Old password"]').$('..').$('input');
     await oldPasswordInput.setValue('mypass');
 
-    let newPasswordInput = await this.driver.$('#user-password-new');
+    let newPasswordInput = await this.driver.$('//label[text()="New password"]').$('..').$('input');
     await newPasswordInput.setValue('wrong');
 
-    let newPasswordInput2 = await this.driver.$('#user-new-password-verification');
+    let newPasswordInput2 = await this.driver.$('//label[text()="Verify password"]').$('..').$('input');
     await newPasswordInput2.setValue('wrong');
 });
 
 Then('I should see a password length error message', async function () {
-    let errorElement = await this.driver.$('p[data-test-error="user-new-pass"]');
+    let errorElement = await this.driver.$('span[class="mt-1 inline-block text-xs text-red dark:text-red-500 order-3"]');
     expect(await errorElement.getText()).to.equal('Password must be at least 10 characters long.');
 });
 
@@ -135,7 +161,7 @@ When('I write a post with title {string} and body {string}', async function (tit
     // Wait 1 second
     
     await this.driver.pause(500);
-    let bodyInput = await this.driver.$('div[class="kg-prose"] > p');
+    let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
     bodyInput.click();
 
     await this.driver.pause(500);
@@ -156,6 +182,8 @@ When('I publish the post', async function () {
 When('I update the post', async function () {
     let updatebutton = await this.driver.$('button[data-test-button="publish-save"]');
     await updatebutton.click();
+
+    closeNotification()
 });
 
 When('I go back to editor view', async function () {
@@ -228,10 +256,13 @@ When('I delete the post with title {string}', async function (title) {
         if (await titleElement.getText() == title) {
             found = true;
             let parent = await titleElement.$('../..');
-            // Right click parent
-            await parent.click({ button: 'right' });
+            await parent.click();
+            this.driver.pause(500);
 
-            let deleteButton = await this.driver.$('span[class="red"]');
+            let settings = await this.driver.$('button[title="Settings"]');
+            await settings.click();
+
+            let deleteButton = await this.driver.$('//span[text()=" Delete "]');
             await deleteButton.click();
 
             let confirmButton = await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
@@ -242,8 +273,7 @@ When('I delete the post with title {string}', async function (title) {
 
     expect(found).to.be.true;
 
-    let notificationClose = await this.driver.$('button[class="gh-notification-close"]');
-    await notificationClose.click();
+    closeNotification()
 });
 
 Then('I delete all remaining posts', async function () {
@@ -262,8 +292,7 @@ Then('I delete all remaining posts', async function () {
         
         await this.driver.pause(500);
 
-        let notificationClose = await this.driver.$('button[class="gh-notification-close"]');
-        await notificationClose.click();
+        closeNotification()
     }
 });
 
@@ -521,6 +550,133 @@ Then('I should see a new invited user with email {string}', async function (emai
 
     expect(found).to.be.true;
 });
+When('I update tag with new name {string}', async function (newName) {
+    let nameInput = await this.driver.$('#tag-name');
+    await nameInput.setValue(newName);
+    await this.driver.pause(1000);
+
+    let saveButton =  await this.driver.$('button[class="gh-btn gh-btn-primary gh-btn-icon ember-view"]');
+    saveButton.click();
+    await this.driver.pause(1000);
+
+});
+
+When('I delete tag with name {string}', async function (name) {
+    
+    let deleteButton =  await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon"]');
+    deleteButton.click();
+    await this.driver.pause(1000);
+
+    let confirmButton =  await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
+    confirmButton.click();
+    await this.driver.pause(1000);
+
+});
+
+
+Then('I validate delete tag with name {string}', async function (nameTag) {
+    
+    let tagsElements = await this.driver.$$('h3.gh-tag-list-name');
+    let found = false;
+
+    
+    for (let name of tagsElements) {
+        if (await name.getText() == nameTag) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.false;
+});
+
+/**************************************************************************************************** FIN TAGS **/
+
+/**************************************************************************************************** INICIO PAGES **/
+When('I go to list pages view', async function () {
+    let pagesLink = await this.driver.$('a[href="#/pages/"]'); 
+    await pagesLink.click();
+});
+
+When('I go back to editor pages', async function () {
+    let pagesLink1 = await this.driver.$('button.gh-back-to-editor') 
+    await pagesLink1.click();
+});
+
+
+When('I go back to list pages view', async function () {
+    let pagesLink2 = await this.driver.$('a[href="#/pages/"]')
+    await pagesLink2.click();
+});
+
+
+
+
+
+When('I go to new pages view', async function () {
+    let newPagesButton = await this.driver.$('a[href="#/editor/page/"]');
+    await newPagesButton.click();
+});
+
+When('I create new pages with title {string} and body {string}', async function (title, body) {
+    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    await titleInput.setValue(title);
+    await this.driver.pause(1000);
+
+    let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
+    bodyInput.click();
+
+    await this.driver.pause(1000);
+    await bodyInput.setValue(body);
+});
+
+When('I publish the pages', async function () {
+    let publishButton = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-publish-trigger"]')
+    await publishButton.click();
+    await this.driver.pause(1000);
+
+    let publishButton2 = await this.driver.$('button[data-test-button="continue"]');
+    await publishButton2.click();
+    await this.driver.pause(1000);
+
+    let publishButton3 = await this.driver.$('button[data-test-button="confirm-publish"]');
+    await publishButton3.click();
+    await this.driver.pause(1000);
+});
+
+
+Then('I should see a pages with title {string} and status {string}', async function (title, status) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+
+            let statusElement = await titleElement.$('..').$('p:nth-child(3)');
+            statusElement = await statusElement.getText();
+            expect(statusElement).to.equal(status);
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+Then('I validate pages with name {string}', async function (title) {
+    
+    let pagesElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titlePage of pagesElements) {
+        if (await titlePage.getText() == title) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
 
 When('I revoke all invitations', async function () {
     let users = await this.driver.$$('a[data-test-revoke-button]');
@@ -689,12 +845,10 @@ Then('I should see a pages with title {string}', async function (title) {
     expect(found).to.be.true;
 });
 
+When('I unpublish the post', async function () {
+    let unpublishButton = await this.driver.$('button[data-test-button="update-flow"]');
+    await unpublishButton.click();
 
-
-
-
-
-
-
-
-
+    let unpublishButton2 = await this.driver.$('button[class="gh-revert-to-draft');
+    await unpublishButton2.click();
+});
