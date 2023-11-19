@@ -6,6 +6,17 @@ Para mayor facilidad en la ejecución de pruebas, se comparten URL's a sitios en
 * Ghost 5.27.0 consultar sección Despliegue de Ghost en Docker
 * [Ghost 5.73.2](https://grupo-miso.ghost.io/)
 
+## Ghost Versions 
+
+| Tecnología      | Versión       | Descripción |
+|---------------|------------------|---------------|
+| Ghost versión inicial | Ghost 5.27.0 |  |
+| Ghost-cli versión inicial | Ghost-Cli 1.25.2 |  |
+| Ghost versión inicial | Ghost 5.27.0 | [http://localhost:3001/ghost/#/signin](http://localhost:3001/ghost/#/signin) consultar sección Despliegue de Ghost en Docker |
+| Ghost nueva versión | Ghost 5.73.2+ | [https://grupo-miso.ghost.io/](https://grupo-miso.ghost.io/) |
+| Noje JS | v18.18.2 | nvm install 18 |
+| npm | v9.8.1 | nvm install 18 |
+
 
 ## 1. Despliegue de Ghost en Docker
 Para realizar la ambientación de la version Ghost 5.27 se utilizara la imagen docker del repositorio de Ghost siga los siguientes pasos y ejecute los comandos con permisos de administrador según su SO:
