@@ -11,31 +11,38 @@ Versión xx.xxx
 
 ## Ghost Versions 
 
-| 1. Versión inicial | Ghost 5.68.0 |  |
-| 1.1 Ghost-Cli |  1.25.2 |  |
-| 2. Nueva versión | Ghost 5.73.2 + | https://grupo-miso.ghost.io/ | 
-| 3. Versión Node JS  | v18.18.2 | nvm install 18 | 
-| 4. Version npm | 9.8.1 | nvm install 18 | 
-| 5. Versión Faker | 9.8.1 | npm install @faker-js/faker --save-dev | 
+| Tecnología      | Versión       | Descripción |
+|---------------|------------------|---------------|
+| Ghost versión inicial | Ghost 5.68.0 |  |
+| Ghost-cli versión inicial | Ghost-Cli 1.25.2 |  |
+| Ghost versión inicial | Ghost 5.68.0 |  |
+| Ghost nueva versión | Ghost 5.73.2+ | [https://grupo-miso.ghost.io/](https://grupo-miso.ghost.io/) |
+| Noje JS | v18.18.2 | nvm install 18 |
+| Noje JS | v18.18.2 | nvm install 18 |
+| npm | v9.8.1 | nvm install 18 |
+| Faker | v9.8.1 | npm install @faker-js/faker --save-dev |
 
 ```bash
 npm install
 ```
 
-### Ghost URL's
+## Ghost URL's
 Para mayor facilidad en la ejecución de pruebas, se comparten URL's a sitios en funcionamiento con las versiones de Ghost utilizadas para la ejecución de pruebas E2E
 * Ghost 5.68.0
 * [Ghost 5.73.2](https://grupo-miso.ghost.io/)
 
-### Run test
-```bash ejecución gráfica
+## Run test
+### Ejecución gráfica
+```bash
 npm run cy:open
 npx cypress open
 ```
-```bash ejecución headless
+### Ejecución headless
+```bash
 npx cypress run --headless  
 ```
-```bash ejecución headless por funcionalidades 
+### Ejecución headless por funcionalidades 
+```bash
 npx cypress run --headless  --spec 'cypress/e2e/signin/*'
 npx cypress run --headless  --spec 'cypress/e2e/post/*'
 npx cypress run --headless  --spec 'cypress/e2e/page/*'
@@ -43,8 +50,9 @@ npx cypress run --headless  --spec 'cypress/e2e/tags/*'
 npx cypress run --headless  --spec 'cypress/e2e/staff/*'
 npx cypress run --headless  --spec 'cypress/e2e/members/*'
 ```
-Notas:
+## Configuración
 La siguiente es la configuración a tener en cuenta para el archivo cypress.config.js 
+
 ```bash
 cypress.config.js
 ```
