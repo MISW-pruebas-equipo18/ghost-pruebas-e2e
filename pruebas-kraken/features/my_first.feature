@@ -3,9 +3,8 @@ Feature: Kraken Scenarios
 @user1 @web
 Scenario: Pruebas extremo a extremo
 
-
 # Escenario 1: Publicar y editar un Post
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to posts view
   And I wait for 2 seconds
@@ -34,7 +33,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 2: Publicar, Editar y Borrar  un Post
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to posts view
   And I wait for 2 seconds
@@ -67,7 +66,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 3: Publicar, Editar y Borrar  un Post
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to posts view
   And I wait for 2 seconds
@@ -99,7 +98,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 4: Verificar el Listado de Posts Inicial
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to posts view
   And I delete all remaining posts
@@ -134,9 +133,8 @@ Scenario: Pruebas extremo a extremo
   And I logout
   And I wait for 5 seconds
 
-
   # Escenario 5: Crear un tag
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to list tags view
   And I wait for 2 seconds
@@ -152,7 +150,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 6: editar un tag
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 5 seconds
   And I go to list tags view
   And I wait for 2 seconds
@@ -166,7 +164,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 7: eliminar un tag
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 5 seconds
   And I go to list tags view
   And I wait for 2 seconds
@@ -179,8 +177,22 @@ Scenario: Pruebas extremo a extremo
   And I logout
   And I wait for 5 seconds
 
+  # Escenario 08: asignar un tag
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  And I go to list pages view
+  And I wait for 2 seconds
+  When I validate pages with name "About this site"
+  And I selected pages with name "About this site"
+  Then I assign tag with name "News"
+  And I wait for 2 seconds
+  And I go back to list pages view
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
   # Escenario 9: publicar una página
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   And I go to list pages view
   And I wait for 2 seconds
@@ -200,7 +212,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 11: editar una página
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   And I go to list pages view
   And I wait for 2 seconds
@@ -216,7 +228,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 12: des-publicar una página
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   And I go to list pages view
   And I wait for 2 seconds
@@ -231,9 +243,8 @@ Scenario: Pruebas extremo a extremo
   And I logout
   And I wait for 5 seconds
   
-
-  # Escenario 15: Cambio de contraseña, datos incorrectos
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+    # Escenario 15: Cambio de contraseña, datos incorrectos
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to profile view
   And I wait for 2 seconds
@@ -263,7 +274,7 @@ Scenario: Pruebas extremo a extremo
 
 
   # Escenario 16: Cambio de nombre o Alias del Staff
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to profile view
   And I wait for 2 seconds
@@ -276,7 +287,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 17: Agregar un nuevo miembro
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to members view
   And I wait for 2 seconds
@@ -296,7 +307,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 18: Editar un miembro, dato de correo
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to members view
   And I wait for 2 seconds
@@ -324,7 +335,7 @@ Scenario: Pruebas extremo a extremo
   And I wait for 5 seconds
 
   # Escenario 19: Staff, Invitar un miembro al staff
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to staff view
   And I wait for 2 seconds
@@ -346,7 +357,7 @@ Scenario: Pruebas extremo a extremo
 
   # Escenario 20: Staff, los comentarios deberian estar activos en la seccion de
   # notificaciones de correo del profile del owner
-  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to staff view
   And I wait for 2 seconds
