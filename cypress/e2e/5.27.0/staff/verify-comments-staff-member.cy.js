@@ -1,16 +1,16 @@
-import { registerCommands } from '../../support/commands'
-import staffPage from '../../pages/staffPage'
+import { registerCommands } from '../../../support/commands'
+import staffPage from '../../../pages/staffPage'
 
 registerCommands()
 
-let user = Cypress.env('user')
-let passw = Cypress.env('passw')
+let user = Cypress.config('uservisitor')
+let passw = Cypress.config('passwordvisitor')
 
 before(() => {
     //Login in Application
     cy.loginAdmin(user,passw)
     cy.url().should('include', '/dashboard')
-    cy.screenshot('staff/verify-comments-staff-member.cy.js/login')
+    cy.screenshot('5.27.0/staff/verify-comments-staff-member.cy.js/login')
 });
 
 describe ('P4: Verify enable comments notifications', function(){
@@ -25,7 +25,7 @@ describe ('P4: Verify enable comments notifications', function(){
         cy.wait(2000)
         // Then
         staffPage.verifyCheckedComments()
-        cy.screenshot('staff/verify-comments-staff-member.cy.js/P3-verify-enable-comments-notifications')
+        cy.screenshot('5.27.0/staff/verify-comments-staff-member.cy.js/P3-verify-enable-comments-notifications')
         staffPage.saveProfile()
         cy.contains('Done').click()
     });
@@ -34,5 +34,5 @@ describe ('P4: Verify enable comments notifications', function(){
 after(() => {
     cy.logout()
     cy.url().should('include', '/signin')
-    cy.screenshot('staff/verify-comments-staff-member.cy.js/logout')
+    cy.screenshot('5.27.0/staff/verify-comments-staff-member.cy.js/logout')
 }); 

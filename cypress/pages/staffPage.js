@@ -2,6 +2,7 @@ class staffPage{
     elements={
         btnInvite: () => cy.contains('Invite people'), 
         inputInvite: () => cy.get(".peer"), 
+        inputInviteOldVersion : () => cy.get('input[name="email"]'),
         textInvite: () => cy.contains('Send invitation now'),
         btnProfileOwner: () => cy.getByTestId('owner-user'),
         checkboxProfile: () => cy.get('input[type="checkbox"]'),
@@ -19,6 +20,10 @@ class staffPage{
 
     typeInviteMember(emailUserInvited){
         this.elements.inputInvite().type(emailUserInvited)
+    }
+
+    typeInviteMemberOldVersion(emailUserInvited){
+        this.elements.inputInviteOldVersion().type(emailUserInvited)
     }
 
     sendInvitation(){
