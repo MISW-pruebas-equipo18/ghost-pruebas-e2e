@@ -17,7 +17,14 @@ else
     exit 1
 fi
 
+index=0
+for FILE in $dir/*;
+do
+    mv "$FILE" "$dir/$index.png"
+    index=$((index+1))
+done
+
 # organize files by their modified date
-find "$dir" -type f -exec bash -c 'dir="./screenshots/"; rm -rf $dir; mkdir -p $dir; file="{}" && cp "$file" "$dir/$(date -r "$file" +"%Y-%m-%d_%H-%M-%S").png"' \;
+# find "$dir" -type f -exec bash -c 'dir="./screenshots/"; rm -rf $dir; mkdir -p $dir; file="{}" && cp "$file" "$dir/$(date -r "$file" +"%Y-%m-%d_%H-%M-%S").png"' \;
 
 echo "Organization by modified date is complete."
