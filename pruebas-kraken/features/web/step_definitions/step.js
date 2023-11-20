@@ -7,8 +7,8 @@ const { pageTags } = require('./pages/tagsPage');
 const { fpages } = require('./pages/page');
 
 
-Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password', async function (username, password) {
-    await this.driver.url(pagesLogin.urlLogin);
+Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password and {kraken-string} url', async function (username, password, urlLogin) {
+    await this.driver.url(urlLogin);
     await this.driver.pause(5000);
 
     let userInput = await this.driver.$(pagesLogin.userInput);
@@ -18,7 +18,7 @@ Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} pass
 
     let loginButton = await this.driver.$(pagesLogin.loginButton);
     await loginButton.click();
-    await this.driver.pause(3000);
+    await this.driver.pause(4000);
 
     let currentTitle = await this.driver.$(pagesMenu.tituloDashboard); 
     expect(await currentTitle.getText()).to.equal('Dashboard');
@@ -410,6 +410,31 @@ Then('I validate delete tag with name {string}', async function (nameTag) {
 
     expect(found).to.be.false;
 });
+
+Then('I assign tag with name {string}', async function (nameTag) {
+    let process = false;
+    
+    let settingButton =  await this.driver.$(fpages.pageSettings);
+    settingButton.click();
+    await this.driver.pause(1000);
+
+    let tagInput = await this.driver.$(fpages.pageTags);
+    await tagInput.setValue(nameTag)
+    await this.driver.pause(1000);
+
+    let tagOption = await this.driver.$(`//li[text()="${nameTag}"]`);
+    await this.driver.pause(1000);
+    tagOption.click();
+    await this.driver.pause(1000);
+
+    let saveButton =  await this.driver.$(fpages.saveButton);
+    saveButton.click();
+    found = true;
+    await this.driver.pause(1000);
+
+    expect(found).to.be.true;
+});
+
 
 /**************************************************************************************************** FIN TAGS **/
 
