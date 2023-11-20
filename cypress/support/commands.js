@@ -2,6 +2,10 @@ import loginPage from '../pages/loginPage'
 import homePage from '../pages/homePage'
 import postPage, { goConfirmPublish } from '../pages/postPage'
 
+const compareSnapshotCommand = require('cypress-visual-regression-resemble-js/dist/command');
+
+compareSnapshotCommand();
+
 let urlGhostAdmin = Cypress.config('baseUrl')
 export function registerCommands(){
 
