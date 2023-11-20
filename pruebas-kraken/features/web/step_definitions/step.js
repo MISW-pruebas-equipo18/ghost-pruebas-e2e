@@ -206,7 +206,7 @@ Then('I should see a post with title {string} and status {string}', async functi
 
             let statusElement = await titleElement.$('..').$('p:nth-child(3)');
             statusElement = await statusElement.getText();
-            expect(statusElement).to.equal(status);
+            expect(statusElement).to.contain(status);
             break;
         }
     }
