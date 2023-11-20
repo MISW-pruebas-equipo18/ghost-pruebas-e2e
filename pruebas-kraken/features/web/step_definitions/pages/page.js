@@ -3,7 +3,7 @@ const fpages = {
     list:'a[href="#/pages/"]',
     newButton:'a[href="#/editor/page/"]',
     titleInput:"textarea.gh-editor-title",
-    bodyInput:'div[class="kg-prose"] > p',
+    bodyInput:'p[data-koenig-dnd-droppable="true"]',
     publishButton:'button[class="gh-btn gh-btn-editor darkgrey gh-publish-trigger"]',
     continueButton:'button[data-test-button="continue"]',
     confirmButton: 'button[data-test-button="confirm-publish"]',
@@ -11,10 +11,14 @@ const fpages = {
     statusElement: "p:nth-child(3)",
     saveButton:'button[class="gh-btn gh-btn-editor gh-editor-save-trigger green ember-view"]',
     unpublishButton: 'button[class="gh-btn gh-btn-editor darkgrey gh-unpublish-trigger"]',
-    draftButton: 'button[data-test-button="revert-to-draft"]'                   
-
+    draftButton: 'button[data-test-button="revert-to-draft"]',
+    pageSettings: "button.settings-menu-toggle",
+    pageTags: "div[id=tag-input]"
+                                 
 };
 
   module.exports = {
     fpages
   };
+
+  

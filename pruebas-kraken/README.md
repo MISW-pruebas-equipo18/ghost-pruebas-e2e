@@ -57,7 +57,11 @@ cp properties.json.example properties.json
 vim properties.json # o el editor de texto de su preferencia
 ```
 
-Finalmente, cambiar el valor de las llaves `"USERNAME"` y `"PASSWORD"` por las credenciales de acceso.
+Finalmente, cambiar el valor de las llaves `"USERNAME"`, `"PASSWORD"`, `"URLLOGIN"` por las credenciales de acceso y la url relacionada en el cuadro Ghost Versions.
+
+Credenciales de acceso Ghost Versión 5.27 url: http://localhost:3001/ghost/#/signin Usuario y Clave: Creado por usted en la ambientación de la imagen docker
+
+Credenciales de acceso Ghost Versión 5.73 url: https://grupo-miso.ghost.io/ghost/#/signin Usuario: albertogalvis@protonmail.com Clave: Gu4c4m4y0.2024
 
 ## 4. Ejecutar las pruebas del proyecto
 
