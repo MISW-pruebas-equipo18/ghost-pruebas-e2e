@@ -1,37 +1,42 @@
 class staffPage{
     elements={
-        owner: () => cy.get('span.user-list-item-figure'),
-        name: () => cy.get('input.gh-input.user-name'),
-        email: () => cy.get('input[name=email]'),
-        passwordOld: () => cy.get('input[id=user-password-old]'),
-        passwordNew: () => cy.get('input[id=user-password-new]'),
-        passwordVerfication: () => cy.get('input[id=user-new-password-verification]'),
-        saveButton: () => cy.contains('Save'),
-        staff: () => cy.contains('Staff'),
-        changePasswordButton: () => cy.contains('Change Password'),
-        activeUsers: () => cy.get('section.gh-main-section.gh-active-users '),
+        btnInvite: () => cy.contains('Invite people'), 
+        inputInvite: () => cy.get(".peer"), 
+        textInvite: () => cy.contains('Send invitation now'),
+        btnProfileOwner: () => cy.getByTestId('owner-user'),
+        checkboxProfile: () => cy.get('input[type="checkbox"]'),
+        saveButton: () => cy.contains('Save & close'), 
+        
     }
 
-    goToOwner() {
-        this.elements.owner().click()
+    btnInvite(){
+        this.elements.btnInvite().click()
     }
 
-    changePass(oldPassw,newPassw){
-        this.elements.passwordOld().type(oldPassw)
-        this.elements.passwordNew().type(newPassw)
-        this.elements.passwordVerfication().type(newPassw)
-        this.elements.changePasswordButton().click()
+    includeUrl(url){
+        cy.url().should('include', url)
     }
 
-    changeFullName(fullName){
-        this.elements.name().clear()
-        this.elements.name().type(fullName)
+    typeInviteMember(emailUserInvited){
+        this.elements.inputInvite().type(emailUserInvited)
+    }
+
+    sendInvitation(){
+        this.elements.textInvite().click()
+    }
+
+    clickBtnProfile(){
+        this.elements.btnProfileOwner().click()
+    }
+
+    verifyCheckedComments(){
+        this.elements.checkboxProfile().eq(0).should('be.checked')
+    }
+
+    saveProfile() {
         this.elements.saveButton().click()
     }
-
-    goToStaff(){
-        this.elements.staff().click()
-    }   
+  
 }
 
 module.exports = new staffPage();

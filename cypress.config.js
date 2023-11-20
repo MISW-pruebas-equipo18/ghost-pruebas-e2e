@@ -25,7 +25,8 @@ module.exports = defineConfig({
       "passw":'Gu4c4m4y0.2023',
       "url_staff":'http://localhost:2368/ghost/#/settings/staff',  
       "url_members":'http://localhost:2368/ghost/#/members',
-      "url_tags":'http://localhost:2368/ghost/#/tags'
+      "url_tags":'http://localhost:2368/ghost/#/tags',
+      "url_invite":'/invite',
     }    
   },
 });

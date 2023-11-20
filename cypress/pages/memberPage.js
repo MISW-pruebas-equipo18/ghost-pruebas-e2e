@@ -4,7 +4,8 @@ class memberPage{
         usernameInput: () => cy.getByTestInput('member-name'),
         useremailInput: () => cy.getByTestInput('member-email'),
         saveButton: () => cy.contains('Save'),
-        newMember: () => cy.contains(Cypress.config('userMember'))
+        newMember: () => cy.contains(Cypress.config('userMember')),
+        getMember: () => cy.get('p.gh-members-list-email'),
         
     }
 
@@ -20,12 +21,28 @@ class memberPage{
         this.elements.useremailInput().type(userEmail)
     }
 
-    saveNewMember() {
+    typeNewUseremail(newuserEmail){
+        this.elements.useremailInput().type(newuserEmail)
+    }    
+
+    saveMember() {
         this.elements.saveButton().click()
     }
 
     visibleMember(userMember) {
         cy.contains(userMember).should('be.visible')
+    }
+
+    visibleEmailMember(newuserEmail) {
+        cy.contains(newuserEmail).should('be.visible')
+    }    
+
+    getMember(){
+        this.elements.getMember().first().click()
+    }
+
+    clearEmailMember(){
+        this.elements.useremailInput().clear()
     }
   
 }

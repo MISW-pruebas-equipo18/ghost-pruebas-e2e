@@ -13,7 +13,7 @@ before(() => {
     //Login in Application
     cy.loginAdmin(user,passw)
     cy.url().should('include', '/dashboard')
-    cy.screenshot('members/add-members/login')
+    cy.screenshot('members/add-member.cy.js/login')
 });
 
 describe ('Add members', function(){  
@@ -30,13 +30,13 @@ describe ('Add members', function(){
         
         memberPage.typeUsername(userMember)
         memberPage.typeUseremail(userEmail)
-        memberPage.saveNewMember()
+        memberPage.saveMember()
         cy.wait(1000)
         // Then
         cy.visit(Cypress.env('url_members'))
         cy.wait(1000)
         memberPage.visibleMember(userMember)
-        cy.screenshot('members/add-members.cy.js/P1_add_new_member')
+        cy.screenshot('members/add-member.cy.js/P1-add-new-member')
 
     });
 });
@@ -44,5 +44,5 @@ describe ('Add members', function(){
 after(() => {
     cy.logout()
     cy.url().should('include', '/signin')
-    cy.screenshot('members/add-members/logout')
+    cy.screenshot('members/add-member.cy.js/logout')
 }); 
