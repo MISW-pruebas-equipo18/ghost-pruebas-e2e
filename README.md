@@ -53,9 +53,9 @@ npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.73.2/**'
 ### Ejecución headless por funcionalidades 
 ```bash
 npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.27.0/signin/*'
-npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.27.0/post/*''
+npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.27.0/post/*'
 npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.73.2/signin/*'
-npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.73.2/post/*''
+npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.73.2/post/*'
 ```
 ## Configuración
 La siguiente es la configuración a tener en cuenta para el archivo cypress.config.js 
