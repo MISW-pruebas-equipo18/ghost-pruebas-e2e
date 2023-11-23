@@ -47,9 +47,10 @@ describe ('Change Full Name', function(){
 
             //**************When**************
             //Diligenciamiento de información            
-            console.log("InitName: " + InitName)
             if(InitName == "")
                 staffPage.elements.name().invoke('val').then(sometext => {InitName = sometext})
+
+            console.log("InitName: " + InitName)
 
             let name= test.fullname
             //Cambian el nombre del usuario
@@ -78,7 +79,7 @@ describe ('Change Full Name', function(){
 
             oldFullName = name != "" && name.length <=200 ? name : oldFullName
             homePage.goToSettings()
-            
+
             //Then
             })
     })
@@ -86,7 +87,7 @@ describe ('Change Full Name', function(){
     it('Reset Full Name', function(){
         //Go to reset full name
         //Accedemos al OWNER que se liste
-        homePage.goToSettings()
+        //homePage.goToSettings()
         settingsPage.goToStaff()
         staffPage.goToOwner()
         cy.wait(2000)
@@ -102,12 +103,13 @@ describe ('Change Full Name', function(){
         staffPage.goToHomePage()
         homePage.goToUserOptions()
         homePage.elements.userOptionsUser().should('contain', InitName)
-        screenShots ? cy.screenshot('SignIn/'+ postPrefix +'/P6_StaffOldUpdated2'): nullx
+        screenShots ? cy.screenshot('SignIn/'+ postPrefix +'/P6_StaffOldUpdated2'): null
     })
 });
 
-/*after(() => {
+
+after(() => {
     cy.logout()
     cy.url().should('include', '/signin')
-    screenShots ? cy.screenshot('SignIn/'+ postPrefix +'/Logout')
-  });  */
+    screenShots ? cy.screenshot('SignIn/'+ postPrefix +'/Logout') : null
+  }); 

@@ -11,7 +11,7 @@ class staffPage{
         changePasswordButton: () => cy.contains('Change password'),
         btnconfirmChangePassword: () => cy.contains('Change password'),
         activeUsers: () => cy.get('div.group.flex.gap-3.cursor-pointer'),
-        btnCloseNotification: () => cy.get('div.flex.items-start.gap-3'),
+        btnCloseNotification: () => cy.get('svg.w-3.h-3.text-white'),
         btnCancel:() => cy.contains('Cancel'),
         btnLeave:() => cy.contains('Leave'),
         returnHomePage: () => cy.contains('Done')
@@ -42,9 +42,10 @@ class staffPage{
         
         if(oldFullName != "" && oldFullName != null)
         {
-            if(fullName == "" || fullName.length >= 200 )
+            if(fullName == "" || fullName.length > 200 )
             {
-                cy.get('input[value="'+ oldFullName +'"]').clear()
+                fullName.length > 200 ? cy.get('input[value="'+ oldFullName +'"]').type(fullName) : cy.get('input[value="'+ oldFullName +'"]').clear()
+
                 this.elements.saveButton().click()
                 this.elements.btnCancel().click()
                 this.elements.btnCloseNotification().click()
