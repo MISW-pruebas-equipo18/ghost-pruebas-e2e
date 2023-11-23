@@ -16,8 +16,9 @@ module.exports = defineConfig({
     uservisitor:'dejahvuuu@gmail.com',
     passwordvisitor: 'Gu4c4m4y0.2023',
     testIsolation: false,
+    screenShots: false,
     specPattern: [
-      'cypress/e2e/Test-apriori/sigin/change-fullname-slug.cy.js'
+      'cypress\\e2e\\Test-apriori\\signin\\change-fullname-slug.cy.js'
     ],
     setupNodeEvents(on, config) {
       // implement node event listeners here
