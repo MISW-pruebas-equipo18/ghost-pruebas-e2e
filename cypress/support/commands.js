@@ -6,6 +6,10 @@ import postPagev2 from '../pages/5.73.2/postPage'
 
 let urlGhostAdmin = Cypress.config('baseUrl')
 let urlGhostAdminv2 = Cypress.config('baseUrlv2')
+const resemble = require('resemblejs');
+
+
+
 export function registerCommands(){
 
   Cypress.Commands.add('loginAdmin', (user,passw,version) =>
@@ -136,5 +140,109 @@ export function registerCommands(){
     const log = Cypress.log({ name: 'getByTestInput', message: testInput })
     const selector = `[data-test-input="${testInput}"]`
     cy.get(selector)
-  })  
+  })
+  
+  Cypress.Commands.add('taskresemble', (name, options) => {
+    if (name === 'resemble') {
+      return new Promise((resolve, reject) => {
+        const { baseline, actual, diff } = options;
+        resemble(baseline)
+          .compareTo(actual)
+          .ignoreColors()
+          .onComplete((data) => {
+            resemble.outputSettings({
+              errorColor: {
+                red: 255,
+                green: 0,
+                blue: 255,
+              },
+              errorType: 'movement',
+              transparency: 0.3,
+            });
+
+            /*
+            var diffImage;
+
+            diffImage = new Image();
+            diffImage.src = data.getImageDataUrl();
+            saveDiffImage(diffImage.src);
+
+            function saveDiffImage(src) {
+              var a = document.createElement("a");
+              a.href = src;
+              a.download = "difference_image.png";
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            }
+            */
+
+            function createDiffImage(diffCanvas) {
+              var diffImage;
+
+              diffImage = new Image();
+  
+              const diffImageDataUrl = diffImage.toDataURL('image/png');
+              return diffImageDataUrl;
+            }
+  
+            resemble(baseline)
+              .compareTo(actual)
+              .ignoreColors()
+              .onComplete((data) => {
+                const diffCanvas = data.canvas;
+                const diffImageDataUrl = createDiffImage(diffCanvas);
+                resolve(diffImageDataUrl);
+                /*
+                // Save the diff image
+                cy.writeFile(diff, data.getBuffer());
+  
+                // Resolve with the comparison result
+                resolve(data);
+                */
+              });
+          });
+      });
+    }
+  });  
 }
+
+/*
+
+var diffImage = new Image();
+        diffImage.src = data.getImageDataUrl();
+
+
+var diff = resemble(file)
+    .compareTo(file2)
+    .ignoreColors()
+    .onComplete(function (data) {
+        console.log(data);
+    });
+
+    ﻿
+
+    resemble (orgScreenshotPath) .compareTo(testScreenshotPath) .onComplete(data => {
+    console.log('compare screens', data)
+    if (data.misMatchPercentage > 0) {
+    console.log('Missmatch of ' + data.misMatchPercentage + '%')
+    // Create screenshots/diff folder only when needed
+    if (!fs.existsSync (diffFolder)) {
+    fs.mkdir(diffFolder, err => {
+    if (err) {
+    throw err
+    })
+    } })
+    // Set filename and folder for Diff fi const diffScreenshotPath =
+
+ 
+    diffFolder + filename + '. + data.m Peek Problem No quick fixes available fs.writeFile(diffScreenshot Path, data.getBuffer(), err => {
+    if (err) {
+    throw err
+    }
+  
+    https://user-images.githubusercontent.com/11851792/66821328-8c2ab580-ef42-11e9-9352-257b3bf63fa4.png
+
+*/
+
+

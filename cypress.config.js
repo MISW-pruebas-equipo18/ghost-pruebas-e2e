@@ -1,10 +1,11 @@
 const { defineConfig } = require("cypress");
+const resemble = require('resemblejs');
 
 module.exports = defineConfig({
   projectId: 'seuha9',
   chromeWebSecurity: false,
   e2e: {
-    baseUrl: 'http://localhost:3001/',
+    baseUrl: 'http://localhost:2369/',
     baseUrlv2: 'https://grupo-miso.ghost.io/',
     //specPattern: 'cypress/e2e/Ghost-5.27.0/**/*.cy.{js,jsx,ts,tsx}',
     user:'eg.romeror1@uniandes.edu.co',
@@ -17,6 +18,8 @@ module.exports = defineConfig({
     passwordvisitor: 'Gu4c4m4y0.2023',
     testIsolation: false,
     specPattern: [
+      "cypress/e2e/regresions.cy.js",
+      "cypress/e2e/imagecomparison.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/invalid-data.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/invalid-change-pass.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/change-pass.cy.js",
@@ -54,9 +57,21 @@ module.exports = defineConfig({
     ],
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      on('task', {
+        compareImages: ({ image1Path, image2Path }, options) => {
+          return new Promise((resolve, reject) => {
+            resemble(image1Path)
+              .compareTo(image2Path)
+              .onComplete(data => {
+                const diffImageDataUrl = createDiffImage(data);
+                resolve(diffImageDataUrl);
+              });
+          });
+        },
+      });
     }, 
     env: {
-      "base_url" : "http://localhost:2368/",
+      "base_url" : "http://localhost:2369/",
       "user":'dejahvuuu@gmail.com',
       "passw":'Gu4c4m4y0.2023',
       "url_staff":'http://localhost:2368/ghost/#/settings/staff',  
