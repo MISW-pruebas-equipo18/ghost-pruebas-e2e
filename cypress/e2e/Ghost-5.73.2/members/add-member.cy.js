@@ -1,42 +1,49 @@
-import { registerCommands } from '../../../support/commands'
+import { registerCommands } from '../../../support/commands' 
+import memberPage from '../../../pages/memberPage'
+import {faker} from '@faker-js/faker';
 
 registerCommands()
 
 let user = Cypress.config('userv2')
-let passw = Cypress.config('passwv2')
+let passw = Cypress.config('passv2')
+let userMember = faker.internet.displayName()
+let userEmail = faker.internet.email() 
 let version = "v2"
-describe ('Add members', function(){
+let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_members')
+before(() => {
+    //Login in Application
+    cy.loginAdmin(user,passw,version)
+    cy.url().should('include', '/dashboard')
+    cy.screenshot('5.73.2/members/add-member.cy.js/login')
+});
 
-    before(( ) => {
-        cy.loginAdmin(user,passw,version)
-        cy.url().should('include', '/dashboard')
-    })    
+describe ('Add members', function(){  
 
-    it('Add new member', function(){
-        const user = {
-            name: 'Jose Bocanegra',
-            email: 'josebocanegra@uniandes.edu.co'
-        };
-        
+    it('P1: Add new member', function(){
         cy.on('uncaught:exception', (err, runnable) => {
             return false
         })
-        cy.visit(Cypress.env('url_members'))
-        cy.contains('New member').click()
+        // Given
+        cy.visit(urlVisit)
+        // When
+        memberPage.addNewMember()
         cy.wait(1000)
-        cy.getByTestInput('member-name').type(user.name)
-        cy.getByTestInput('member-email').type(user.email)
-        cy.contains('Save').click()
-    });
+        
+        memberPage.typeUsername(userMember)
+        memberPage.typeUseremail(userEmail)
+        memberPage.saveMember()
+        cy.wait(1000)
+        // Then
+        cy.visit(urlVisit)
+        cy.wait(1000)
+        memberPage.visibleMember(userMember)
+        cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
 
-    it('Verify new member', function(){
-        cy.visit(Cypress.env('url_members'))
-        cy.contains('josebocanegra@uniandes.edu.co').should('be.visible')
     });
 });
 
 after(() => {
     cy.logout()
     cy.url().should('include', '/signin')
-    cy.screenshot('SignIn/change-fullname/Logout')
-  });  
+    cy.screenshot('5.73.2/members/add-member.cy.js/logout')
+}); 
