@@ -4,8 +4,8 @@ module.exports = defineConfig({
   projectId: 'seuha9',
   chromeWebSecurity: false,
   e2e: {
-    baseUrl: 'http://localhost:3001/',
-    baseUrlv2: 'https://grupo-miso.ghost.io/',
+    baseUrl: 'http://localhost:2368/',
+    baseUrlv2: 'http://localhost:2368/',
     //specPattern: 'cypress/e2e/Ghost-5.27.0/**/*.cy.{js,jsx,ts,tsx}',
     user:'eg.romeror1@uniandes.edu.co',
     passw:'GioR2023@@',
@@ -19,6 +19,10 @@ module.exports = defineConfig({
     screencapture: false,
     specPattern: [
       "cypress/e2e/Test-a-priori/signin/change-fullname-slug.cy.js",
+      "cypress/e2e/Ghost-5.73.2/members/add-member.cy.js",
+      "cypress/e2e/Ghost-5.73.2/members/edit-member.cy.js",
+      "cypress/e2e/Ghost-5.73.2/staff/invite-staff-member.cy.js",
+      "cypress/e2e/Ghost-5.73.2/staff/verify-comments-staff-member.cy.js",     
       /*"cypress/e2e/Ghost-5.27.0/signin/invalid-data.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/invalid-change-pass.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/change-pass.cy.js",

@@ -1,11 +1,11 @@
 import { registerCommands } from '../../../support/commands' 
-import memberPage from '../../../pages/memberPage'
+import memberPage from '../../../pages/5.73.2/memberPage'
 import {faker} from '@faker-js/faker';
 
 registerCommands()
 
-let user = Cypress.config('userv2')
-let passw = Cypress.config('passv2')
+let user = Cypress.config('uservisitor')
+let passw = Cypress.config('passwordvisitor')
 let userMember = faker.internet.displayName()
 let userEmail = faker.internet.email() 
 let version = "v2"
@@ -14,7 +14,7 @@ before(() => {
     //Login in Application
     cy.loginAdmin(user,passw,version)
     cy.url().should('include', '/dashboard')
-    cy.screenshot('5.73.2/members/add-member.cy.js/login')
+    //cy.screenshot('5.73.2/members/add-member.cy.js/login')
 });
 
 describe ('Add members', function(){  
@@ -37,7 +37,7 @@ describe ('Add members', function(){
         cy.visit(urlVisit)
         cy.wait(1000)
         memberPage.visibleMember(userMember)
-        cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
+        //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
 
     });
 });
@@ -45,5 +45,5 @@ describe ('Add members', function(){
 after(() => {
     cy.logout()
     cy.url().should('include', '/signin')
-    cy.screenshot('5.73.2/members/add-member.cy.js/logout')
+    //cy.screenshot('5.73.2/members/add-member.cy.js/logout')
 }); 

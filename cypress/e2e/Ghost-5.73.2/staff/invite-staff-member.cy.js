@@ -1,11 +1,11 @@
 import { registerCommands } from '../../../support/commands'
-import staffPage from '../../../pages/staffPage'
+import staffPage from '../../../pages/5.73.2/staffPage'
 import {faker} from '@faker-js/faker';
 
 registerCommands()
 
-let user = Cypress.config('userv2')
-let passw = Cypress.config('passwv2')
+let user = Cypress.config('uservisitor')
+let passw = Cypress.config('passwordvisitor')
 let emailUserInvited = faker.internet.email() 
 let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_staff')
 let urlVisit2 = Cypress.config('baseUrlv2') + Cypress.env('url_invite')
