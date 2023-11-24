@@ -80,7 +80,6 @@ describe ('Change Full Name', function(){
             oldFullName = name != "" && name.length <=200 ? name : oldFullName
             homePage.goToSettings()
 
-            //Then
             })
     })
 
