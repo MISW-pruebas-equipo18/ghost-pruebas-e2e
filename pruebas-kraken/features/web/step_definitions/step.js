@@ -303,10 +303,11 @@ Then('I delete all remaining posts', async function () {
 });
 
 When('I update my slug name with {string}', async function (slug) {
-    let slugInput = await this.driver.$('input[id="user-slug"]');
+    let slugInput = await this.driver.$('input[id=":rp:"]');
     await slugInput.setValue(slug);
 
-    let saveButton = await this.driver.$('button[data-test-save-button]');
+    // let saveButton = await this.driver.$('button[data-test-save-button]');
+    let saveButton = await this.driver.$('//span[text()="Save & close"]');
     await saveButton.click();
 })
 
@@ -734,3 +735,18 @@ When('I create new pages with Datapool Aleatorio limitesuperior', async function
     await this.driver.pause(1000);
 });
 
+
+
+When('I write a post with Datapol Aleatorio', async function (title, body) {
+    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    await titleInput.setValue(title);
+
+    // Wait 1 second
+    
+    await this.driver.pause(500);
+    let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
+    bodyInput.click();
+
+    await this.driver.pause(500);
+    await bodyInput.setValue(body);
+});
