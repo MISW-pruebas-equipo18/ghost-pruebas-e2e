@@ -16,13 +16,9 @@ module.exports = defineConfig({
     uservisitor:'dejahvuuu@gmail.com',
     passwordvisitor: 'Gu4c4m4y0.2023',
     testIsolation: false,
-    screencapture: false,
+    screenShots: false,
     specPattern: [
-      "cypress/e2e/Test-a-priori/signin/change-fullname-slug.cy.js",
-      "cypress/e2e/Ghost-5.73.2/members/add-member.cy.js",
-      "cypress/e2e/Ghost-5.73.2/members/edit-member.cy.js",
-      "cypress/e2e/Ghost-5.73.2/staff/invite-staff-member.cy.js",
-      "cypress/e2e/Ghost-5.73.2/staff/verify-comments-staff-member.cy.js",     
+      'cypress\\e2e\\Test-apriori\\signin\\change-fullname-slug.cy.js'
       /*"cypress/e2e/Ghost-5.27.0/signin/invalid-data.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/invalid-change-pass.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/change-pass.cy.js",

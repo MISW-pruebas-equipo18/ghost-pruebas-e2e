@@ -17,18 +17,19 @@ Scenario: Pruebas extremo a extremo
   And I go back to editor view
   And I wait for 1 seconds
   And I go back to posts view
-  Then I should see a post with title "(Untitled)" and status "Published"
   And I wait for 2 seconds
-  When I click on the post with title "(Untitled)"
+  And I should see a post with title "(Untitled)" and status "Published"
+  And I wait for 2 seconds
+  And I click on the post with title "(Untitled)"
+  And I wait for 2 seconds
   And I write a post with title "Test Post scenario 1" and body "Test Body scenario 1"
   And I wait for 2 seconds
   And I update the post
+  And I wait for 2 seconds
   And I go back to posts view
+  And I wait for 2 seconds
   Then I should see a post with title "Test Post scenario 1" and status "Published"
   And I wait for 5 seconds
-  # Tear down
-  And I delete all remaining posts
-  And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
 
@@ -46,22 +47,23 @@ Scenario: Pruebas extremo a extremo
   And I go back to editor view
   And I wait for 1 seconds
   And I go back to posts view
-  Then I should see a post with title "Test Post scenario 2" and status "Published"
   And I wait for 2 seconds
-  When I click on the post with title "Test Post scenario 2"
+  And I should see a post with title "Test Post scenario 2" and status "Published"
+  And I wait for 2 seconds
+  And I click on the post with title "Test Post scenario 2"
+  And I wait for 2 seconds
   And I write a post with title "Test Post scenario 2 EDIT" and body "Test Body scenario 2 EDIT"
   And I wait for 2 seconds
   And I update the post
+  And I wait for 2 seconds
   And I go back to posts view
-  Then I should see a post with title "Test Post scenario 2 EDIT" and status "Published"
   And I wait for 2 seconds
-  When I delete the post with title "Test Post scenario 2 EDIT"
+  And I should see a post with title "Test Post scenario 2 EDIT" and status "Published"
   And I wait for 2 seconds
+  And I delete the post with title "Test Post scenario 2 EDIT"
+  And I wait for 5 seconds
   Then I should not see a post with title "Test Post scenario 2 EDIT"
   And I wait for 5 seconds
-  # Tear down
-  And I delete all remaining posts
-  And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
 
@@ -75,9 +77,11 @@ Scenario: Pruebas extremo a extremo
   And I write a post with title "Test Post scenario 3 DRAFT" and body "Test Body scenario 3 DRAFT"
   And I wait for 2 seconds
   And I go back to posts view
-  Then I should see a post with title "Test Post scenario 3 DRAFT" and status "Draft"
   And I wait for 2 seconds
-  When I click on the post with title "Test Post scenario 3 DRAFT"
+  And I should see a post with title "Test Post scenario 3 DRAFT" and status "Draft"
+  And I wait for 2 seconds
+  And I click on the post with title "Test Post scenario 3 DRAFT"
+  And I wait for 2 seconds
   And I write a post with title "Test Post scenario 3" and body "Test Body scenario 3"
   And I wait for 2 seconds
   And I publish the post
@@ -85,15 +89,13 @@ Scenario: Pruebas extremo a extremo
   And I go back to editor view
   And I wait for 2 seconds
   And I go back to posts view
-  Then I should see a post with title "Test Post scenario 3" and status "Published"
   And I wait for 2 seconds
-  When I delete the post with title "Test Post scenario 3"
+  And I should see a post with title "Test Post scenario 3" and status "Published"
+  And I wait for 2 seconds
+  And I delete the post with title "Test Post scenario 3"
   And I wait for 2 seconds
   Then I should not see a post with title "Test Post scenario 3"
   And I wait for 5 seconds
-  # Tear down
-  And I delete all remaining posts
-  And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
 
@@ -101,34 +103,28 @@ Scenario: Pruebas extremo a extremo
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to posts view
-  And I delete all remaining posts
-  And I wait for 2 seconds
-  Then I should see 0 posts
   And I wait for 5 seconds
-  When I go to new post view
+  And I go to new post view
   And I wait for 2 seconds
-  And I write a post with title "Test Post scenario 4.1" and body "Test Body scenario 4.1"
+  And I write a post with title "Test Post scenario 4" and body "Test Body scenario 4"
   And I wait for 2 seconds
   And I publish the post
   And I wait for 2 seconds
   And I go back to editor view
-  And I wait for 1 seconds
-  And I go back to posts view
-  Then I should see 1 posts
-  And I wait for 2 seconds
-  And I go to new post view
-  And I wait for 2 seconds
-  And I write a post with title "Test Post scenario 4.2 DRAFT" and body "Test Body scenario 4.2 DRAFT"
   And I wait for 2 seconds
   And I go back to posts view
   And I wait for 2 seconds
-  Then I should see 2 posts
+  And I should see a post with title "Test Post scenario 4" and status "Published"
   And I wait for 2 seconds
-  When I delete the post with title "Test Post scenario 4.1"
+  And I click on the post with title "Test Post scenario 4"
   And I wait for 2 seconds
-  Then I should see 1 posts
-  # Tear down
-  And I delete all remaining posts
+  And I unpublish the post
+  And I wait for 2 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  Then I should see a post with title "Test Post scenario 4" and status "Draft"
+  And I wait for 2 seconds
+  And I delete the post with title "Test Post scenario 4"
   And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
@@ -248,27 +244,33 @@ Scenario: Pruebas extremo a extremo
   And I wait for 2 seconds
   When I go to profile view
   And I wait for 2 seconds
+  And I click on change password button
+  And I wait for 2 seconds
   And I update my password with empty fields
+  And I wait for 2 seconds
   And I submit the password update form
   And I wait for 2 seconds
-  Then I should see an empty password fields error message
+  And I should see an empty password fields error message
   And I wait for 2 seconds
-  When I update my password with a wrong old password
+  And I update my password with a wrong old password
   And I submit the password update form
   And I wait for 2 seconds
-  Then I should see a message that the old password is wrong
+  And I should see a message that the old password is wrong
   And I wait for 2 seconds
-  When I update my password with a new insecure password
+  And I update my password with a new insecure password
   And I submit the password update form
   And I wait for 2 seconds
-  Then I should see a password security error message
+  And I should see a password security error message
   And I wait for 2 seconds
-  When I update my password with a short new password
+  And I update my password with a short new password
   And I submit the password update form
   And I wait for 2 seconds
   Then I should see a password length error message
   And I wait for 2 seconds
-  # Tear down
+  And I go back to profile
+  And I wait for 2 seconds
+  And I go back to dashboard view
+  And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
 
