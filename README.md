@@ -13,9 +13,7 @@ Versión xx.xxx
 
 | Tecnología      | Versión       | Descripción |
 |---------------|------------------|---------------|
-| Ghost versión inicial | Ghost 5.68.0 |  |
-| Ghost-cli versión inicial | Ghost-Cli 1.25.2 |  |
-| Ghost versión inicial | Ghost 5.68.0 |  |
+| Ghost versión inicial | Ghost 5.27.0 |  |
 | Ghost nueva versión | Ghost 5.73.2+ | [https://grupo-miso.ghost.io/](https://grupo-miso.ghost.io/) |
 | Noje JS | v18.18.2 | nvm install 18 |
 | Noje JS | v18.18.2 | nvm install 18 |
@@ -25,11 +23,41 @@ Versión xx.xxx
 ```bash
 npm install
 ```
-
 ## Ghost URL's
 Para mayor facilidad en la ejecución de pruebas, se comparten URL's a sitios en funcionamiento con las versiones de Ghost utilizadas para la ejecución de pruebas E2E
-* Ghost 5.68.0
+* Ghost 5.27.0 (se debe instalar), para mayor facilidad se comparte instrucciones mediante las cuales fueron montadas en Docker
+  ```bash
+  docker run -d -e url=http://localhost:3001 -p 3001:2368 --name ghost_5.27.0 ghost:5.27.0
+  docker run -d --name some-ghost -e NODE_ENV=development -e url=http://localhost:3001 -p 3001:2368 ghost:5.27.0
+  ```
+* Ghost 5.27.0 consultar sección Despliegue de Ghost en Docker
 * [Ghost 5.73.2](https://grupo-miso.ghost.io/)
+
+## Despliegue de Ghost en Docker
+Para realizar la ambientación de la version Ghost 5.27 se utilizara la imagen docker del repositorio de Ghost siga los siguientes pasos y ejecute los comandos con permisos de administrador según su SO:
+
+1. Debe contar con el servicio docker instalado en su maquina, el presente paso a paso se hizo con la versión: Docker Engine - Community 24.0.7
+```bash
+sudo docker info
+```
+2. verifique las imagenes presente en docker y detenga los contenedores relacionados a imagenes Ghost en caso de tener alguna.
+listar las imagenes docker:
+```bash
+sudo docker images
+```
+listar los contenedores en ejecución:
+```bash
+sudo docker ps 
+```
+3. obtener la imagen de ghost V.5.27 en modo desarrollo:    
+
+```bash
+sudo docker run -d --name ghost_5.27 -e NODE_ENV=development -e url=http://localhost:3001 -p 3001:2368 ghost:5.27
+```
+4. Al finalizar la importación de la imagen y creación del contenedor el sitio: [http://localhost:3001/ghost/#/signin](http://localhost:3001/ghost/#/signin) estara disponible
+5. Realice la creación del usuario administrador con el correo y clave de su preferencia, recuerde que estos datos se deben configurar en los archivos de las herramientas cypress y kraken para lograr hacer la ejecución de los escenarios.
+
+Nota: Estos pasos fueron desarrollados en Ubuntu 22.04
 
 ## Run test
 ### Ejecución gráfica
@@ -41,14 +69,19 @@ npx cypress open
 ```bash
 npx cypress run --headless  
 ```
+
+### Ejecución headless por veriones de Ghost
+```bash
+npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.27.0/**'
+npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.73.2/**'
+```
+
 ### Ejecución headless por funcionalidades 
 ```bash
-npx cypress run --headless  --spec 'cypress/e2e/signin/*'
-npx cypress run --headless  --spec 'cypress/e2e/post/*'
-npx cypress run --headless  --spec 'cypress/e2e/page/*'
-npx cypress run --headless  --spec 'cypress/e2e/tags/*'
-npx cypress run --headless  --spec 'cypress/e2e/staff/*'
-npx cypress run --headless  --spec 'cypress/e2e/members/*'
+npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.27.0/signin/*'
+npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.27.0/post/*'
+npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.73.2/signin/*'
+npx cypress run --headless  --spec 'cypress/e2e/Ghost-5.73.2/post/*'
 ```
 ## Configuración
 La siguiente es la configuración a tener en cuenta para el archivo cypress.config.js 
@@ -68,36 +101,54 @@ La siguiente es la configuración a tener en cuenta para el archivo cypress.conf
 
 ```bash
 e2e: {
-    baseUrl: 'http://localhost:2368/',
+    baseUrl: 'http://localhost:3001/',
     baseUrlv2: 'https://grupo-miso.ghost.io/',
-    specPattern: [
-      "cypress/e2e/signin/invalid-data.cy.js",
-      "cypress/e2e/signin/invalid-change-pass.cy.js",
-      "cypress/e2e/signin/change-pass.cy.js",
-      "cypress/e2e/signin/change-fullname-slug.cy.js",
-      "cypress/e2e/post/public-edit-post.cy.js",
-      "cypress/e2e/post/public-edit-delete-post.cy.js",
-      "cypress/e2e/post/public-draft-post.cy.js",
-      "cypress/e2e/post/public-and-unpublish-post.cy.js",
-      "cypress/e2e/page/new-page.cy.js",
-      "cypress/e2e/tags/add-tag.cy.js",
-      "cypress/e2e/tags/delete-tag.cy.js",
-      "cypress/e2e/tags/assign-tag.cy.js",
-      "cypress/e2e/tags/edit-tag.cy.js",
-      "cypress/e2e/staff/invite-staff-member.cy.js",
-      "cypress/e2e/staff/verify-comments-staff-member.cy.js",
-      "cypress/e2e/members/add-member.cy.js",
-      "cypress/e2e/members/edit-member.cy.js"
-    ],
-    user:'userGhostv1',
-    passw:'passGhostv1',
-    newPassw:'newpassGhostv1',
-    userv2:'userGhostNewVersion',
-    passwv2:'passGhostNewVersion',
-    newPasswv2:'newpassGhostNewVersion',
-    uservisitor:'user',
-    passwordvisitor: 'pass',
+    //specPattern: 'cypress/e2e/Ghost-5.27.0/**/*.cy.{js,jsx,ts,tsx}',
+    user:'eg.romeror1@uniandes.edu.co',
+    passw:'GioR2023@@',
+    newPassw:'GioR2023**',
+    userv2:'albertogalvis@protonmail.com',
+    passwv2:'Gu4c4m4y0.2024',
+    newPasswv2:'Pruebas123*',
+    uservisitor:'dejahvuuu@gmail.com',
+    passwordvisitor: 'Gu4c4m4y0.2023',
     testIsolation: false,
+    specPattern: [
+      "cypress/e2e/Ghost-5.27.0/signin/invalid-data.cy.js",
+      "cypress/e2e/Ghost-5.27.0/signin/invalid-change-pass.cy.js",
+      "cypress/e2e/Ghost-5.27.0/signin/change-pass.cy.js",
+      "cypress/e2e/Ghost-5.27.0/signin/change-fullname-slug.cy.js",
+      "cypress/e2e/Ghost-5.27.0/post/public-edit-post.cy.js",
+      "cypress/e2e/Ghost-5.27.0/post/public-edit-delete-post.cy.js",
+      "cypress/e2e/Ghost-5.27.0/post/public-draft-post.cy.js",
+      "cypress/e2e/Ghost-5.27.0/post/public-and-unpublish-post.cy.js",
+      "cypress/e2e/Ghost-5.27.0/page/new-page.cy.js",
+      "cypress/e2e/Ghost-5.27.0/tags/add-tag.cy.js",
+      "cypress/e2e/Ghost-5.27.0/tags/delete-tag.cy.js",
+      "cypress/e2e/Ghost-5.27.0/tags/assign-tag.cy.js",
+      // "cypress/e2e/Ghost-5.27.0/tags/edit-tag.cy.js",
+      // "cypress/e2e/Ghost-5.27.0/staff/invite-staff-member.cy.js",
+      // "cypress/e2e/Ghost-5.27.0/staff/verify-comments-staff-member.cy.js",
+      // "cypress/e2e/Ghost-5.27.0/members/add-member.cy.js",
+      // "cypress/e2e/Ghost-5.27.0/members/edit-member.cy.js",
+      "cypress/e2e/Ghost-5.73.2/signin/invalid-data.cy.js",
+      "cypress/e2e/Ghost-5.73.2/signin/invalid-change-pass.cy.js",
+      "cypress/e2e/Ghost-5.73.2/signin/change-pass.cy.js",
+      "cypress/e2e/Ghost-5.73.2/signin/change-fullname-slug.cy.js",
+      "cypress/e2e/Ghost-5.73.2/post/public-edit-post.cy.js",
+      "cypress/e2e/Ghost-5.73.2/post/public-edit-delete-post.cy.js",
+      "cypress/e2e/Ghost-5.73.2/post/public-draft-post.cy.js",
+      "cypress/e2e/Ghost-5.73.2/post/public-and-unpublish-post.cy.js",
+      "cypress/e2e/Ghost-5.73.2/page/new-page.cy.js",
+      "cypress/e2e/Ghost-5.73.2/tags/add-tag.cy.js",
+      "cypress/e2e/Ghost-5.73.2/tags/delete-tag.cy.js",
+      "cypress/e2e/Ghost-5.73.2/tags/assign-tag.cy.js"//,
+      // "cypress/e2e/Ghost-5.73.2/tags/edit-tag.cy.js",
+      // "cypress/e2e/Ghost-5.73.2/staff/invite-staff-member.cy.js",
+      // "cypress/e2e/Ghost-5.73.2/staff/verify-comments-staff-member.cy.js",
+      // "cypress/e2e/Ghost-5.73.2/members/add-member.cy.js",
+      // "cypress/e2e/Ghost-5.73.2/members/edit-member.cy.js"
+    ],
     setupNodeEvents(on, config) {
       // implement node event listeners here
     }
@@ -110,3 +161,7 @@ Funcionalidades probadas
 
 * Escenarios de prueba Kraken: [pruebas-kraken](./pruebas-kraken)
 * Escenarios de prueba Cypress: [pruebas-cypress](./cypress)
+
+### Aspectos a tener en cuenta
+* Tener la fecha y hora sincronizada con internet para evitar errores de actualización en Ghost 5.73.2
+* La contraseña a configurar para las pruebas debe tener minimo una lontigud de 10 caracteres, se recomienda que tenga letras, numeros y caracteres especiales, esto para evitar error por validación de caracteristicas de la contraseña y las demás pruebas dejen de funcionar debido a bloqueo del usuario
