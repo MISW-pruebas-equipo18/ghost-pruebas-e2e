@@ -38,23 +38,24 @@ class staffPage{
     }
 
     changeFullName(fullName,oldFullName){
+        console.log("oldFullName: " + oldFullName)
         
         if(oldFullName != "" && oldFullName != null)
         {
-            if(fullName == "" || fullName == null)
+            if(fullName == "" || fullName.length > 200 )
             {
-                cy.get('input[value="'+ oldFullName +'"]').clear()
+                fullName.length > 200 ? cy.get('input[value="'+ oldFullName +'"]').type(fullName) : cy.get('input[value="'+ oldFullName +'"]').clear()
+
+                this.elements.saveButton().click()
+                this.elements.btnCancel().click()
+                this.elements.btnCloseNotification().click()
+                this.elements.btnLeave().click()
             }
             else
             {
                 cy.get('input[value="'+ oldFullName +'"]').clear().type(fullName)
+                this.elements.saveButton().click()
             }
-            
-            this.elements.saveButton().click()
-            // cy.get('input[value="'+ oldFullName +'"]').invoke('data', 'id')
-            // .then(dataId => {
-            //     cy.get('input[id="'+ dataId +'"]').clear()
-            //     cy.get('input[id="'+ dataId +'"]').type(fullName)});
         }
         else
         {
