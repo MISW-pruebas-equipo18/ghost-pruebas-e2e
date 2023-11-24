@@ -1,10 +1,16 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { assert, expect } = require('chai');
+const { faker } = require("@faker-js/faker");
 
 const { pagesLogin } = require('./pages/loginPage');
 const { pagesMenu } = require('./pages/menuPage');
 const { pageTags } = require('./pages/tagsPage');
 const { fpages } = require('./pages/page');
+
+const { PagesAleatorio } = require('./Datapool/aleatorio');
+const { PagesApriori } = require('./Datapool/apriori');
+
+
 
 
 Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password and {kraken-string} url', async function (username, password, urlLogin) {
@@ -297,10 +303,11 @@ Then('I delete all remaining posts', async function () {
 });
 
 When('I update my slug name with {string}', async function (slug) {
-    let slugInput = await this.driver.$('input[id="user-slug"]');
+    let slugInput = await this.driver.$('input[id=":rp:"]');
     await slugInput.setValue(slug);
 
-    let saveButton = await this.driver.$('button[data-test-save-button]');
+    // let saveButton = await this.driver.$('button[data-test-save-button]');
+    let saveButton = await this.driver.$('//span[text()="Save & close"]');
     await saveButton.click();
 })
 
@@ -550,133 +557,7 @@ Then('I should see a new invited user with email {string}', async function (emai
 
     expect(found).to.be.true;
 });
-When('I update tag with new name {string}', async function (newName) {
-    let nameInput = await this.driver.$('#tag-name');
-    await nameInput.setValue(newName);
-    await this.driver.pause(1000);
 
-    let saveButton =  await this.driver.$('button[class="gh-btn gh-btn-primary gh-btn-icon ember-view"]');
-    saveButton.click();
-    await this.driver.pause(1000);
-
-});
-
-When('I delete tag with name {string}', async function (name) {
-    
-    let deleteButton =  await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon"]');
-    deleteButton.click();
-    await this.driver.pause(1000);
-
-    let confirmButton =  await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
-    confirmButton.click();
-    await this.driver.pause(1000);
-
-});
-
-
-Then('I validate delete tag with name {string}', async function (nameTag) {
-    
-    let tagsElements = await this.driver.$$('h3.gh-tag-list-name');
-    let found = false;
-
-    
-    for (let name of tagsElements) {
-        if (await name.getText() == nameTag) {
-            found = true;
-            break;
-        }
-    }
-
-    expect(found).to.be.false;
-});
-
-/**************************************************************************************************** FIN TAGS **/
-
-/**************************************************************************************************** INICIO PAGES **/
-When('I go to list pages view', async function () {
-    let pagesLink = await this.driver.$('a[href="#/pages/"]'); 
-    await pagesLink.click();
-});
-
-When('I go back to editor pages', async function () {
-    let pagesLink1 = await this.driver.$('button.gh-back-to-editor') 
-    await pagesLink1.click();
-});
-
-
-When('I go back to list pages view', async function () {
-    let pagesLink2 = await this.driver.$('a[href="#/pages/"]')
-    await pagesLink2.click();
-});
-
-
-
-
-
-When('I go to new pages view', async function () {
-    let newPagesButton = await this.driver.$('a[href="#/editor/page/"]');
-    await newPagesButton.click();
-});
-
-When('I create new pages with title {string} and body {string}', async function (title, body) {
-    let titleInput = await this.driver.$('textarea.gh-editor-title');
-    await titleInput.setValue(title);
-    await this.driver.pause(1000);
-
-    let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
-    bodyInput.click();
-
-    await this.driver.pause(1000);
-    await bodyInput.setValue(body);
-});
-
-When('I publish the pages', async function () {
-    let publishButton = await this.driver.$('button[class="gh-btn gh-btn-editor darkgrey gh-publish-trigger"]')
-    await publishButton.click();
-    await this.driver.pause(1000);
-
-    let publishButton2 = await this.driver.$('button[data-test-button="continue"]');
-    await publishButton2.click();
-    await this.driver.pause(1000);
-
-    let publishButton3 = await this.driver.$('button[data-test-button="confirm-publish"]');
-    await publishButton3.click();
-    await this.driver.pause(1000);
-});
-
-
-Then('I should see a pages with title {string} and status {string}', async function (title, status) {
-    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
-
-    let found = false;
-    for (let titleElement of titleElements) {
-        if (await titleElement.getText() == title) {
-            found = true;
-
-            let statusElement = await titleElement.$('..').$('p:nth-child(3)');
-            statusElement = await statusElement.getText();
-            expect(statusElement).to.equal(status);
-            break;
-        }
-    }
-
-    expect(found).to.be.true;
-});
-
-Then('I validate pages with name {string}', async function (title) {
-    
-    let pagesElements = await this.driver.$$('h3.gh-content-entry-title');
-
-    let found = false;
-    for (let titlePage of pagesElements) {
-        if (await titlePage.getText() == title) {
-            found = true;
-            break;
-        }
-    }
-
-    expect(found).to.be.true;
-});
 
 When('I revoke all invitations', async function () {
     let users = await this.driver.$$('a[data-test-revoke-button]');
@@ -753,24 +634,6 @@ When('I publish the pages', async function () {
     await this.driver.pause(1000);
 });
 
-
-Then('I should see a pages with title {string} and status {string}', async function (title, status) {
-    let titleElements = await this.driver.$$(fpages.pagesElements);
-
-    let found = false;
-    for (let titleElement of titleElements) {
-        if (await titleElement.getText() == title) {
-            found = true;
-
-            let statusElement = await titleElement.$('..').$(fpages.statusElement);
-            statusElement = await statusElement.getText();
-            expect(statusElement).to.equal(status);
-            break;
-        }
-    }
-
-    expect(found).to.be.true;
-});
 
 Then('I validate pages with name {string}', async function (title) {
     
@@ -851,4 +714,39 @@ When('I unpublish the post', async function () {
 
     let unpublishButton2 = await this.driver.$('button[class="gh-revert-to-draft');
     await unpublishButton2.click();
+});
+
+/**************************************************************************************************** escenarios ALEATORIOS **/
+
+When('I create new pages with Datapool Aleatorio limitesuperior', async function () {
+    /*const Titulo_LimiteSuperior = faker.lorem.word(PagesAleatorio.Titulo_LimiteSuperior);*/
+    await this.driver.pause(5000);
+    const Descrip_LimiteSuperior = faker.lorem.word(PagesAleatorio.Descrip_LimiteSuperior);
+    await this.driver.pause(5000);
+    
+    let titleInput = await this.driver.$(fpages.titleInput);
+    await titleInput.setValue(PagesApriori.Titulo_255);
+    await this.driver.pause(1000);
+
+    let bodyInput = await this.driver.$(fpages.bodyInput);
+    bodyInput.click();
+    await this.driver.pause(1000);
+    await bodyInput.setValue(Descrip_LimiteSuperior);
+    await this.driver.pause(1000);
+});
+
+
+
+When('I write a post with Datapol Aleatorio', async function (title, body) {
+    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    await titleInput.setValue(title);
+
+    // Wait 1 second
+    
+    await this.driver.pause(500);
+    let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
+    bodyInput.click();
+
+    await this.driver.pause(500);
+    await bodyInput.setValue(body);
 });

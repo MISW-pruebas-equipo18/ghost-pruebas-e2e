@@ -1,6 +1,6 @@
-import loginPage from '../pages/5.27.0/loginPage'
-import homePage from '../pages/5.27.0/homePage'
-import postPage from '../pages/5.27.0/postPage'
+import loginPage from '../pages/5.73.2/loginPage'
+import homePage from '../pages/5.73.2/homePage'
+import postPage from '../pages/5.73.2/postPage'
 import homePagev2 from '../pages/5.73.2/homePage'
 import postPagev2 from '../pages/5.73.2/postPage'
 
