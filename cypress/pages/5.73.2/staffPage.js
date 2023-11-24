@@ -32,8 +32,17 @@ class staffPage{
     changePass(oldPassw,newPassw){
         this.elements.changePasswordButton().click()
         this.elements.passwordOld().type(oldPassw)
-        this.elements.passwordNew().type(newPassw)
-        this.elements.passwordVerfication().type(newPassw)
+        if(newPassw != "" && newPassw != null)
+        {
+            this.elements.passwordNew().type(newPassw)
+            this.elements.passwordVerfication().type(newPassw)
+        }
+        else
+        {
+            this.elements.passwordNew().clear()
+            this.elements.passwordVerfication().clear()
+        }
+
         this.elements.btnconfirmChangePassword().click()
     }
 

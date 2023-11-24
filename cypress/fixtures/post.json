@@ -1,0 +1,25 @@
+{
+    "publicPost": 
+    [
+        {
+            "id": "Escenario exitoso",
+            "title": "Post 1",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl aliquet nu"
+        },
+        {
+            "id": "Titulo vacio",
+            "title": "",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl aliquet nu"
+        },
+        {
+            "id": "contenido vacio",
+            "title": "Post 3",
+            "content": ""
+        },
+        {
+            "id": "post vacio",
+            "title": "",
+            "content": ""
+        }
+    ]
+}
