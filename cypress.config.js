@@ -4,8 +4,8 @@ module.exports = defineConfig({
   projectId: 'seuha9',
   chromeWebSecurity: false,
   e2e: {
-    baseUrl: 'http://localhost:2368/',
-    baseUrlv2: 'http://localhost:2368/',
+    baseUrl: 'http://localhost:3001/',
+    baseUrlv2: 'http://localhost:3002/',
     //specPattern: 'cypress/e2e/Ghost-5.27.0/**/*.cy.{js,jsx,ts,tsx}',
     user:'eg.romeror1@uniandes.edu.co',
     passw:'GioR2023@@',
@@ -18,7 +18,8 @@ module.exports = defineConfig({
     testIsolation: false,
     screenShots: false,
     specPattern: [
-      'cypress\\e2e\\Test-apriori\\signin\\change-fullname-slug.cy.js'
+      'cypress\\e2e\\Test-apriori\\signin\\change-fullname-slug.cy.js',
+      'cypress\\e2e\\Test-apriori\\signin\\change-pass.cy.js'
       /*"cypress/e2e/Ghost-5.27.0/signin/invalid-data.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/invalid-change-pass.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/change-pass.cy.js",

@@ -9,5 +9,16 @@
     {
         "fullname":"abcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñoabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñoabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmn"
     }
+    ],
+    "invalidPassword":[
+    {
+        "password":"12345"
+    },
+    {
+        "password":"GioR2023**"
+    },
+    {
+        "password":"GioR2023**"
+    }
     ]
 }
