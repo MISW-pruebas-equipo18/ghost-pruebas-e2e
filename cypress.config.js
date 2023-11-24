@@ -16,8 +16,10 @@ module.exports = defineConfig({
     uservisitor:'dejahvuuu@gmail.com',
     passwordvisitor: 'Gu4c4m4y0.2023',
     testIsolation: false,
+    screenShots: false,
     specPattern: [
-      "cypress/e2e/Ghost-5.27.0/signin/invalid-data.cy.js",
+      'cypress\\e2e\\Test-apriori\\signin\\change-fullname-slug.cy.js'
+      /*"cypress/e2e/Ghost-5.27.0/signin/invalid-data.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/invalid-change-pass.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/change-pass.cy.js",
       "cypress/e2e/Ghost-5.27.0/signin/change-fullname-slug.cy.js",
@@ -30,10 +32,10 @@ module.exports = defineConfig({
       "cypress/e2e/Ghost-5.27.0/tags/delete-tag.cy.js",
       "cypress/e2e/Ghost-5.27.0/tags/assign-tag.cy.js",
       // "cypress/e2e/Ghost-5.27.0/tags/edit-tag.cy.js",
-      // "cypress/e2e/Ghost-5.27.0/staff/invite-staff-member.cy.js",
-      // "cypress/e2e/Ghost-5.27.0/staff/verify-comments-staff-member.cy.js",
-      // "cypress/e2e/Ghost-5.27.0/members/add-member.cy.js",
-      // "cypress/e2e/Ghost-5.27.0/members/edit-member.cy.js",
+      "cypress/e2e/Ghost-5.27.0/staff/invite-staff-member.cy.js",
+      "cypress/e2e/Ghost-5.27.0/staff/verify-comments-staff-member.cy.js",
+      "cypress/e2e/Ghost-5.27.0/members/add-member.cy.js",
+      "cypress/e2e/Ghost-5.27.0/members/edit-member.cy.js",
       "cypress/e2e/Ghost-5.73.2/signin/invalid-data.cy.js",
       "cypress/e2e/Ghost-5.73.2/signin/invalid-change-pass.cy.js",
       "cypress/e2e/Ghost-5.73.2/signin/change-pass.cy.js",
@@ -45,12 +47,12 @@ module.exports = defineConfig({
       "cypress/e2e/Ghost-5.73.2/page/new-page.cy.js",
       "cypress/e2e/Ghost-5.73.2/tags/add-tag.cy.js",
       "cypress/e2e/Ghost-5.73.2/tags/delete-tag.cy.js",
-      "cypress/e2e/Ghost-5.73.2/tags/assign-tag.cy.js"//,
+      "cypress/e2e/Ghost-5.73.2/tags/assign-tag.cy.js",
       // "cypress/e2e/Ghost-5.73.2/tags/edit-tag.cy.js",
       // "cypress/e2e/Ghost-5.73.2/staff/invite-staff-member.cy.js",
       // "cypress/e2e/Ghost-5.73.2/staff/verify-comments-staff-member.cy.js",
-      // "cypress/e2e/Ghost-5.73.2/members/add-member.cy.js",
-      // "cypress/e2e/Ghost-5.73.2/members/edit-member.cy.js"
+      "cypress/e2e/Ghost-5.73.2/members/add-member.cy.js",
+      "cypress/e2e/Ghost-5.73.2/members/edit-member.cy.js"*/
     ],
     setupNodeEvents(on, config) {
       // implement node event listeners here
@@ -59,9 +61,10 @@ module.exports = defineConfig({
       "base_url" : "http://localhost:2368/",
       "user":'dejahvuuu@gmail.com',
       "passw":'Gu4c4m4y0.2023',
-      "url_staff":'http://localhost:2368/ghost/#/settings/staff',  
-      "url_members":'http://localhost:2368/ghost/#/members',
-      "url_tags":'http://localhost:2368/ghost/#/tags'
+      "url_staff":'ghost/#/settings/staff',  
+      "url_members":'ghost/#/members',
+      "url_tags":'ghost/#/tags',
+      "url_invite":'/invite',
     }    
   },
 });
