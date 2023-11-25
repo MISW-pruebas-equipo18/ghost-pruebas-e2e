@@ -103,6 +103,7 @@ Scenario: Pruebas extremo a extremo con datos pseudoaletorios con mockaroo
   And I logout
   And I wait for 5 seconds  
 
+
 # Escenario 50: Crear tag con valores de frontera
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
@@ -116,6 +117,7 @@ Scenario: Pruebas extremo a extremo con datos pseudoaletorios con mockaroo
   And I go to list tags view
   And I wait for 5 seconds
   And I logout
+  And I wait for 5 seconds
 
 # Escenario 51: Crear tag con nombre de 190 caracteres
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
@@ -129,5 +131,21 @@ Scenario: Pruebas extremo a extremo con datos pseudoaletorios con mockaroo
   Then I create tag valid
   And I go to list tags view
   And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+# Escenario 52: Crear tag con nombre de 192 caracteres
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create new tag with Datapool pseudoAleatorio limitesuperior
+  And I wait for 2 seconds
+  Then I publish tag error
+  And I wait for 2 seconds
+  And I cancel tag
+  And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
