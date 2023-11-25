@@ -29,6 +29,7 @@ module.exports = defineConfig({
       'cypress/e2e/Test-apriori/members/add/campos-vacios.cy.js',
       'cypress/e2e/Test-apriori/members/edit/flujo-normal.cy.js',
       'cypress/e2e/Test-apriori/members/edit/edit-name.cy.js',
+      'cypress/e2e/Test-apriori/members/edit/edit-email.cy.js',
       'cypress/e2e/Test-apriori/staff/invite/campo-vacio.cy.js',
       'cypress/e2e/Test-aleatorio/members/add/flujo-normal.cy.js',
       'cypress/e2e/Test-aleatorio/members/edit/flujo-normal.cy.js',
