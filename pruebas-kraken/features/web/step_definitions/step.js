@@ -1,7 +1,9 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { assert, expect } = require('chai');
 const { faker } = require("@faker-js/faker");
+const axios = require("axios");
 
+const data = [];
 const { pagesLogin } = require('./pages/loginPage');
 const { pagesMenu } = require('./pages/menuPage');
 const { pageTags } = require('./pages/tagsPage');
@@ -9,8 +11,6 @@ const { fpages } = require('./pages/page');
 
 const { PagesAleatorio } = require('./Datapool/aleatorio');
 const { PagesApriori } = require('./Datapool/apriori');
-
-
 
 
 Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password and {kraken-string} url', async function (username, password, urlLogin) {
@@ -715,22 +715,66 @@ When('I unpublish the post', async function () {
     await unpublishButton2.click();
 });
 
-/**************************************************************************************************** escenarios ALEATORIOS **/
+/**************************************************************************************************** escenarios PSEUDOALEATORIOS **/
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
 
 When('I create new pages with Datapool Aleatorio limitesuperior', async function () {
-    /*const Titulo_LimiteSuperior = faker.lorem.word(PagesAleatorio.Titulo_LimiteSuperior);*/
-    await this.driver.pause(5000);
-    const Descrip_LimiteSuperior = faker.lorem.word(PagesAleatorio.Descrip_LimiteSuperior);
-    await this.driver.pause(5000);
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let Titulo_LimiteSuperior = datapoolMockaroo[indice].tituloLimiteSuperiorMasUno;
+    let descripcion = faker.random.alpha(25); 
     
     let titleInput = await this.driver.$(fpages.titleInput);
-    await titleInput.setValue(PagesApriori.Titulo_255);
+    await titleInput.setValue(Titulo_LimiteSuperior);
     await this.driver.pause(1000);
 
     let bodyInput = await this.driver.$(fpages.bodyInput);
     bodyInput.click();
     await this.driver.pause(1000);
-    await bodyInput.setValue(Descrip_LimiteSuperior);
+    await bodyInput.setValue(descripcion);
     await this.driver.pause(1000);
+});
+
+Then('I publish the pages error', async function () {
+    let haveError = false;
+    let publishButton = await this.driver.$$(fpages.publishButton);
+    
+    if (publishButton > 0){
+        await publishButton.click();
+        await this.driver.pause(1000);
+        
+        let alerta = await this.driver.$(fpages.MsjError)
+        
+        if (await alerta.getText().contain("Title cannot be longer than 255 characters") ) {
+            haveError = true;
+        }
+    
+    }
+    else
+    {
+        haveError = true;
+
+    }
+        
+    expect(haveError).to.be.true
+    
+});
+
+
+When('I cancel pages', async function () {
+    let pagesLink2 = await this.driver.$(fpages.list)
+    await pagesLink2.click();
+    await this.driver.pause(1000);
+    let leavePage = await this.driver.$(fpages.leaveButton)
+    await leavePage.click();
+    
 });
 
