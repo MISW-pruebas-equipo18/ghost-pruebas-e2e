@@ -3,7 +3,6 @@ const { assert, expect } = require('chai');
 const { faker } = require("@faker-js/faker");
 const axios = require("axios");
 
-const data = [];
 const { pagesLogin } = require('./pages/loginPage');
 const { pagesMenu } = require('./pages/menuPage');
 const { pageTags } = require('./pages/tagsPage');
@@ -864,8 +863,48 @@ When('I create new pages with Datapool pseudoAleatorio valido', async function (
     await this.driver.pause(1000);
 });
 
-Then("I click firts pages", async function () {
+When("I click firts pages", async function () {
     let element = await this.driver.$(fpages.firstPages);
     return await element.click();
   });
+
+Then('I update the pages error', async function () {
+    let haveError = false;
+    
+    let saveButton =  await this.driver.$(fpages.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+
+    let alerta = await this.driver.$('div.gh-alert-content');
+        
+    if (await alerta.getText() == "Update failed: Title cannot be longer than 255 characters."){
+        haveError = true;
+    }
+
+    expect(haveError).to.be.true
+    
+});
+
+
+
+Then('I publish update pages valid', async function (){
+    let processComplete = false;
+    
+    try {
+        let saveButton =  await this.driver.$(fpages.saveButton);
+        saveButton.click();
+        await this.driver.pause(1000);
+        processComplete = true;
+    } catch (error) {
+        processComplete = false;
+    }
+    
+    expect(processComplete).to.be.true; 
+
+});
+
+  
+
+
+
 
