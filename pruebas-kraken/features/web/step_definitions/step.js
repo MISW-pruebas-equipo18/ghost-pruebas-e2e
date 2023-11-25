@@ -8,10 +8,6 @@ const { pagesMenu } = require('./pages/menuPage');
 const { pageTags } = require('./pages/tagsPage');
 const { fpages } = require('./pages/page');
 
-const { PagesAleatorio } = require('./Datapool/aleatorio');
-const { PagesApriori } = require('./Datapool/apriori');
-
-
 Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password and {kraken-string} url', async function (username, password, urlLogin) {
     await this.driver.url(urlLogin);
 
@@ -837,7 +833,7 @@ Then('I publish the pages valid', async function () {
         processComplete = false;
     }
     
-    expect(haveError).to.be.true; 
+    expect(processComplete).to.be.true; 
    
 });
 
@@ -885,8 +881,6 @@ Then('I update the pages error', async function () {
     
 });
 
-
-
 Then('I publish update pages valid', async function (){
     let processComplete = false;
     
@@ -902,6 +896,47 @@ Then('I publish update pages valid', async function (){
     expect(processComplete).to.be.true; 
 
 });
+
+When('I create new tag with Datapool pseudoAleatorio valido', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = datapoolMockaroo[indice].tagValido;
+    let descripcion = faker.random.alpha(25); 
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+Then('I create tag valid', async function () {
+    let processComplete = false;
+    
+    try {
+        let saveButton =  await this.driver.$(pageTags.saveButton);
+        saveButton.click();
+        await this.driver.pause(1000);
+    
+        processComplete = true;
+    } catch (error) {
+        processComplete = false;
+    }
+    
+    expect(processComplete).to.be.true; 
+   
+});
+
+
 
   
 
