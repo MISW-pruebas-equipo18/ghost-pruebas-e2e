@@ -34,13 +34,17 @@ class memberPage{
         cy.contains(userMember).should('be.visible')
     }
 
-    notSaveMember(userMember) {
+    notSaveMember() {
         this.elements.textNotSaveMember()
     }
 
     visibleEmailMember(newuserEmail) {
         cy.contains(newuserEmail).should('be.visible')
-    }    
+    }
+    
+    visibleNameMember(newuserName) {
+        cy.contains(newuserName).should('be.visible')
+    } 
 
     getMember(){
         this.elements.getMember().first().click()
@@ -48,6 +52,10 @@ class memberPage{
 
     clearEmailMember(){
         this.elements.useremailInput().clear()
+    }
+
+    clearNameMember(){
+        this.elements.usernameInput().clear()
     }
   
 }

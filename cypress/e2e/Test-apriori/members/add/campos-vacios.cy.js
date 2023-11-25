@@ -17,14 +17,14 @@ before(function() {
 })
 
 beforeEach(function() {
-    cy.fixture('members/add/correosinformato').then((addMemberErrorEmail) => {
-        this.addMemberErrorEmail = addMemberErrorEmail
+    cy.fixture('members/add/camposvacios').then((addMemberEmptyInput) => {
+        this.addMemberEmptyInput = addMemberEmptyInput
     })
 })
 
-describe ('Add members - error email format', function(){ 
+describe ('Add members - empty inputs', function(){ 
 
-    it('Add new member - error email format', function(){
+    it('Add new member - empty inputs', function(){
     
         cy.on('uncaught:exception', (err, runnable) => {
             return false
@@ -41,8 +41,8 @@ describe ('Add members - error email format', function(){
         
         // When flujo normal
         key = getRandom(1, 9);
-        let userMember2 = this.addMemberErrorEmail[key].name
-        let userEmail2 = this.addMemberErrorEmail[key].email
+        let userMember2 = this.addMemberEmptyInput[key].name
+        let userEmail2 = this.addMemberEmptyInput[key].email
 
         memberPage.typeUsername(userMember2)
         memberPage.typeUseremail(userEmail2)

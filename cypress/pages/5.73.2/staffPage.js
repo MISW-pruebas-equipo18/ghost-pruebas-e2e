@@ -1,5 +1,6 @@
 class staffPage{
     elements={
+        textNotSave: () => cy.contains('Retry'),
         btnInvite: () => cy.contains('Invite people'), 
         inputInvite: () => cy.get(".peer"), 
         textInvite: () => cy.contains('Send invitation now'),
@@ -107,6 +108,10 @@ class staffPage{
 
     saveProfile() {
         this.elements.saveButton().click()
+    }
+
+    notSave() {
+        this.elements.textNotSave()
     }
   
 }
