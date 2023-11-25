@@ -1,0 +1,53 @@
+{
+    "createTasg":
+    [
+        {
+            "id": "Registro exitoso",
+            "name": "Prueba",
+            "slug": "prueba",
+            "description": "Tag de prueba exitosa generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Tag nombre vacío",
+            "name": "",
+            "slug": "vacio",
+            "description": "Tag de prueba nombre de tag vacio generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Tag alias vacío",
+            "name": "alias-vacio",
+            "slug": "",
+            "description": "Tag de prueba alias de tag vacio generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Tag descripción vacía",
+            "name": "descripcion-vacia",
+            "slug": "descripcion-vacia",
+            "description": "Tag de prueba descripción de tag vacia generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Tag nombre y alias vacios",
+            "name": "",
+            "slug": "",
+            "description": "Tag de prueba nombre y alias de tag vacios generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Tag nombre y descripción vacios",
+            "name": "",
+            "slug": "nombre-descripcion-vacios",
+            "description": ""
+        },
+        {
+            "id": "Tag vacío",
+            "name": "",
+            "slug": "",
+            "description": ""
+        },
+        {
+            "id": "Tag alias y descripción vacios",
+            "name": "tag-alias-descripcion-vacios",
+            "slug": "",
+            "description": ""
+        }
+    ]
+}

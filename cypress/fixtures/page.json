@@ -1,0 +1,25 @@
+{
+    "publicPage": 
+    [
+        {
+            "id": "Escenario exitoso",
+            "title": "Page 1",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl aliquet nu"
+        },
+        {
+            "id": "Titulo vacio",
+            "title": "",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl aliquet nu"
+        },
+        {
+            "id": "contenido vacio",
+            "title": "Page 3",
+            "content": ""
+        },
+        {
+            "id": "pagina vacia",
+            "title": "",
+            "content": ""
+        }
+    ]
+}
