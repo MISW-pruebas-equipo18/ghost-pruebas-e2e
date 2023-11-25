@@ -6,7 +6,7 @@ const pageTags = {
     tagsElements: "h3.gh-tag-list-name",
     select:"h3.gh-tag-list-name",
     deleteButton:'button[class="gh-btn gh-btn-red gh-btn-icon"]',
-    confirmButton:'button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]'
+    confirmButton:'button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]',
 
 };
 

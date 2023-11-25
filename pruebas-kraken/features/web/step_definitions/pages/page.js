@@ -13,7 +13,9 @@ const fpages = {
     unpublishButton: 'button[class="gh-btn gh-btn-editor darkgrey gh-unpublish-trigger"]',
     draftButton: 'button[data-test-button="revert-to-draft"]',
     pageSettings: "button.settings-menu-toggle",
-    pageTags: "div[id=tag-input]"
+    pageTags: "div[id=tag-input]",
+    MsjError: "gh-alert-content",
+    leaveButton: 'button[class="gh-btn gh-btn-red"]'
                                  
 };
 
