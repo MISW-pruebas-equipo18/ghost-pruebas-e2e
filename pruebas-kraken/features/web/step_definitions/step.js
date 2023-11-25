@@ -1072,6 +1072,11 @@ When('I create new tag descripcion with Datapool pseudoAleatorio limitesuperior'
     await this.driver.pause(1000);
 });
 
+When("I click firts tag", async function () {
+    let element = await this.driver.$(pageTags.firstTags);
+    return await element.click();
+  });
+
 
 
 
