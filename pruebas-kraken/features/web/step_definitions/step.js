@@ -722,7 +722,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
-When('I create new pages with Datapool Aleatorio limitesuperior', async function () {
+When('I create new pages with Datapool pseudoAleatorio limitesuperior', async function () {
     
     let indice = getRandomInt(11);
 
@@ -793,4 +793,51 @@ When('I write a post with Datapol Aleatorio', async function (title, body) {
 
     await this.driver.pause(500);
     await bodyInput.setValue(body);
+});
+
+When('I create new pages with Datapool pseudoAleatorio limitesuperiorAnt', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let Titulo_LimiteSuperior = datapoolMockaroo[indice].tituloLimiteSuperiorMenosUno;
+    let descripcion = faker.random.alpha(25); 
+    
+    let titleInput = await this.driver.$(fpages.titleInput);
+    await titleInput.setValue(Titulo_LimiteSuperior);
+    await this.driver.pause(1000);
+
+    let bodyInput = await this.driver.$(fpages.bodyInput);
+    bodyInput.click();
+    await this.driver.pause(1000);
+    await bodyInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+Then('I publish the pages valid', async function () {
+    let processComplete = false;
+    
+    try {
+        let publishButton = await this.driver.$(fpages.publishButton)
+        await publishButton.click();
+        await this.driver.pause(1000);
+    
+        let publishButton2 = await this.driver.$(fpages.continueButton);
+        await publishButton2.click();
+        await this.driver.pause(1000);
+    
+        let publishButton3 = await this.driver.$(fpages.confirmButton);
+        await publishButton3.click();
+        await this.driver.pause(1000);
+        
+        processComplete = true;
+    } catch (error) {
+        processComplete = false;
+    }
+    
+    expect(haveError).to.be.true; 
+   
 });
