@@ -936,6 +936,30 @@ Then('I create tag valid', async function () {
    
 });
 
+When('I create new tag with Datapool pseudoAleatorio limitesuperiorAnt', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = datapoolMockaroo[indice].tagLimiteSuperiorMenosUno;
+    let descripcion = faker.random.alpha(25); 
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+
+
 
 
   
