@@ -30,11 +30,21 @@ describe('Insert Language', function(){
         cy.on('uncaught:exception', (err, runnable) => {
             return false
         })
-        
+
+        // Given
+        cy.visit(urlVisit)
+        cy.wait(2000)
         
         // When flujo normal
-
+        settingsPage.clickEditLanguage()
+        cy.wait(1000)
+        key = getRandom(1, 4);
+        let lang = this.insertLanguage[key].lang
+        settingsPage.typeCode(lang)
+        settingsPage.saveLanguage()
+        cy.wait(1000)
         // Then
+        settingsPage.returnHomePage()
 
 
     })

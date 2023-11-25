@@ -1,11 +1,18 @@
 
 [
     {
-        "example1":"",
-        "example2":""
+        "lang":"es"
     },
     {
-        "example1":"",
-        "example2":""
+        "lang":"br"
+    },
+    {
+        "lang":"fr"
+    },
+    {
+        "lang":"en"
+    },
+    {
+        "lang":"afr"
     }
 ]

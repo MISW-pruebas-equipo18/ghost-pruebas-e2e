@@ -10,7 +10,10 @@ class settingsPage{
         editCode: () => cy.get('[data-testid="code-injection"] > .items-start > .-mt-0\.5 > .flex > .cursor-pointer > span'),
         editorCode: () => cy.get('[data-testid="header-code"] > .cm-editor > .cm-scroller'),
         saveButton: () => cy.get('[data-testid="code-injection"] > .items-start > .-mt-0\.5 > .flex > .text-green > span'),
-        returnHomePage: () => cy.contains('Done')
+        returnHomePage: () => cy.contains('Done'),
+        editLanguage: () => cy.get('[data-testid="publication-language"] > .items-start > .-mt-0\.5 > .flex > .cursor-pointer > span'),
+        inputLanguage: () => cy.get("input[placeholder=\"en\"]").type("<3"),
+        saveButtonLanguage: () => cy.get('[data-testid="publication-language"] > .items-start > .-mt-0\.5 > .flex > .text-green > span')
     }
 
     goToStaff() {
@@ -32,6 +35,19 @@ class settingsPage{
     returnHomePage() {
         this.elements.returnHomePage().click()
     }
+
+    clickEditLanguage() {
+        this.elements.editLanguage().click()
+    }
+
+    getInputLanguage(text) {
+        this.elements.inputLanguage().type(text)
+    }
+
+    saveLanguage() {
+        this.elements.saveButtonLanguage().click()
+    }
+ 
 }
 
 module.exports = new settingsPage();
