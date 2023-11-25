@@ -10,16 +10,30 @@ class tagPage{
         btnSaveTag: () => cy.contains('Save'),
         viewActions: () => cy.get('section.view-actions'),
         returnTags:() => cy.get('a[data-test-link=tags-back]'),
+        btnLeave: () => cy.contains('Leave'),
         btnDeleteTag: () => cy.contains('Delete tag'),
         btnConfirmDelete: () => cy.get('button.gh-btn.gh-btn-red.gh-btn-icon.ember-view')
     }
 
     createTag(name, slug, description/*, color*/){
         this.elements.btnNewTag().click()
-        this.elements.nameTag().type(name)
-        this.elements.slugTag().type(slug)
-        this.elements.descriptionTag().type(description)
+
+        if(name != null && name != "")
+            this.elements.nameTag().type(name)
+        else
+            this.elements.nameTag().clear()
+
+        if(slug != null && slug != "")
+            this.elements.slugTag().type(slug)
+        else
+            this.elements.slugTag().clear()
+
+        if(description != null && description != "")
+            this.elements.descriptionTag().type(description)
+        else
+            this.elements.descriptionTag().clear()
         //this.elements.colorTag().type(color)
+
         this.elements.btnSaveTag().click()
     }
 
