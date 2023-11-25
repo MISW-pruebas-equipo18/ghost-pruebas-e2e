@@ -28,7 +28,7 @@ Scenario: Pruebas extremo a extremo con datos pseudoaletorios con mockaroo
   And I wait for 2 seconds
   And I create new pages with Datapool pseudoAleatorio limitesuperiorAnt
   And I wait for 2 seconds
-  Then I publish the pages
+  Then I publish the pages  
   And I wait for 2 seconds
   And I go back to editor pages
   And I wait for 2 seconds
