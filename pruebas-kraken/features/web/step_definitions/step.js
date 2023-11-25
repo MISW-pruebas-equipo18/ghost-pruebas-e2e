@@ -864,3 +864,8 @@ When('I create new pages with Datapool pseudoAleatorio valido', async function (
     await this.driver.pause(1000);
 });
 
+Then("I click firts pages", async function () {
+    let element = await this.driver.$(fpages.firstPages);
+    return await element.click();
+  });
+
