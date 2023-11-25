@@ -3,6 +3,7 @@ Feature: Kraken Scenarios
 @user1 @web
 Scenario: Pruebas extremo a extremo con datos pseudoaletorios con mockaroo
 
+
 # Escenario 42: Crear pagina con titulo que tiene 256 caracteres
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
@@ -240,5 +241,34 @@ Scenario: Pruebas extremo a extremo con datos pseudoaletorios con mockaroo
   And I wait for 2 seconds
   And I logout
   And I wait for 5 seconds
+      
+# Escenario 45: Editar tag la descripción a valores validos
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I click firts tag
+  And I wait for 2 seconds
+  And I create new tag descripcion with Datapool pseudoAleatorio valido
+  And I wait for 2 seconds
+  Then I create tag valid
+  And I go to list tags view
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
   
-
+# Escenario 49: Editar tag la descripción 499 caracteres
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I click firts tag
+  And I wait for 2 seconds
+  And I create new tag descripcion with Datapool pseudoAleatorio limitesuperiorAnt
+  And I wait for 2 seconds
+  Then I create tag valid
+  And I go to list tags view
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+  
