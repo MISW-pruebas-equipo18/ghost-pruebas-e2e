@@ -21,6 +21,8 @@ module.exports = defineConfig({
       'cypress/e2e/Test-apriori/signin/change-fullname-slug.cy.js',
       'cypress/e2e/Test-apriori/signin/change-pass.cy.js',
       'cypress/e2e/Test-apriori/post/public-post.cy.js',
+      'cypress/e2e/Test-apriori/page/new-page.cy.js',
+      'cypress/e2e/Test-apriori/tag/add-tag.cy.js',
       'cypress/e2e/Test-apriori/members/add/correo-sin-formato.cy.js',
       'cypress/e2e/Test-apriori/members/add/flujo-normal.cy.js',
       'cypress/e2e/Test-apriori/members/edit/flujo-normal.cy.js',
