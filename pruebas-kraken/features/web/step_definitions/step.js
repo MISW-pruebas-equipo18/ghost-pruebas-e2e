@@ -936,6 +936,146 @@ Then('I create tag valid', async function () {
    
 });
 
+When('I create new tag with Datapool pseudoAleatorio limitesuperiorAnt', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = datapoolMockaroo[indice].tagLimiteSuperiorMenosUno;
+    let descripcion = faker.random.alpha(25); 
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+When('I create new tag with Datapool pseudoAleatorio limitesuperior', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = datapoolMockaroo[indice].tagLimiteSuperiorMasUno;
+    let descripcion = faker.random.alpha(25); 
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+
+Then('I publish tag error', async function () {
+    let haveError = false;
+    let saveButton =  await this.driver.$(pageTags.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+    
+    let retryButton = await this.driver.$$(pageTags.saveButton);
+    if (retryButton == 0){
+        haveError = true;
+    }
+
+    expect(haveError).to.be.true
+    
+});
+
+When('I cancel tag', async function () {
+    let tagLink2 = await this.driver.$(pagesMenu.tags)
+    await tagLink2.click();
+    await this.driver.pause(1000);
+    let leaveTag = await this.driver.$(pageTags.leaveButton)
+    await leaveTag.click();
+    
+});
+
+
+When('I create new tag descripcion with Datapool pseudoAleatorio valido', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = faker.random.alpha(25); 
+    let descripcion = datapoolMockaroo[indice].Descripciontag;
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+When('I create new tag descripcion with Datapool pseudoAleatorio limitesuperiorAnt', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = faker.random.alpha(25); 
+    let descripcion = datapoolMockaroo[indice].DestagLimiteSuperiorMenosUno;
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+When('I create new tag descripcion with Datapool pseudoAleatorio limitesuperior', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = faker.random.alpha(25); 
+    let descripcion = datapoolMockaroo[indice].DestagLimiteSuperiorMasUno;
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+
+
+
+
 
 
   

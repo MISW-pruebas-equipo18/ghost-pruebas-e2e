@@ -117,3 +117,80 @@ Scenario: Pruebas extremo a extremo con datos pseudoaletorios con mockaroo
   And I wait for 5 seconds
   And I logout
   And I wait for 5 seconds
+
+# Escenario 51: Crear tag con nombre de 190 caracteres
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create new tag with Datapool pseudoAleatorio limitesuperiorAnt
+  And I wait for 2 seconds
+  Then I create tag valid
+  And I go to list tags view
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+# Escenario 52: Crear tag con nombre de 192 caracteres
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create new tag with Datapool pseudoAleatorio limitesuperior
+  And I wait for 2 seconds
+  Then I publish tag error
+  And I wait for 2 seconds
+  And I cancel tag
+  And I wait for 2 seconds
+  And I logout
+  And I wait for 5 seconds
+
+# Escenario 57: Crear tag con una descripcion valida
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create new tag descripcion with Datapool pseudoAleatorio valido
+  And I wait for 2 seconds
+  Then I create tag valid
+  And I go to list tags view
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+# Escenario 58: Crear tag con una descripcion de 499 caracteres
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create new tag descripcion with Datapool pseudoAleatorio limitesuperiorAnt
+  And I wait for 2 seconds
+  Then I create tag valid
+  And I go to list tags view
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+# Escenario 59: Crear tag una descripcion de 501 caracteres
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create new tag descripcion with Datapool pseudoAleatorio limitesuperior
+  And I wait for 2 seconds
+  Then I publish tag error
+  And I wait for 2 seconds
+  And I cancel tag
+  And I wait for 2 seconds
+  And I logout
+  And I wait for 5 seconds
