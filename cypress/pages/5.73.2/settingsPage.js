@@ -12,8 +12,10 @@ class settingsPage{
         saveButton: () => cy.get('[data-testid="code-injection"] > .items-start > .-mt-0\.5 > .flex > .text-green > span'),
         returnHomePage: () => cy.contains('Done'),
         editLanguage: () => cy.get('[data-testid="publication-language"] > .items-start > .-mt-0\.5 > .flex > .cursor-pointer > span'),
-        inputLanguage: () => cy.get("input[placeholder=\"en\"]").type("<3"),
-        saveButtonLanguage: () => cy.get('[data-testid="publication-language"] > .items-start > .-mt-0\.5 > .flex > .text-green > span')
+        inputLanguage: () => cy.get("input[placeholder=\"en\"]"),
+        saveButtonLanguage: () => cy.get('[data-testid="publication-language"] > .items-start > .-mt-0\.5 > .flex > .text-green > span'),
+        editRecommendations: () => cy.get('[data-testid="recommendations"] > .items-start > .-mt-0\.5 > .cursor-pointer > span'),
+        inputRecommendations: () => cy.get("input[placeholder=\"https://www.example.com\"]"),
     }
 
     goToStaff() {
@@ -46,6 +48,14 @@ class settingsPage{
 
     saveLanguage() {
         this.elements.saveButtonLanguage().click()
+    }
+
+    clickEditRecommendations() {
+        this.elements.editRecommendations().click()
+    }
+
+    typeInputRecommendations(url) {
+        this.elements.inputRecommendations().type(url)
     }
  
 }

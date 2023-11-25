@@ -40,7 +40,7 @@ describe('Insert Code', function(){
         // When flujo normal
         settingsPage.clickEditCode()
         cy.wait(1000)
-        key = getRandom(1, 4);
+        key = getRandom(1, 4)
         let code = this.insertCode[key].code
         settingsPage.typeCode(code)
         settingsPage.saveCode()

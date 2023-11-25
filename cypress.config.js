@@ -33,6 +33,7 @@ module.exports = defineConfig({
       'cypress/e2e/Test-apriori/staff/invite/campo-vacio.cy.js',
       'cypress/e2e/Test-apriori/settings/code-injection/flujo-normal.cy.js',
       'cypress/e2e/Test-apriori/settings/language/flujo-normal.cy.js',
+      'cypress/e2e/Test-apriori/settings/recommendations/flujo-normal.cy.js',
       'cypress/e2e/Test-aleatorio/members/add/flujo-normal.cy.js',
       'cypress/e2e/Test-aleatorio/members/edit/flujo-normal.cy.js',
       'cypress/e2e/Test-aleatorio/staff/invite/flujo-normal.cy.js',

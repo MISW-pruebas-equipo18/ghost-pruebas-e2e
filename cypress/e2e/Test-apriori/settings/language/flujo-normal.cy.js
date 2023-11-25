@@ -38,7 +38,7 @@ describe('Insert Language', function(){
         // When flujo normal
         settingsPage.clickEditLanguage()
         cy.wait(1000)
-        key = getRandom(1, 4);
+        key = getRandom(1, 4)
         let lang = this.insertLanguage[key].lang
         settingsPage.typeCode(lang)
         settingsPage.saveLanguage()
