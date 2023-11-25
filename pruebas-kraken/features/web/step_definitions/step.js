@@ -1006,6 +1006,72 @@ When('I cancel tag', async function () {
 });
 
 
+When('I create new tag descripcion with Datapool pseudoAleatorio valido', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = faker.random.alpha(25); 
+    let descripcion = datapoolMockaroo[indice].Descripciontag;
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+When('I create new tag descripcion with Datapool pseudoAleatorio limitesuperiorAnt', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = faker.random.alpha(25); 
+    let descripcion = datapoolMockaroo[indice].DestagLimiteSuperiorMenosUno;
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+When('I create new tag descripcion with Datapool pseudoAleatorio limitesuperior', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = faker.random.alpha(25); 
+    let descripcion = datapoolMockaroo[indice].DestagLimiteSuperiorMasUno;
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
 
 
 
