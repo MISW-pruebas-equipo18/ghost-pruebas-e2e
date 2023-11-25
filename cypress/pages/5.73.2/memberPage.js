@@ -6,6 +6,7 @@ class memberPage{
         saveButton: () => cy.contains('Save'),
         newMember: () => cy.contains(Cypress.config('userMember')),
         getMember: () => cy.get('p.gh-members-list-email'),
+        textNotSaveMember: () => cy.contains('Retry'),
         
     }
 
@@ -31,6 +32,10 @@ class memberPage{
 
     visibleMember(userMember) {
         cy.contains(userMember).should('be.visible')
+    }
+
+    notSaveMember(userMember) {
+        this.elements.textNotSaveMember()
     }
 
     visibleEmailMember(newuserEmail) {

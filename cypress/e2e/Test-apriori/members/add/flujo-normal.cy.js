@@ -8,28 +8,31 @@ let passw = Cypress.config('passwordvisitor')
 let version = "v2"
 let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_members')
 
-before(() => {
+
+before(function() {
     //Login in Application
     cy.loginAdmin(user,passw,version)
     cy.url().should('include', '/dashboard')
     //cy.screenshot('5.73.2/members/add-member.cy.js/login')
-});
-
-beforeEach(function() {
-    cy.fixture('members/add-member').then((addMember) => {
-      this.addMember = addMember
-    })
 })
 
-describe ('Add members', function(){ 
+beforeEach(function() {
+    cy.fixture('members/add/flujocompleto').then((addMember) => {
+      this.addMember = addMember
+    })
+    cy.visit(urlVisit)
+    cy.wait(2000)
+})
+
+describe('Add members', function(){ 
+
     
-    it('P1: Add new member - No:35 ID:MEMB-1', function(){
+    it('P1: Add new member', function(){ 
+
         cy.on('uncaught:exception', (err, runnable) => {
             return false
         })
-        // Given
-        cy.visit(urlVisit)
-        // When
+        
         memberPage.addNewMember()
         cy.wait(1000)
         
@@ -48,8 +51,9 @@ describe ('Add members', function(){
         memberPage.visibleMember(userMember)
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
 
-    });
-});
+    })
+    
+})
 
 function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -59,4 +63,4 @@ after(() => {
     cy.logout()
     cy.url().should('include', '/signin')
     //cy.screenshot('5.73.2/members/add-member.cy.js/logout')
-}); 
+})
