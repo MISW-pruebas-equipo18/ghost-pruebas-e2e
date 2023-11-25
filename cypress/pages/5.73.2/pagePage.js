@@ -33,8 +33,29 @@ class pagePage{
 
     createPage(title, content){
         this.elements.btnNewPage().click()
-        this.elements.pageTitle().type(title)
-        this.elements.content().type(content)
+
+        if(title != null && title != "")
+            this.elements.pageTitle().type(title)
+
+        if(content != null && content != "")
+            this.elements.content().type(content)
+        else
+        {
+            this.elements.content().type("Prueba")
+            this.elements.content().clear()
+        }
+
+        this.elements.btnPublish().click()
+        this.elements.btnContinuePublish().click()
+        this.elements.btnConfirmPublish().click()
+    }
+
+    createnullPage(){
+        this.elements.btnNewPage().click()
+        this.elements.pageTitle().type("Prueba")
+        this.elements.pageTitle().clear()
+        this.elements.content().type("Prueba")
+        this.elements.content().clear()
         this.elements.btnPublish().click()
         this.elements.btnContinuePublish().click()
         this.elements.btnConfirmPublish().click()
