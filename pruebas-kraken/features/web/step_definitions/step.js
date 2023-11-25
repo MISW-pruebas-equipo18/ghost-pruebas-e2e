@@ -730,11 +730,11 @@ When('I create new pages with Datapool pseudoAleatorio limitesuperior', async fu
         "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
       );
     const datapoolMockaroo = response.data;
-    let Titulo_LimiteSuperior = datapoolMockaroo[indice].tituloLimiteSuperiorMasUno;
+    let Titulo = datapoolMockaroo[indice].tituloLimiteSuperiorMasUno;
     let descripcion = faker.random.alpha(25); 
     
     let titleInput = await this.driver.$(fpages.titleInput);
-    await titleInput.setValue(Titulo_LimiteSuperior);
+    await titleInput.setValue(Titulo);
     await this.driver.pause(1000);
 
     let bodyInput = await this.driver.$(fpages.bodyInput);
@@ -803,11 +803,11 @@ When('I create new pages with Datapool pseudoAleatorio limitesuperiorAnt', async
         "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
       );
     const datapoolMockaroo = response.data;
-    let Titulo_LimiteSuperior = datapoolMockaroo[indice].tituloLimiteSuperiorMenosUno;
+    let Titulo = datapoolMockaroo[indice].tituloLimiteSuperiorMenosUno;
     let descripcion = faker.random.alpha(25); 
     
     let titleInput = await this.driver.$(fpages.titleInput);
-    await titleInput.setValue(Titulo_LimiteSuperior);
+    await titleInput.setValue(Titulo);
     await this.driver.pause(1000);
 
     let bodyInput = await this.driver.$(fpages.bodyInput);
@@ -841,3 +841,26 @@ Then('I publish the pages valid', async function () {
     expect(haveError).to.be.true; 
    
 });
+
+When('I create new pages with Datapool pseudoAleatorio valido', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let Titulo = datapoolMockaroo[indice].tituloValido;
+    let descripcion = faker.random.alpha(25); 
+    
+    let titleInput = await this.driver.$(fpages.titleInput);
+    await titleInput.setValue(Titulo);
+    await this.driver.pause(1000);
+
+    let bodyInput = await this.driver.$(fpages.bodyInput);
+    bodyInput.click();
+    await this.driver.pause(1000);
+    await bodyInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
