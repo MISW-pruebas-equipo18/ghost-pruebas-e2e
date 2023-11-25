@@ -20,8 +20,6 @@ beforeEach(function() {
     cy.fixture('members/add/flujocompleto').then((addMember) => {
       this.addMember = addMember
     })
-    cy.visit(urlVisit)
-    cy.wait(2000)
 })
 
 describe('Add members', function(){ 
@@ -32,6 +30,10 @@ describe('Add members', function(){
         cy.on('uncaught:exception', (err, runnable) => {
             return false
         })
+
+        // Given
+        cy.visit(urlVisit)
+        cy.wait(2000)
         
         memberPage.addNewMember()
         cy.wait(1000)

@@ -7,6 +7,7 @@ let user = Cypress.config('uservisitor')
 let passw = Cypress.config('passwordvisitor')
 let version = "v2"
 let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_settings') + '/code-injection'
+let urlVisitSite = Cypress.config('baseUrlv2')
 
 
 before(function() {
@@ -30,11 +31,25 @@ describe('Insert Code', function(){
         cy.on('uncaught:exception', (err, runnable) => {
             return false
         })
+
+        // Given
+        cy.visit(urlVisit)
+        cy.wait(2000)
         
         
         // When flujo normal
+        settingsPage.clickEditCode()
+        cy.wait(1000)
+        key = getRandom(1, 4);
+        let code = this.insertCode[key].code
+        settingsPage.typeCode(code)
+        settingsPage.saveCode()
+        cy.wait(1000)
+        settingsPage.returnHomePage()
 
         // Then
+        cy.visit(urlVisitSite)
+        cy.contains(code)
 
 
     })
