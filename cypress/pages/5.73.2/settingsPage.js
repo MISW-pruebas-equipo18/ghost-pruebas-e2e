@@ -16,6 +16,11 @@ class settingsPage{
         saveButtonLanguage: () => cy.get('[data-testid="publication-language"] > .items-start > .-mt-0\.5 > .flex > .text-green > span'),
         editRecommendations: () => cy.get('[data-testid="recommendations"] > .items-start > .-mt-0\.5 > .cursor-pointer > span'),
         inputRecommendations: () => cy.get("input[placeholder=\"https://www.example.com\"]"),
+        editTitleDescription: () => cy.get('[data-testid="title-and-description"] > .items-start > .-mt-0\.5 > .flex > .cursor-pointer > span'),
+        inputTitle: () => cy.get("input[placeholder=\"Site title\"]"),
+        inputDescription: () => cy.get("input[placeholder=\"Site description\"]"),
+        saveButtonTitleDescription: () => cy.get('[data-testid="title-and-description"] > .items-start > .-mt-0\.5 > .flex > .text-green > span')
+        
     }
 
     goToStaff() {
@@ -56,6 +61,30 @@ class settingsPage{
 
     typeInputRecommendations(url) {
         this.elements.inputRecommendations().type(url)
+    }
+
+    clickEditTitleDescription() {
+        this.elements.editTitleDescription().click()
+    }
+
+    clearTitle(){
+        this.elements.inputTitle().clear()
+    }
+
+    clearDescription(){
+        this.elements.inputDescription().clear()
+    }
+
+    typeInputTitle(title) {
+        this.elements.inputTitle().type(title)
+    }
+
+    typeInputDescription(description) {
+        this.elements.inputDescription().type(description)
+    }
+
+    saveTitleDescription() {
+        this.elements.saveButtonTitleDescription().click()
     }
  
 }
