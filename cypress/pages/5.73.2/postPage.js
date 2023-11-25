@@ -62,9 +62,14 @@ class postPage{
 
     fillPost(title,content){
         this.elements.title().clear()
-        this.elements.title().type(title)
+
+        if(title != "" && title != null)
+            this.elements.title().type(title)
+
         this.elements.content().clear()
-        this.elements.content().type(content)
+
+        if(content != "" && content != null)
+            this.elements.content().type(content)
     }
 
     publishOnly(){

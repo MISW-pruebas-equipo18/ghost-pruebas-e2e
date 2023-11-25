@@ -18,8 +18,9 @@ module.exports = defineConfig({
     testIsolation: false,
     screenShots: false,
     specPattern: [
-      'cypress\\e2e\\Test-apriori\\signin\\change-fullname-slug.cy.js',
-      'cypress\\e2e\\Test-apriori\\signin\\change-pass.cy.js',
+      'cypress/e2e/Test-apriori/signin/change-fullname-slug.cy.js',
+      'cypress/e2e/Test-apriori/signin/change-pass.cy.js',
+      'cypress/e2e/Test-apriori/post/public-post.cy.js',
       'cypress/e2e/Test-apriori/members/add-member.cy.js',
       'cypress/e2e/Test-apriori/members/edit-member.cy.js',
       'cypress/e2e/Test-aleatorio/members/add-member.cy.js',
