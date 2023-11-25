@@ -1,17 +1,12 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { assert, expect } = require('chai');
 const { faker } = require("@faker-js/faker");
+const axios = require("axios");
 
 const { pagesLogin } = require('./pages/loginPage');
 const { pagesMenu } = require('./pages/menuPage');
 const { pageTags } = require('./pages/tagsPage');
 const { fpages } = require('./pages/page');
-
-const { PagesAleatorio } = require('./Datapool/aleatorio');
-const { PagesApriori } = require('./Datapool/apriori');
-
-
-
 
 Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password and {kraken-string} url', async function (username, password, urlLogin) {
     await this.driver.url(urlLogin);
@@ -716,23 +711,67 @@ When('I unpublish the post', async function () {
     await unpublishButton2.click();
 });
 
-/**************************************************************************************************** escenarios ALEATORIOS **/
+/**************************************************************************************************** escenarios PSEUDOALEATORIOS **/
 
-When('I create new pages with Datapool Aleatorio limitesuperior', async function () {
-    /*const Titulo_LimiteSuperior = faker.lorem.word(PagesAleatorio.Titulo_LimiteSuperior);*/
-    await this.driver.pause(5000);
-    const Descrip_LimiteSuperior = faker.lorem.word(PagesAleatorio.Descrip_LimiteSuperior);
-    await this.driver.pause(5000);
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+When('I create new pages with Datapool pseudoAleatorio limitesuperior', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let Titulo = datapoolMockaroo[indice].tituloLimiteSuperiorMasUno;
+    let descripcion = faker.random.alpha(25); 
     
     let titleInput = await this.driver.$(fpages.titleInput);
-    await titleInput.setValue(PagesApriori.Titulo_255);
+    await titleInput.setValue(Titulo);
     await this.driver.pause(1000);
 
     let bodyInput = await this.driver.$(fpages.bodyInput);
     bodyInput.click();
     await this.driver.pause(1000);
-    await bodyInput.setValue(Descrip_LimiteSuperior);
+    await bodyInput.setValue(descripcion);
     await this.driver.pause(1000);
+});
+
+Then('I publish the pages error', async function () {
+    let haveError = false;
+    let publishButton = await this.driver.$$(fpages.publishButton);
+    
+    if (publishButton > 0){
+        await publishButton.click();
+        await this.driver.pause(1000);
+        
+        let alerta = await this.driver.$(fpages.MsjError)
+        
+        if (await alerta.getText().contain("Title cannot be longer than 255 characters") ) {
+            haveError = true;
+        }
+    
+    }
+    else
+    {
+        haveError = true;
+
+    }
+        
+    expect(haveError).to.be.true
+    
+});
+
+
+When('I cancel pages', async function () {
+    let pagesLink2 = await this.driver.$(fpages.list)
+    await pagesLink2.click();
+    await this.driver.pause(1000);
+    let leavePage = await this.driver.$(fpages.leaveButton)
+    await leavePage.click();
+    
 });
 
 
@@ -750,3 +789,157 @@ When('I write a post with Datapol Aleatorio', async function (title, body) {
     await this.driver.pause(500);
     await bodyInput.setValue(body);
 });
+
+When('I create new pages with Datapool pseudoAleatorio limitesuperiorAnt', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let Titulo = datapoolMockaroo[indice].tituloLimiteSuperiorMenosUno;
+    let descripcion = faker.random.alpha(25); 
+    
+    let titleInput = await this.driver.$(fpages.titleInput);
+    await titleInput.setValue(Titulo);
+    await this.driver.pause(1000);
+
+    let bodyInput = await this.driver.$(fpages.bodyInput);
+    bodyInput.click();
+    await this.driver.pause(1000);
+    await bodyInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+Then('I publish the pages valid', async function () {
+    let processComplete = false;
+    
+    try {
+        let publishButton = await this.driver.$(fpages.publishButton)
+        await publishButton.click();
+        await this.driver.pause(1000);
+    
+        let publishButton2 = await this.driver.$(fpages.continueButton);
+        await publishButton2.click();
+        await this.driver.pause(1000);
+    
+        let publishButton3 = await this.driver.$(fpages.confirmButton);
+        await publishButton3.click();
+        await this.driver.pause(1000);
+        
+        processComplete = true;
+    } catch (error) {
+        processComplete = false;
+    }
+    
+    expect(processComplete).to.be.true; 
+   
+});
+
+When('I create new pages with Datapool pseudoAleatorio valido', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let Titulo = datapoolMockaroo[indice].tituloValido;
+    let descripcion = faker.random.alpha(25); 
+    
+    let titleInput = await this.driver.$(fpages.titleInput);
+    await titleInput.setValue(Titulo);
+    await this.driver.pause(1000);
+
+    let bodyInput = await this.driver.$(fpages.bodyInput);
+    bodyInput.click();
+    await this.driver.pause(1000);
+    await bodyInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+When("I click firts pages", async function () {
+    let element = await this.driver.$(fpages.firstPages);
+    return await element.click();
+  });
+
+Then('I update the pages error', async function () {
+    let haveError = false;
+    
+    let saveButton =  await this.driver.$(fpages.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+
+    let alerta = await this.driver.$('div.gh-alert-content');
+        
+    if (await alerta.getText() == "Update failed: Title cannot be longer than 255 characters."){
+        haveError = true;
+    }
+
+    expect(haveError).to.be.true
+    
+});
+
+Then('I publish update pages valid', async function (){
+    let processComplete = false;
+    
+    try {
+        let saveButton =  await this.driver.$(fpages.saveButton);
+        saveButton.click();
+        await this.driver.pause(1000);
+        processComplete = true;
+    } catch (error) {
+        processComplete = false;
+    }
+    
+    expect(processComplete).to.be.true; 
+
+});
+
+When('I create new tag with Datapool pseudoAleatorio valido', async function () {
+    
+    let indice = getRandomInt(11);
+
+    const response = await axios.get(
+        "https://my.api.mockaroo.com/titulos_pages_tags.json?key=ecc92df0"
+      );
+    const datapoolMockaroo = response.data;
+    let nombre = datapoolMockaroo[indice].tagValido;
+    let descripcion = faker.random.alpha(25); 
+    
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nombre);
+    await this.driver.pause(1000);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(descripcion);
+    await this.driver.pause(1000);
+});
+
+Then('I create tag valid', async function () {
+    let processComplete = false;
+    
+    try {
+        let saveButton =  await this.driver.$(pageTags.saveButton);
+        saveButton.click();
+        await this.driver.pause(1000);
+    
+        processComplete = true;
+    } catch (error) {
+        processComplete = false;
+    }
+    
+    expect(processComplete).to.be.true; 
+   
+});
+
+
+
+  
+
+
+
+
