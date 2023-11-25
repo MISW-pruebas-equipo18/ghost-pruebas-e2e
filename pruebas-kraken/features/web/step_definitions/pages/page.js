@@ -15,7 +15,8 @@ const fpages = {
     pageSettings: "button.settings-menu-toggle",
     pageTags: "div[id=tag-input]",
     MsjError: "gh-alert-content",
-    leaveButton: 'button[class="gh-btn gh-btn-red"]'
+    leaveButton: 'button[class="gh-btn gh-btn-red"]',
+    firstPages: 'div.gh-posts-list-item-group'
                                  
 };
 
