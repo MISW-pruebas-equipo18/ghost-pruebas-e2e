@@ -1,5 +1,5 @@
-import { registerCommands } from '../../../support/commands' 
-import memberPage from '../../../pages/5.73.2/memberPage'
+import { registerCommands } from '../../../../support/commands' 
+import memberPage from '../../../../pages/5.73.2/memberPage'
 import {faker} from '@faker-js/faker';
 
 registerCommands()

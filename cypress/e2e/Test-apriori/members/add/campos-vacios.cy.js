@@ -1,5 +1,5 @@
-import { registerCommands } from '../../../support/commands' 
-import memberPage from '../../../pages/5.73.2/memberPage'
+import { registerCommands } from '../../../../support/commands' 
+import memberPage from '../../../../pages/5.73.2/memberPage'
 
 registerCommands()
 
@@ -8,48 +8,52 @@ let passw = Cypress.config('passwordvisitor')
 let version = "v2"
 let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_members')
 
-before(() => {
+before(function() {
     //Login in Application
     cy.loginAdmin(user,passw,version)
     cy.url().should('include', '/dashboard')
+    cy.wait(2000)
     //cy.screenshot('5.73.2/members/add-member.cy.js/login')
-});
+})
 
 beforeEach(function() {
-    cy.fixture('members/add-member').then((addMember) => {
-      this.addMember = addMember
+    cy.fixture('members/add/camposvacios').then((addMemberEmptyInput) => {
+        this.addMemberEmptyInput = addMemberEmptyInput
     })
 })
 
-describe ('Add members', function(){ 
+describe ('Add members - empty inputs', function(){ 
+
+    it('Add new member - empty inputs', function(){
     
-    it('P1: Add new member - No:35 ID:MEMB-1', function(){
         cy.on('uncaught:exception', (err, runnable) => {
             return false
         })
+  
         // Given
-        cy.visit(urlVisit)
+        cy.contains('Members').click(),
+        console.log(urlVisit)
+        cy.visit(urlVisit, { timeout: 3000})
+        cy.wait(1000)
         // When
         memberPage.addNewMember()
         cy.wait(1000)
         
         // When flujo normal
         key = getRandom(1, 9);
-        let userMember = this.addMember[key].name
-        let userEmail = this.addMember[key].email
+        let userMember2 = this.addMemberEmptyInput[key].name
+        let userEmail2 = this.addMemberEmptyInput[key].email
 
-        memberPage.typeUsername(userMember)
-        memberPage.typeUseremail(userEmail)
+        memberPage.typeUsername(userMember2)
+        memberPage.typeUseremail(userEmail2)
         memberPage.saveMember()
         cy.wait(1000)
         // Then
-        cy.visit(urlVisit)
-        cy.wait(1000)
-        memberPage.visibleMember(userMember)
+        memberPage.notSaveMember()
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
 
-    });
-});
+    })    
+})
 
 function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -59,4 +63,4 @@ after(() => {
     cy.logout()
     cy.url().should('include', '/signin')
     //cy.screenshot('5.73.2/members/add-member.cy.js/logout')
-}); 
+}) 
