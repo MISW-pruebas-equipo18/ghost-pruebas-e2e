@@ -49,5 +49,56 @@
             "slug": "",
             "description": ""
         }
+    ],
+    "editTag":
+    [
+        {
+            "id": "Actualización exitosa",
+            "name": "Edición satisfactoria",
+            "slug": "edicion-satisfactoria",
+            "description": "Tag de prueba exitosa generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Editar tag nombre vacío",
+            "name": "",
+            "slug": "vacio",
+            "description": "Tag de prueba nombre de tag vacio generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Editar tag alias vacío",
+            "name": "Edicion alias vacio",
+            "slug": "",
+            "description": "Tag de prueba alias de tag vacio generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Editar tag descripción vacía",
+            "name": "Edición descripcion-vacia",
+            "slug": "edicion-descripcion-vacia",
+            "description": "Tag de prueba descripción de tag vacia generado a partir de pruebas a priori"
+        },
+        {
+            "id": "Editar tag nombre y alias vacios",
+            "name": "",
+            "slug": "",
+            "description": "Tag de prueba nombre y alias de tag vacios generado a partir de pruebas a priori"
+        },
+        {
+            "id": "TEditar tag nombre y descripción vacios",
+            "name": "",
+            "slug": "edicion-nombre-descripcion-vacios",
+            "description": ""
+        },
+        {
+            "id": "Editar tag vacío",
+            "name": "",
+            "slug": "",
+            "description": ""
+        },
+        {
+            "id": "Editar tag alias y descripción vacios",
+            "name": "edicion-tag-alias-descripcion-vacios",
+            "slug": "",
+            "description": ""
+        }
     ]
 }

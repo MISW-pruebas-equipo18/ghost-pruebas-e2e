@@ -6,6 +6,7 @@ class memberPage{
         saveButton: () => cy.contains('Save'),
         newMember: () => cy.contains(Cypress.config('userMember')),
         getMember: () => cy.get('p.gh-members-list-email'),
+        textNotSaveMember: () => cy.contains('Retry'),
         
     }
 
@@ -33,9 +34,17 @@ class memberPage{
         cy.contains(userMember).should('be.visible')
     }
 
+    notSaveMember() {
+        this.elements.textNotSaveMember()
+    }
+
     visibleEmailMember(newuserEmail) {
         cy.contains(newuserEmail).should('be.visible')
-    }    
+    }
+    
+    visibleNameMember(newuserName) {
+        cy.contains(newuserName).should('be.visible')
+    } 
 
     getMember(){
         this.elements.getMember().first().click()
@@ -43,6 +52,10 @@ class memberPage{
 
     clearEmailMember(){
         this.elements.useremailInput().clear()
+    }
+
+    clearNameMember(){
+        this.elements.usernameInput().clear()
     }
   
 }
