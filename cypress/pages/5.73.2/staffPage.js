@@ -8,8 +8,8 @@ class staffPage{
         checkboxProfile: () => cy.get('input[type="checkbox"]'),
         saveButton: () => cy.contains('Save & close'), 
         owner: () => cy.get('div[data-testid=owner-user]'),
-        name: () => cy.get('input[id=":rm:"]'),
-        email: () => cy.get('input[id=":rn:"]'),
+        name: () => cy.contains('label', 'Full name').invoke('attr', 'for').then((id) => { cy.get('input[id="'+ id +'"]') } ) ,
+        email: () => cy.contains('label', 'Email').invoke('attr', 'for').then((id) => { cy.get('input[id="'+ id +'"]') } ),
         passwordOld: () => cy.get('input[type="password"]').first(),
         passwordNew: () => cy.get('input[type="password"]').eq(1),
         passwordVerfication: () => cy.get('input[type="password"]').eq(2),
@@ -79,6 +79,14 @@ class staffPage{
             this.elements.name().type(fullName)
             this.elements.saveButton().click()
         }
+    }
+
+    goToStaff(){
+        this.elements.staff().click()
+    }   
+
+    closeNotification(){
+        this.elements.btnCloseNotification().click()
     }
 
     btnInvite(){
