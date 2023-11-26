@@ -2,11 +2,16 @@ const { Given, When, Then } = require('@cucumber/cucumber');
 const { assert, expect } = require('chai');
 const { faker } = require("@faker-js/faker");
 const axios = require("axios");
+//const csv = require("csv-parser");
+//const fs = require('fs')
+//const data = [];
+const dataLogin = require('./Datapool/datosLogin.json');
 
 const { pagesLogin } = require('./pages/loginPage');
 const { pagesMenu } = require('./pages/menuPage');
 const { pageTags } = require('./pages/tagsPage');
 const { fpages } = require('./pages/page');
+const { datosLogin } = require('./Datapool/datosLogin.json');
 
 Given('I login to Ghost Admin with {kraken-string} user and {kraken-string} password and {kraken-string} url', async function (username, password, urlLogin) {
     await this.driver.url(urlLogin);
@@ -1077,7 +1082,58 @@ When("I click firts tag", async function () {
     return await element.click();
   });
 
+/**************************************************************************************************** escenarios APRIORI **/
+Given('I login to Ghost from data CSV and {kraken-string} url', async function (urlLogin) {
+    let loginError;
+    
+    await this.driver.url(urlLogin);
+    await this.driver.pause(5000);
 
+    let indice = getRandomInt(21);
+
+    let idlogin = dataLogin[indice].id
+    let username = dataLogin[indice].email;
+    let password = dataLogin[indice].password;
+
+    let userInput = await this.driver.$(pagesLogin.userInput);
+    await userInput.setValue(username);
+    let passwordInput = await this.driver.$(pagesLogin.passwordInput);
+    await passwordInput.setValue(password);
+
+    let loginButton = await this.driver.$(pagesLogin.loginButton);
+    await loginButton.click();
+    await this.driver.pause(4000);
+
+    let currentTitle = await this.driver.$(pagesMenu.tituloDashboard); 
+    
+    
+    try {
+        if(await currentTitle.getText() == "Dashboard") 
+        {
+            if(idlogin == 20)
+            {
+                let avatarButton = await this.driver.$(pagesMenu.avatarButton);
+                await avatarButton.click();
+                let signoutButton = await this.driver.$(pagesMenu.signoutButton);
+                await this.driver.pause(2000);
+                await signoutButton.click();
+                loginError = false
+            }
+            else
+            {
+                loginError = true;
+            }
+        }     
+    } catch (error) {
+        loginError = false;
+    }
+    
+    
+
+    expect(loginError).to.be,false; 
+    
+    
+});
 
 
 
