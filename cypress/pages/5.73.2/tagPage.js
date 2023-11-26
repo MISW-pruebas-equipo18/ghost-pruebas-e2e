@@ -37,6 +37,28 @@ class tagPage{
         this.elements.btnSaveTag().click()
     }
 
+    editTag(name, newName, newSlug, newDescription/*, newColor*/){
+        this.elements.tagItem().contains(name).click()
+        cy.wait(1000)
+
+        if(newName != null && newName != "")
+            this.elements.nameTag().clear().type(newName)
+        else
+            this.elements.nameTag().clear()
+
+        if(newSlug != null && newSlug != "")
+            this.elements.slugTag().clear().type(newSlug)
+        else
+            this.elements.slugTag().clear()
+
+        if(newDescription != null && newDescription != "")
+            this.elements.descriptionTag().clear().type(newDescription)
+        else
+            this.elements.descriptionTag().clear()
+
+        this.elements.btnSaveTag().click()
+    }
+
     deleteTag(name){
         this.elements.tagItem().contains(name).click()
         cy.wait(1000)
