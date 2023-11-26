@@ -74,3 +74,31 @@ Ejecute el siguiente comando para ejecutar el proyecto:
 Esto ejecutará las pruebas del proyecto y generará un reporte en la carpeta `reports`.
 Para ver el reporte, abra el archivo `reports/<id>/index.html`.
 
+# Semana 7 pruebas con datos aleatorios
+
+## 1. Preparación del ambiente
+
+Version Ghost: 5.74.2
+Alojada: https://grupo-miso.ghost.io/ghost/#/signin
+
+Para extender las capacidades de kraken se instalaron las siguientes librerias: 
+* Faker 6.6.6
+* axios 1.6.2
+* csv-parser 3.0.0
+
+Por favor ejecutar el siguiente comando en la carpeta raiz del proyecto (Pruebas-Kraken)
+```bash
+npm install
+```
+
+## 2. Escenarios y estrategias de generación de datos aleatorios 
+
+El proyecto cuenta con una carpeta con el nombre Escenarios en esta se encuentran los diferentes archivos según la estrategia implementada, para mayor detalle de consulte el inventario de escenarios: https://uniandes.sharepoint.com/:x:/s/PruebasAutomatizadas220/EWG23SiQztFIq1-w4N7MiH0BHNvcpehwNgkwgyB4IKyJzw?e=YcMV5K debe ingresar con la cuenta unianes
+
+Para ejecutar el grupo de escenarios debe copiar el archivo .feature y ubicarlo en el directorio: ./features
+
+En la carpeta datapool se encuentran los archivos base para la estrategia a priori, para mayor detalle consulte la wiki - Semana 7
+
+## 3. Reporte de incidencias
+
+Las inconsistencias enconetradas fueron documentadas en la siguiente ubicación: https://github.com/MISW-pruebas-equipo18/ghost-pruebas-e2e/issues
