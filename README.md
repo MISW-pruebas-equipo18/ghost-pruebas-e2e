@@ -212,9 +212,10 @@ Para la ejecución de pruebas en Cypress se hizo uso principalmente de dos estra
       'cypress/e2e/Test-apriori/signin/**',
    ```
 7. Para ejecutar las pruebas por headless es necesario ejecutar los siguientes comandos:
-```bash
+  ```bash
   npx cypress run --headless
   ```
 8. Tener en cuenta que los escenarios negativos son considerados aquellos en los cuales el should o el assert no se cumple, por lo cual en la ejecución de pruebas encontrarán algunas que no llegan a buen fin, pero es especificamente porque se detecta que el escenario no es posible en la aplicación y su resultado es el esperado, negativo. A continuación un resumen de la ejecución de los escenarios:
+   
 ![image](https://github.com/MISW-pruebas-equipo18/ghost-pruebas-e2e/assets/142758558/df254072-9edf-4feb-9578-35df7bf9ce02)
 
