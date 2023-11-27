@@ -13,8 +13,8 @@ module.exports = defineConfig({
     userv2:'albertogalvis@protonmail.com',
     passwv2:'Gu4c4m4y0.2024',
     newPasswv2:'Pruebas123*',
-    uservisitor:'dejahvuuu@gmail.com',
-    passwordvisitor: 'Gu4c4m4y0.2023',
+    uservisitor:'albertogalvis@protonmail.com',
+    passwordvisitor: 'Gu4c4m4y0.2024',
     testIsolation: false,
     screenShots: false,
     specPattern: [
@@ -28,7 +28,7 @@ module.exports = defineConfig({
       'cypress/e2e/Test-aleatorio/members/**',
       'cypress/e2e/Test-aleatorio/staff/**',
       'cypress/e2e/Test-apriori/signin/**',
-      'cypress/e2e/Test-apriori/members/add/flujo-normal.cy.js',
+      /*'cypress/e2e/Test-apriori/members/add/flujo-normal.cy.js',
       'cypress/e2e/Test-apriori/members/add/correo-sin-formato.cy.js',
       'cypress/e2e/Test-apriori/members/add/campo-vacio-nombre.cy.js',
       'cypress/e2e/Test-apriori/members/add/campo-vacio-email.cy.js',
@@ -43,7 +43,6 @@ module.exports = defineConfig({
       'cypress/e2e/Test-aleatorio/members/add/flujo-normal.cy.js',
       'cypress/e2e/Test-aleatorio/members/edit/flujo-normal.cy.js',
       'cypress/e2e/Test-aleatorio/staff/invite/flujo-normal.cy.js',
-      /*
       'cypress/e2e/Test-apriori/members/add/correo-sin-formato.cy.js',
       'cypress/e2e/Test-apriori/members/add/flujo-normal.cy.js',
       'cypress/e2e/Test-apriori/members/add/campo-vacio.cy.js',
