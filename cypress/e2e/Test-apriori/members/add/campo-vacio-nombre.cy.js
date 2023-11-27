@@ -16,13 +16,15 @@ before(function() {
     //cy.screenshot('5.73.2/members/add-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('members/add/camposvacios').then((addMemberEmptyInput) => {
-        this.addMemberEmptyInput = addMemberEmptyInput
-    })
-})
+
 
 describe ('Add members - empty inputs', function(){ 
+
+    beforeEach(function() {
+        cy.fixture('members/add/camposvacios').then((addMemberEmptyInput) => {
+            this.addMemberEmptyInput = addMemberEmptyInput
+        })
+    })    
 
     it('Add new member - empty inputs', function(){
     
@@ -40,24 +42,20 @@ describe ('Add members - empty inputs', function(){
         cy.wait(1000)
         
         // When flujo normal
-        key = getRandom(1, 9);
-        let userMember2 = this.addMemberEmptyInput[key].name
-        let userEmail2 = this.addMemberEmptyInput[key].email
+        const key = Math.floor(Math.random() * (9 - 1)) + 1
+        let emailMember2 = this.addMemberEmptyInput[key].email
 
-        memberPage.typeUsername(userMember2)
-        memberPage.typeUseremail(userEmail2)
+        memberPage.typeNewUseremail(emailMember2)
         memberPage.saveMember()
         cy.wait(1000)
         // Then
-        memberPage.notSaveMember()
+        cy.visit(urlVisit)
+        cy.wait(1000)
+        memberPage.visibleEmailMember(emailMember2)
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
 
     })    
 })
-
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 after(() => {
     cy.logout()

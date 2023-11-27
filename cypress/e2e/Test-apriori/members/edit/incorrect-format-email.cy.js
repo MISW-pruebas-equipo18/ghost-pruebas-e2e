@@ -15,13 +15,14 @@ before(() => {
     //cy.screenshot('5.73.2/members/edit-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('members/edit/camposvacios').then((editEmail) => {
-      this.editEmail = editEmail
-    })
-})
 
 describe ('Edit members', function(){
+
+    beforeEach(function() {
+        cy.fixture('members/edit/camposvacios').then((editEmail) => {
+          this.editEmail = editEmail
+        })
+    })    
 
     it('P2: edit current member', function(){
 
@@ -32,28 +33,24 @@ describe ('Edit members', function(){
         cy.visit(urlVisit)
         cy.wait(2000)
         // When
-        //cy.contains(user.currentEmail).click()
         memberPage.getMember()
         cy.wait(1000)
         memberPage.clearEmailMember()
-        key = getRandom(1, 9);
-        memberPage.typeUsername(this.editEmail[key].email)
+        const key = Math.floor(Math.random() * (9 - 1)) + 1
+        memberPage.typeUseremail(this.editEmail[key].email)
         cy.wait(2000)
         memberPage.saveMember()
         cy.wait(1000)
 
-
         // Then
-        memberPage.notSaveMember()
+        cy.contains('Retry').should('be.visible')
+        cy.contains('Dashboard').click()
+        cy.contains('Leave').click()
         //cy.screenshot('5.73.2/members/edit-member.cy.js/P2-edit-current-member')
 
     })
 
 })
-
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 after(() => {
     cy.logout()

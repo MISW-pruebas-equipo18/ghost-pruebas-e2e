@@ -8,7 +8,6 @@ let passw = Cypress.config('passwordvisitor')
 let version = "v2"
 let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_members')
 
-
 before(function() {
     //Login in Application
     cy.loginAdmin(user,passw,version)
@@ -16,14 +15,13 @@ before(function() {
     //cy.screenshot('5.73.2/members/add-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('members/add/flujocompleto').then((addMember) => {
-      this.addMember = addMember
-    })
-})
-
 describe('Add members', function(){ 
 
+    beforeEach(function() {
+        cy.fixture('members/add/flujocompleto').then((addMember) => {
+          this.addMember = addMember
+        })
+    })
     
     it('P1: Add new member', function(){ 
 
@@ -34,12 +32,11 @@ describe('Add members', function(){
         // Given
         cy.visit(urlVisit)
         cy.wait(2000)
-        
         memberPage.addNewMember()
         cy.wait(1000)
         
         // When flujo normal
-        key = getRandom(1, 9);
+        const key = Math.floor(Math.random() * (9 - 1)) + 1
         let userMember = this.addMember[key].name
         let userEmail = this.addMember[key].email
 
@@ -52,14 +49,11 @@ describe('Add members', function(){
         cy.wait(1000)
         memberPage.visibleMember(userMember)
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
+   
 
     })
     
 })
-
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 after(() => {
     cy.logout()

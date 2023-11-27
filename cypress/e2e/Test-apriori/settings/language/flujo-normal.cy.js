@@ -6,24 +6,24 @@ registerCommands()
 let user = Cypress.config('uservisitor')
 let passw = Cypress.config('passwordvisitor')
 let version = "v2"
-let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_settings') + '/publication-language'
+let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_settings')
 
 
-before(function() {
+before(() => {
     //Login in Application
     cy.loginAdmin(user,passw,version)
     cy.url().should('include', '/dashboard')
     //cy.screenshot('5.73.2/members/add-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('settings/language/flujocompleto').then((insertLanguage) => {
-      this.insertLanguage = insertLanguage
-    })
-})
-
 describe('Insert Language', function(){ 
 
+
+    beforeEach(function() {
+        cy.fixture('settings/language/flujocompleto').then((insertLanguage) => {
+          this.insertLanguage = insertLanguage
+        })
+    })    
     
     it('Insert Language', function(){ 
 
@@ -38,9 +38,10 @@ describe('Insert Language', function(){
         // When flujo normal
         settingsPage.clickEditLanguage()
         cy.wait(1000)
-        key = getRandom(1, 4)
+        const key = Math.floor(Math.random() * (4 - 1)) + 1
         let lang = this.insertLanguage[key].lang
-        settingsPage.typeCode(lang)
+        settingsPage.elements.inputLanguage().clear()
+        settingsPage.typeLang(lang)
         settingsPage.saveLanguage()
         cy.wait(1000)
         // Then
@@ -50,10 +51,6 @@ describe('Insert Language', function(){
     })
     
 })
-
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 after(() => {
     cy.logout()

@@ -2,7 +2,7 @@ class staffPage{
     elements={
         textNotSave: () => cy.contains('Retry'),
         btnInvite: () => cy.contains('Invite people'), 
-        inputInvite: () => cy.get(".peer"), 
+        inputInvite: () => cy.get("input[placeholder=\"jamie@example.com\"]"), 
         textInvite: () => cy.contains('Send invitation now'),
         btnProfileOwner: () => cy.getByTestId('owner-user'),
         checkboxProfile: () => cy.get('input[type="checkbox"]'),
