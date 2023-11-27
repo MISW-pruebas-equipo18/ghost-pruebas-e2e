@@ -16,15 +16,17 @@ before(function() {
     //cy.screenshot('5.73.2/members/add-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('members/add/camposvacios').then((addMemberEmptyInput) => {
-        this.addMemberEmptyInput = addMemberEmptyInput
-    })
-})
 
-describe ('Add members - empty input', function(){ 
 
-    it('Add new member - empty input', function(){
+describe ('Add members - empty inputs', function(){ 
+
+    beforeEach(function() {
+        cy.fixture('members/add/camposvacios').then((addMemberEmptyInput) => {
+            this.addMemberEmptyInput = addMemberEmptyInput
+        })
+    })    
+
+    it('Add new member - empty inputs', function(){
     
         cy.on('uncaught:exception', (err, runnable) => {
             return false
@@ -40,22 +42,20 @@ describe ('Add members - empty input', function(){
         cy.wait(1000)
         
         // When flujo normal
-        key = getRandom(1, 9);
+        const key = Math.floor(Math.random() * (9 - 1)) + 1
         let userMember2 = this.addMemberEmptyInput[key].name
 
         memberPage.typeUsername(userMember2)
         memberPage.saveMember()
         cy.wait(1000)
         // Then
-        memberPage.notSaveMember()
+        cy.contains('Retry').should('be.visible')
+        cy.contains('Dashboard').click()
+        cy.contains('Leave').click()
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
 
     })    
 })
-
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 after(() => {
     cy.logout()

@@ -6,7 +6,7 @@ registerCommands()
 let user = Cypress.config('uservisitor')
 let passw = Cypress.config('passwordvisitor')
 let version = "v2"
-let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_settings') + '/general'
+let urlVisit = Cypress.config('baseUrlv2') + Cypress.env('url_settings')
 let urlVisitSite = Cypress.config('baseUrlv2')
 
 before(function() {
@@ -16,14 +16,16 @@ before(function() {
     //cy.screenshot('5.73.2/members/add-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('settings/titledescription/flujocompleto').then((insertTitleDescription) => {
-      this.insertTitleDescription = insertTitleDescription
-    })
-})
+
 
 describe('Insert title and description', function(){ 
 
+
+    beforeEach(function() {
+        cy.fixture('settings/titledescription/flujocompleto').then((insertTitleDescription) => {
+          this.insertTitleDescription = insertTitleDescription
+        })
+    })
     
     it('Insert title and description', function(){ 
 
@@ -41,7 +43,7 @@ describe('Insert title and description', function(){
         settingsPage.clearTitle()
         settingsPage.clearDescription()
         cy.wait(1000)
-        key = getRandom(1, 4)
+        const key = Math.floor(Math.random() * (4 - 1)) + 1
         let title = insertTitleDescription[key].title
         let description = insertTitleDescription[key].description
         settingsPage.typeInputTitle(title)
@@ -57,10 +59,6 @@ describe('Insert title and description', function(){
     })
     
 })
-
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 after(() => {
     cy.logout()

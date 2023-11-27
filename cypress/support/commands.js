@@ -127,14 +127,16 @@ export function registerCommands(){
   });
 
   Cypress.Commands.add('getByTestId', (testId) => {
-    const log = Cypress.log({ name: 'getByTestId', message: testId })
     const selector = `[data-testId="${testId}"]`
     cy.get(selector)
   })
 
   Cypress.Commands.add('getByTestInput', (testInput) => {
-    const log = Cypress.log({ name: 'getByTestInput', message: testInput })
     const selector = `[data-test-input="${testInput}"]`
     cy.get(selector)
-  })  
+  })
+  
+  Cypress.Commands.add('clickOutside', function() {
+    return cy.get('body').click(0,0); 
+  })
 }

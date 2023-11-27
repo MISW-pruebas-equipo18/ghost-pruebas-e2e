@@ -16,13 +16,13 @@ before(function() {
     //cy.screenshot('5.73.2/members/add-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('members/add/correosinformato').then((addMemberErrorEmail) => {
-        this.addMemberErrorEmail = addMemberErrorEmail
-    })
-})
-
 describe ('Add members - error email format', function(){ 
+
+    beforeEach(function() {
+        cy.fixture('members/add/correosinformato').then((addMemberErrorEmail) => {
+            this.addMemberErrorEmail = addMemberErrorEmail
+        })
+    })    
 
     it('Add new member - error email format', function(){
     
@@ -31,16 +31,13 @@ describe ('Add members - error email format', function(){
         })
   
         // Given
-        cy.contains('Members').click(),
-        console.log(urlVisit)
-        cy.visit(urlVisit, { timeout: 3000})
+        cy.visit(urlVisit)
         cy.wait(1000)
-        // When
         memberPage.addNewMember()
         cy.wait(1000)
         
         // When flujo normal
-        key = getRandom(1, 9);
+        const key = Math.floor(Math.random() * (9 - 1)) + 1
         let userMember2 = this.addMemberErrorEmail[key].name
         let userEmail2 = this.addMemberErrorEmail[key].email
 
@@ -49,15 +46,13 @@ describe ('Add members - error email format', function(){
         memberPage.saveMember()
         cy.wait(1000)
         // Then
-        memberPage.notSaveMember()
+        cy.contains('Retry').should('be.visible')
+        cy.contains('Dashboard').click()
+        cy.contains('Leave').click()
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
 
     })    
 })
-
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 after(() => {
     cy.logout()

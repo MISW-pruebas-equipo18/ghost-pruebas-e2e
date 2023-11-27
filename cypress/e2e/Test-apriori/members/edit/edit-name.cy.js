@@ -15,13 +15,13 @@ before(() => {
     //cy.screenshot('5.73.2/members/edit-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('members/edit/flujocompleto').then((editMember) => {
-      this.editMember = editMember
-    })
-})
-
 describe ('Edit members', function(){
+
+    beforeEach(function() {
+        cy.fixture('members/edit/flujocompleto').then((editMember) => {
+          this.editMember = editMember
+        })
+    })
 
     it('P2: edit current member', function(){
 
@@ -36,15 +36,16 @@ describe ('Edit members', function(){
         memberPage.getMember()
         cy.wait(1000)
         memberPage.clearNameMember()
-        key = getRandom(1, 9);
-        memberPage.typeUsername(this.editMember[key].name)
+        const key = Math.floor(Math.random() * (9 - 1)) + 1
+        let username = this.editMember[key].name
+        memberPage.typeUsername(username)
         cy.wait(2000)
         memberPage.saveMember()
         cy.wait(2000)
 
         // Then
         cy.visit(urlVisit)
-        memberPage.visibleNameMember(this.editMember[key].name)
+        memberPage.visibleNameMember(username)
         //cy.screenshot('5.73.2/members/edit-member.cy.js/P2-edit-current-member')
 
     })
