@@ -164,14 +164,37 @@ When('I write a post with title {string} and body {string}', async function (tit
     let titleInput = await this.driver.$('textarea.gh-editor-title');
     await titleInput.setValue(title);
 
-    // Wait 1 second
-    
     await this.driver.pause(500);
     let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
     bodyInput.click();
 
     await this.driver.pause(500);
     await bodyInput.setValue(body);
+});
+
+When('I write a random post with title {kraken-string}', async function (title) {
+    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    await titleInput.setValue(title);
+
+    await this.driver.pause(500);
+    let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
+    bodyInput.click();
+
+    await this.driver.pause(500);
+    await bodyInput.setValue(faker.string.alphanumeric(255));
+});
+
+
+When('I write a pseudorandom post with title {kraken-string}', async function (title) {
+    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    await titleInput.setValue(title);
+
+    await this.driver.pause(500);
+    let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
+    bodyInput.click();
+
+    await this.driver.pause(500);
+    await bodyInput.setValue(faker.lorem.paragraph());
 });
 
 When('I publish the post', async function () {
@@ -203,6 +226,27 @@ When('I go back to posts view', async function () {
 });
 
 Then('I should see a post with title {string} and status {string}', async function (title, status) {
+    console.log(`Looking for element with title ${title}`)
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+
+            let statusElement = await titleElement.$('..').$('p:nth-child(3)');
+            statusElement = await statusElement.getText();
+            expect(statusElement).to.contain(status);
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+
+Then('I should see a post with random title {kraken-string} and status {string}', async function (title, status) {
+    console.log(`Looking for element with title ${title}`)
     let titleElements = await this.driver.$$('h3.gh-content-entry-title');
 
     let found = false;
@@ -239,6 +283,20 @@ Then ('I should not see a post with title {string}', async function (title) {
     expect(found).to.be.false;
 });
 
+Then ('I should not see a post with random title {kraken-string}', async function (title) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.false;
+});
+
 When('I click on the post with title {string}', async function (title) {
     let titleElements = await this.driver.$$('h3.gh-content-entry-title');
 
@@ -254,7 +312,51 @@ When('I click on the post with title {string}', async function (title) {
     expect(found).to.be.true;
 });
 
+When('I click on the post with random title {kraken-string}', async function (title) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+            await titleElement.click();
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
 When('I delete the post with title {string}', async function (title) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+            let parent = await titleElement.$('../..');
+            await parent.click();
+            this.driver.pause(500);
+
+            let settings = await this.driver.$('button[title="Settings"]');
+            await settings.click();
+
+            let deleteButton = await this.driver.$('//span[text()=" Delete "]');
+            await deleteButton.click();
+
+            let confirmButton = await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
+            await confirmButton.click();
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+
+    closeNotification()
+});
+
+
+When('I delete the post with random title {kraken-string}', async function (title) {
     let titleElements = await this.driver.$$('h3.gh-content-entry-title');
 
     let found = false;
@@ -303,7 +405,16 @@ Then('I delete all remaining posts', async function () {
 });
 
 When('I update my slug name with {string}', async function (slug) {
-    let slugInput = await this.driver.$('input[id=":rp:"]');
+    let slugInput = await this.driver.$('input[class="peer z-[1] order-2 h-8 w-full bg-transparent px-3 py-1 text-sm placeholder:text-grey-500 dark:placeholder:text-grey-700 md:h-9 md:py-2 md:text-md dark:text-white rounded-md"]');
+    await slugInput.setValue(slug);
+
+    // let saveButton = await this.driver.$('button[data-test-save-button]');
+    let saveButton = await this.driver.$('//span[text()="Save & close"]');
+    await saveButton.click();
+})
+
+When('I update my slug name with random {kraken-string}', async function (slug) {
+    let slugInput = await this.driver.$('input[class="peer z-[1] order-2 h-8 w-full bg-transparent px-3 py-1 text-sm placeholder:text-grey-500 dark:placeholder:text-grey-700 md:h-9 md:py-2 md:text-md dark:text-white rounded-md"]');
     await slugInput.setValue(slug);
 
     // let saveButton = await this.driver.$('button[data-test-save-button]');
@@ -334,7 +445,32 @@ When('I fill a new member with name {string} and email {string}', async function
     await emailInput.setValue(email);
 });
 
+When('I fill a new member with random name {kraken-string} and email {kraken-string}', async function (name, email) {
+    let nameInput = await this.driver.$('input[name="name"]');
+    await nameInput.setValue(name);
+
+    let emailInput = await this.driver.$('input[name="email"]');
+    await emailInput.setValue(email);
+});
+
 Then('I should see a member with name {string} and email {string}', async function (name, email) {
+    let members = await this.driver.$$('table[class="gh-list"] > tbody > tr > a:first-child > div > div');
+
+    let found = false;
+    for (let member of members) {
+        if (await member.$('h3').getText() == name) {
+            let emailElement = await member.$('p');
+            emailElement = await emailElement.getText();
+            expect(emailElement).to.equal(email);            
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+Then('I should see a member with random name {kraken-string} and email {kraken-string}', async function (name, email) {
     let members = await this.driver.$$('table[class="gh-list"] > tbody > tr > a:first-child > div > div');
 
     let found = false;
@@ -496,6 +632,20 @@ When('I click on the member with name {string}', async function (name) {
     expect(found).to.be.true;
 });
 
+When('I click on the member with random name {kraken-string}', async function (name) {
+    let members = await this.driver.$$('table[class="gh-list"] > tbody > tr > a:first-child > div > div');
+
+    let found = false;
+    for (let member of members) {
+        if (await member.$('h3').getText() == name) {
+            found = true;
+            await member.click();  
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
 
 When('I delete all remaining members', async function () {
     let members = await this.driver.$$('table[class="gh-list"] > tbody > tr');
@@ -520,24 +670,32 @@ When('I go to staff view', async function () {
     let settingsButton = await this.driver.$('a[href="#/settings/"]');
     await settingsButton.click();
 
-    let staffButton = await this.driver.$('a[href="#/settings/staff/"]');
+    let staffButton = await this.driver.$('#staff');
     await staffButton.click();
 });
 
 When('I click on invite people button' , async function () {
-    await this.driver.$('button[data-test-button="invite-staff-user"]').click();
+    await this.driver.$('//span[text()="Invite people"]').click();
 });
 
 When('I fill the invite form for an admin user with email {string}', async function (email) {
-    let emailInput = await this.driver.$('input[name="email"]');
+    let emailInput = await this.driver.$('input[class="peer z-[1] order-2 h-8 w-full bg-transparent px-3 py-1 text-sm placeholder:text-grey-500 dark:placeholder:text-grey-700 md:h-9 md:py-2 md:text-md dark:text-white rounded-md"]');
     await emailInput.setValue(email);
 
-    let adminOption = await this.driver.$('div[data-test-option="Administrator"]');
+    let adminOption = await this.driver.$('input[value="administrator"]');
+    await adminOption.click();
+});
+
+When('I fill the invite form for an admin user with random email {kraken-string}', async function (email) {
+    let emailInput = await this.driver.$('input[class="peer z-[1] order-2 h-8 w-full bg-transparent px-3 py-1 text-sm placeholder:text-grey-500 dark:placeholder:text-grey-700 md:h-9 md:py-2 md:text-md dark:text-white rounded-md"]');
+    await emailInput.setValue(email);
+
+    let adminOption = await this.driver.$('input[value="administrator"]');
     await adminOption.click();
 });
 
 When('I click on send invitation now button', async function () {
-    let sendButton = await this.driver.$('button[data-test-button="send-user-invite"]');
+    let sendButton = await this.driver.$('//span[text()="Send invitation now"]');
     await sendButton.click();
 });
 
@@ -546,11 +704,13 @@ When('I reload the page', async function () {
 });
 
 Then('I should see a new invited user with email {string}', async function (email) {
+    await this.driver.$('#users-invited').click()
     let users = await this.driver.$$('h3[data-test-email]');
     let found = false;
 
     for (let user of users) {
-        if (await user.getText() == email) {            found = true;
+        if (await user.getText() == email) {
+            found = true;
             break;
         }
     }
@@ -558,6 +718,21 @@ Then('I should see a new invited user with email {string}', async function (emai
     expect(found).to.be.true;
 });
 
+
+Then('I should see a new invited user with random email {kraken-string}', async function (email) {
+    await this.driver.$('#users-invited').click()
+    let users = await this.driver.$$('h3[data-test-email]');
+    let found = false;
+
+    for (let user of users) {
+        if (await user.getText() == email) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
 
 When('I revoke all invitations', async function () {
     let users = await this.driver.$$('a[data-test-revoke-button]');

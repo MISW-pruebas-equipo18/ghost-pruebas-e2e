@@ -321,3 +321,103 @@ Scenario: Pruebas extremo a extremo con datos pseudoaletorios con mockaroo
   And I wait for 5 seconds
   And I logout
   And I wait for 5 seconds
+
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to posts view
+  And I wait for 5 seconds
+  And I go to new post view
+  And I wait for 2 seconds
+  And I write a pseudorandom post with title "$name_6"
+  And I wait for 2 seconds
+  And I publish the post
+  And I wait for 2 seconds
+  And I go back to editor view
+  And I wait for 2 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  And I should see a post with random title "$$name_6" and status "Published"
+  And I wait for 2 seconds
+  And I click on the post with random title "$$name_6"
+  And I wait for 2 seconds
+  And I unpublish the post
+  And I wait for 2 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  Then I should see a post with random title "$$name_6" and status "Draft"
+  And I wait for 2 seconds
+  And I delete the post with random title "$$name_6"
+  And I wait for 2 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to posts view
+  And I wait for 2 seconds
+  And I go to new post view
+  And I wait for 2 seconds
+  And I write a pseudorandom post with title "$name_8"
+  And I wait for 2 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  And I should see a post with random title "$$name_8" and status "Draft"
+  And I wait for 2 seconds
+  And I click on the post with random title "$$name_8"
+  And I wait for 2 seconds
+  And I publish the post
+  And I wait for 2 seconds
+  And I go back to editor view
+  And I wait for 2 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  And I should see a post with random title "$$name_8" and status "Published"
+  And I wait for 2 seconds
+  And I delete the post with random title "$$name_8"
+  And I wait for 2 seconds
+  Then I should not see a post with random title "$$name_8"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to posts view
+  And I wait for 2 seconds
+  And I go to new post view
+  And I wait for 2 seconds
+  And I write a random post with title "$name_4"
+  And I wait for 2 seconds
+  And I publish the post
+  And I wait for 2 seconds
+  And I go back to editor view
+  And I wait for 1 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  And I should see a post with random title "$$name_4" and status "Published"
+  And I wait for 2 seconds
+  And I delete the post with random title "$$name_4"
+  And I wait for 5 seconds
+  Then I should not see a post with random title "$$name_4"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  When I go to posts view
+  And I wait for 2 seconds
+  And I go to new post view
+  And I wait for 2 seconds
+  And I write a pseudorandom post with title "$name_2"
+  And I wait for 2 seconds
+  And I publish the post
+  And I wait for 2 seconds
+  And I go back to editor view
+  And I wait for 1 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  Then I should see a post with random title "$$name_2" and status "Published"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
