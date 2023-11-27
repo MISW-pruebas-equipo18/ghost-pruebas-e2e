@@ -213,3 +213,4 @@ Para la ejecución de pruebas en Cypress se hizo uso principalmente de dos estra
   npx cypress run --headless  --spec 'cypress/e2e/Test-aleatorio/**'
   ```
 8. Tener en cuenta que los escenarios negativos son considerados aquellos en los cuales el should o el assert no se cumple, por lo cual en la ejecución de pruebas encontrarán algunas que no llegan a buen fin, pero es especificamente porque se detecta que el escenario no es posible en la aplicación y su resultado es el esperado, negativo. A continuación un resumen de la ejecución de los escenarios:
+![image](https://github.com/MISW-pruebas-equipo18/ghost-pruebas-e2e/assets/142758558/2cef4673-a148-475f-ac5b-8573faa9e5d9)
