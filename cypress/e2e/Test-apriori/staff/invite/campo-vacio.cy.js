@@ -17,34 +17,32 @@ before(() => {
     //cy.screenshot('5.73.2/staff/invite-staff-member.cy.js/login')
 })
 
-beforeEach(function() {
-    cy.fixture('staff/invite/camposvacios').then((insertEmptyEmail) => {
-      this.insertEmptyEmail = insertEmptyEmail
-    })
-})
-
 describe ('Invite staff member', function(){
+
+    beforeEach(function() {
+        cy.fixture('staff/invite/camposvacios').then((insertEmptyEmail) => {
+          this.insertEmptyEmail = insertEmptyEmail
+        })
+    })    
 
     it('P3: Invite staff member', function(){
         // Given
         cy.visit(urlVisit)
         // When 
         staffPage.btnInvite()
-        staffPage.includeUrl(CurlVisit2)
-        key = getRandom(1, 9);
+        cy.wait(1000)
+        const key = Math.floor(Math.random() * (9 - 1)) + 1
         staffPage.typeInviteMember(this.insertEmptyEmail[key].email)
         staffPage.sendInvitation()
         cy.wait(2000)
         // Then
-        cy.contains('Please enter a valid email address.')  
+        cy.contains('Please enter a valid email address.')
+        cy.clickOutside() 
+        cy.contains('Done').click() 
         //cy.screenshot('5.73.2/staff/invite-staff-member.cy.js/P3-invite-staff-member') 
     })
 
 })
-
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 after(() => {
     cy.logout()

@@ -1,18 +1,18 @@
 
 [
     {
-        "code":"<div>Hello, welcome to new site.</div>"
+        "code":"Hello, welcome to new site."
     },
     {
-        "code":"<h2>Hello, welcome to new site.</h2>"
+        "code":"Hello, welcome to new site."
     },
     {
-        "code":"<h3>Hello, welcome to new site.</h3>"
+        "code":"Hello, welcome to new site."
     },
     {
-        "code":"<h4>Hello, welcome to new site.</h4>"
+        "code":"Hello, welcome to new site."
     },
     {
-        "code":"<p>The custom HTML item can contain one or more sets of HTML elements</p>"
+        "code":"The custom HTML item can contain one or more sets of HTML elements"
     }
 ]
