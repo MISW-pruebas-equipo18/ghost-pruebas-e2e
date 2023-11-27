@@ -185,16 +185,17 @@ Para la ejecución de pruebas en Cypress se hizo uso principalmente de dos estra
    ```bash
    docker run -d --name ghost_5.73.2 -e NODE_ENV=development -e url=http://localhost:3002 -p 3002:2368 ghost:5.73.2
    ```
-  En caso de presentar inconvenientes con la instalación ejecute las dos siguientes instrucciones
-  ```bash
-  docker run -d -e url=http://localhost:3002 -p 3002:2368 --name ghost_5.73.2 ghost:5.73.2
-  docker run -d --name ghost_5.73 -e NODE_ENV=development -e url=http://localhost:3002 -p 3002:2368 ghost:5.73.2
-  ```
+    En caso de presentar inconvenientes con la instalación ejecute las dos siguientes instrucciones
+    ```bash
+    docker run -d -e url=http://localhost:3002 -p 3002:2368 --name ghost_5.73.2 ghost:5.73.2
+    docker run -d --name ghost_5.73 -e NODE_ENV=development -e url=http://localhost:3002 -p 3002:2368 ghost:5.73.2
+    ```
 2. La configuración a tener en cuenta respecto al archivo "cypress.config.js" para estas pruebas es la siguiente:
-  2.1. Las pruebas para esta entrega se correran con la URL del parametro "baseUrlv2"
-  2.2. Tener en cuenta que para correr las pruebas headless la "baseUrl" debe tener una URL válida, por lo cual se recomienda que tanto el parametro "baseUrl" como "baseUrlv2" tengan el mismo valor
-  2.3. Para este tipo de pruebas y para esta versión, solo se debe tener en cuenta ajustar los parametros "userv2" y "passwv2" para una correcta autenticación y correcta ejecución de pruebas, este paso es          importante ya que una contraseña incorrecta podría ocasionar que se bloquee el usuario y las pruebas fallen.
-  2.4. El orden defindo para las pruebas en el parametro "specPattern" es el siguiente:
+3. Las pruebas para esta entrega se correran con la URL del parametro "baseUrlv2"
+4. Tener en cuenta que para correr las pruebas headless la "baseUrl" debe tener una URL válida, por lo cual se recomienda que tanto el parametro "baseUrl" como "baseUrlv2" tengan el mismo valor
+5. Para este tipo de pruebas y para esta versión, solo se debe tener en cuenta ajustar los parametros "userv2" y "passwv2" para una correcta autenticación y correcta ejecución de pruebas, este paso es importante ya que una contraseña incorrecta podría ocasionar que se bloquee el usuario y las pruebas fallen.
+6. El orden defindo para las pruebas en el parametro "specPattern" es el siguiente:
+   ```bash
       'cypress/e2e/Test-apriori/post/**',
       'cypress/e2e/Test-apriori/page/**',
       'cypress/e2e/Test-apriori/tag/**',
@@ -205,8 +206,9 @@ Para la ejecución de pruebas en Cypress se hizo uso principalmente de dos estra
       'cypress/e2e/Test-aleatorio/members/**',
       'cypress/e2e/Test-aleatorio/staff/**',
       'cypress/e2e/Test-apriori/signin/**',
-4. Para ejecutar las pruebas por headless es necesario ejecutar los siguientes comandos:
-   ```bash
+   ```
+7. Para ejecutar las pruebas por headless es necesario ejecutar los siguientes comandos:
+```bash
   npx cypress run --headless  --spec 'cypress/e2e/Test-apriori/**'
   npx cypress run --headless  --spec 'cypress/e2e/Test-aleatorio/**'
   ```
