@@ -415,6 +415,8 @@ When('I update my slug name with {string}', async function (slug) {
 
 When('I update my slug name with random {kraken-string}', async function (slug) {
     let slugInput = await this.driver.$('input[class="peer z-[1] order-2 h-8 w-full bg-transparent px-3 py-1 text-sm placeholder:text-grey-500 dark:placeholder:text-grey-700 md:h-9 md:py-2 md:text-md dark:text-white rounded-md"]');
+    await slugInput.setValue('');
+    this.driver.pause(500);
     await slugInput.setValue(slug);
 
     // let saveButton = await this.driver.$('button[data-test-save-button]');
@@ -479,6 +481,20 @@ Then('I should see a member with random name {kraken-string} and email {kraken-s
             let emailElement = await member.$('p');
             emailElement = await emailElement.getText();
             expect(emailElement).to.equal(email);            
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+Then('I should see a member with random name {kraken-string}', async function (name) {
+    let members = await this.driver.$$('table[class="gh-list"] > tbody > tr > a:first-child > div > div');
+
+    let found = false;
+    for (let member of members) {
+        if (await member.$('h3').getText() == name) {
             found = true;
             break;
         }
@@ -615,6 +631,18 @@ Then('I assign tag with name {string}', async function (nameTag) {
 When('I save the new member', async function() {
     let saveButton = await this.driver.$(pageTags.saveButton);
     await saveButton.click();
+});
+
+// Then I should see an invalid email message
+Then('I should see an invalid email message', async function () {
+    let errorElement = await this.driver.$('div[class="form-group max-width error"] > p');
+    expect(await errorElement.getText()).to.equal('Invalid Email.');
+});
+
+// And I close the unsaved window
+When('I close the unsaved window', async function () {
+    let leaveButton = await this.driver.$('button[data-test-leave-button]');
+    await leaveButton.click();
 });
 
 When('I click on the member with name {string}', async function (name) {
