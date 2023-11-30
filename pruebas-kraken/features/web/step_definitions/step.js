@@ -537,7 +537,65 @@ When('I create a new tag with name {string} and description {string} and color {
 
 });
 
+When('I create a new random tag with name {kraken-string}', async function (name) {
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(name);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(faker.lorem.paragraph());
+
+    let saveButton =  await this.driver.$(pageTags.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+});
+
+
+When('I create a new random tag with name {kraken-string} and invalid description', async function (name) {
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(name);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(faker.string.alphanumeric({length: {min: 501, max: 1000}}));
+
+    let saveButton =  await this.driver.$(pageTags.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+});
+
+When('I create a new random tag with invalid name', async function () {
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(faker.string.alphanumeric({length: {min: 192, max: 200}}));
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(faker.string.alphanumeric({length: {min: 10, max: 499}}));
+
+    let saveButton =  await this.driver.$(pageTags.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+});
+
 Then('I validate tag with name {string}', async function (nameTag) {
+    
+    let tagsElements = await this.driver.$$(pageTags.tagsElements);
+
+    let found = false;
+    for (let name of tagsElements) {
+        if (await name.getText() == nameTag) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+Then('I validate random tag with name {kraken-string}', async function (nameTag) {
     
     let tagsElements = await this.driver.$$(pageTags.tagsElements);
 
@@ -565,6 +623,35 @@ When('I selected tag with name {string}', async function (nameTag) {
     }
 
     expect(found).to.be.true;
+});
+
+When('I select the tag with random name {kraken-string}', async function (nameTag) {
+    let tagElements = await this.driver.$$(pageTags.select);
+
+    let found = false;
+    for (let tagElement of tagElements) {
+        if (await tagElement.getText() == nameTag) {
+            found = true;
+            await tagElement.click();
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I edit the tag with random name {kraken-string} and description {kraken-string}', async function (nameTag, description) {
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nameTag);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(description);
+
+    let saveButton =  await this.driver.$(pageTags.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
 });
 
 When('I update tag with new name {string}', async function (newName) {
@@ -645,6 +732,17 @@ When('I save the new member', async function() {
 Then('I should see an invalid email message', async function () {
     let errorElement = await this.driver.$('div[class="form-group max-width error"] > p');
     expect(await errorElement.getText()).to.equal('Invalid Email.');
+});
+
+// Then I should see an invalid description message
+Then('I should see an invalid description message', async function () {
+    let errorElement = await this.driver.$('div[class="form-group no-margin error"] > p[class="response"]');
+    expect(await errorElement.getText()).to.equal('Description cannot be longer than 500 characters.');
+});
+
+Then('I should see an invalid name message', async function () {
+    let errorElement = await this.driver.$('span[class="error"] > p[class="response"]');
+    expect(await errorElement.getText()).to.equal('Tag names cannot be longer than 191 characters.');
 });
 
 // And I close the unsaved window
