@@ -837,19 +837,18 @@ When('I reload the page', async function () {
     await this.driver.refresh();
 });
 
-Then('I should see a new invited user with email {string}', async function (email) {
+When('I click outside dialog', async function () {
+    let title = await this.driver.$('div[class="sticky -top-px z-20 mt-[-55px] min-w-[260px] grow-0 bg-white pt-[52px] dark:bg-black tablet:fixed tablet:top-[8vmin] tablet:mt-0 tablet:basis-[260px] tablet:pt-0"]');
+    await title.click();
+});
+
+When('I click on invited users button', async function () {
     await this.driver.$('#users-invited').click()
-    let users = await this.driver.$$('h3[data-test-email]');
-    let found = false;
+});
 
-    for (let user of users) {
-        if (await user.getText() == email) {
-            found = true;
-            break;
-        }
-    }
-
-    expect(found).to.be.true;
+Then('I should see a new invited user with email {string}', async function (email) {
+    let user = await this.driver.$(`//span[text()="${email}"]`);
+    expect(user).to.not.be.null;
 });
 
 

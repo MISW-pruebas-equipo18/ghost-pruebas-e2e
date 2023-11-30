@@ -432,6 +432,10 @@ Scenario: Escenarios Aleatorios
   # And I wait for 5 seconds
   # And I reload the page
   # And I wait for 5 seconds
+  # And I click outside dialog
+  # And I wait for 2 seconds
+  # And I click on invited users button
+  # And I wait for 1 seconds
   # Then I should see a new invited user with random email "$$email_12"
   # And I wait for 2 seconds
   # And I revoke all invitations
