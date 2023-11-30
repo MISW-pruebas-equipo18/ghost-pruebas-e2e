@@ -319,6 +319,54 @@ Scenario: Escenarios Aleatorios
   And I logout
   And I wait for 5 seconds
 
+  # Editar un tag con un nombre aleatorio y una descripción inválida
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create a new random tag with name "$string_1"
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I select the tag with random name "$$string_1"
+  And I wait for 2 seconds
+  And I edit the tag with random name "$string_2" and invalid description 
+  And I wait for 2 seconds
+  Then I should see an invalid description message
+  And I wait for 2 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I close the unsaved window
+  And I wait for 2 seconds
+  And I logout
+  And I wait for 5 seconds
+
+  # Editar un tag con un nombre inválido y una descripción aleatoria
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create a new random tag with name "$string_1"
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I select the tag with random name "$$string_1"
+  And I wait for 2 seconds
+  And I edit the tag with random invalid name
+  And I wait for 2 seconds
+  Then I should see an invalid name message
+  And I wait for 2 seconds
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I close the unsaved window
+  And I wait for 2 seconds
+  And I logout
+  And I wait for 5 seconds
+
   # Crear y editar una página con título y body aleatorio
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
@@ -418,44 +466,3 @@ Scenario: Escenarios Aleatorios
   And I logout
   And I wait for 5 seconds
 
-  # # Invitar a una persona para pertenecer al staff
-  # # FIXME
-  # Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
-  # And I wait for 2 seconds
-  # When I go to staff view
-  # And I wait for 2 seconds
-  # And I click on invite people button
-  # And I wait for 2 seconds
-  # And I fill the invite form for an admin user with random email "$email_12"
-  # And I wait for 2 seconds
-  # And I click on send invitation now button
-  # And I wait for 5 seconds
-  # And I reload the page
-  # And I wait for 5 seconds
-  # And I click outside dialog
-  # And I wait for 2 seconds
-  # And I click on invited users button
-  # And I wait for 1 seconds
-  # Then I should see a new invited user with random email "$$email_12"
-  # And I wait for 2 seconds
-  # And I revoke all invitations
-  # And I wait for 2 seconds
-  # And I logout
-  # And I wait for 5 seconds
-
-  # # Cambiar  el slug name del usuario administrador
-  # # FIXME
-  # Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
-  # And I wait for 2 seconds
-  # When I go to profile view
-  # And I wait for 2 seconds
-  # And I update my slug name with random "$string_11"
-  # Then I should see that the profile URL ends with "$$string_11"
-  # And I wait for 2 seconds
-  # And I update my slug name with "alberto"
-  # And I wait for 2 seconds
-  # And I go back to profile
-  # And I wait for 2 seconds
-  # And I go back to dashboard view
-  # And I logout
-  # And I wait for 5 seconds

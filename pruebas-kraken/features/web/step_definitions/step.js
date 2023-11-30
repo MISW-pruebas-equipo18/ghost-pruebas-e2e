@@ -654,6 +654,37 @@ When('I edit the tag with random name {kraken-string} and description {kraken-st
     await this.driver.pause(1000);
 });
 
+// I edit the tag with random name "$string_2" and invalid description
+When('I edit the tag with random name {kraken-string} and invalid description', async function (nameTag) {
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(nameTag);
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(faker.string.alphanumeric({length: {min: 501, max: 1000}}));
+
+    let saveButton =  await this.driver.$(pageTags.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+});
+
+When('I edit the tag with random invalid name', async function () {
+    let nameInput = await this.driver.$(pageTags.nameInput);
+    await nameInput.setValue(faker.string.alphanumeric({length: {min: 192, max: 200}}));
+
+    let descriptionInput = await this.driver.$(pageTags.descriptionInput);
+    descriptionInput.click();
+    await this.driver.pause(1000);
+    await descriptionInput.setValue(faker.string.alphanumeric({length: {min: 10, max: 499}}));
+
+    let saveButton =  await this.driver.$(pageTags.saveButton);
+    saveButton.click();
+    await this.driver.pause(1000);
+});
+
+
+
 When('I update tag with new name {string}', async function (newName) {
     let nameInput = await this.driver.$(pageTags.nameInput);
     await nameInput.setValue(newName);
