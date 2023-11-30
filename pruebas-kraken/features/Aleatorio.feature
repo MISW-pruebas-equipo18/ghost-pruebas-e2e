@@ -151,13 +151,13 @@ Scenario: Escenarios Aleatorios
   When I go to members view
   And I wait for 2 seconds
   And I click on new member button
-  And I fill a new member with random name "" and email "$email_22"
+  And I fill a new member with random name empty and email "$email_22"
   And I wait for 2 seconds
   And I save the new member
   And I wait for 2 seconds
   And I go to members view
   And I wait for 2 seconds
-  Then I should see a member with random name "$$email_22" ### TODO
+  Then I should see a member with random name "$$email_22"
   And I wait for 2 seconds
   And I delete all remaining members
   And I wait for 2 seconds
@@ -192,10 +192,58 @@ Scenario: Escenarios Aleatorios
   And I wait for 5 seconds
 
   # Editar un miembro con nombre aleatorio e email inválido
-  # TODO
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  And I go to members view
+  And I wait for 2 seconds
+  And I click on new member button
+  And I fill a new member with random name "$string_23" and email "$email_24"
+  And I wait for 2 seconds
+  And I save the new member
+  And I wait for 2 seconds
+  When I go to members view
+  And I wait for 2 seconds
+  And I click on the member with random name "$$string_23"
+  And I wait for 2 seconds
+  And I fill a new member with random name "$string_24" and email "$string_25"
+  And I wait for 2 seconds
+  And I save the new member
+  And I wait for 2 seconds
+  Then I should see an invalid email message
+  And I wait for 2 seconds
+  And I go to members view
+  And I wait for 2 seconds
+  And I close the unsaved window
+  And I wait for 2 seconds
+  And I logout
+  And I wait for 5 seconds
 
-  # Editar un miembro con nombre inválido e email aleatorio
-  # TODO
+  # Editar un miembro con nombre vacío e email aleatorio
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  And I go to members view
+  And I wait for 2 seconds
+  And I click on new member button
+  And I fill a new member with random name "$string_26" and email "$email_27"
+  And I wait for 2 seconds
+  And I save the new member
+  And I wait for 2 seconds
+  When I go to members view
+  And I wait for 2 seconds
+  And I click on the member with random name "$$string_26"
+  And I wait for 2 seconds
+  And I fill a new member with random name empty and email "$email_28"
+  And I wait for 2 seconds
+  And I save the new member
+  And I wait for 2 seconds
+  And I go to members view
+  And I wait for 2 seconds
+  Then I should see a member with random name "$$email_28"
+  And I wait for 2 seconds
+  And I delete all remaining members
+  And I wait for 2 seconds
+  And I logout
+  And I wait for 5 seconds
 
   # Crear un tag con nombre y descripción aleatorias
   # TODO
@@ -222,6 +270,7 @@ Scenario: Escenarios Aleatorios
   # TODO
 
   # Invitar a una persona para pertenecer al staff
+  # FIXME
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to staff view
@@ -242,6 +291,7 @@ Scenario: Escenarios Aleatorios
   And I wait for 5 seconds
 
   # Cambiar  el slug name del usuario administrador
+  # FIXME
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
   When I go to profile view

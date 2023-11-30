@@ -455,6 +455,14 @@ When('I fill a new member with random name {kraken-string} and email {kraken-str
     await emailInput.setValue(email);
 });
 
+When('I fill a new member with random name empty and email {kraken-string}', async function (email) {
+    let nameInput = await this.driver.$('input[name="name"]');
+    await nameInput.setValue('');
+
+    let emailInput = await this.driver.$('input[name="email"]');
+    await emailInput.setValue(email);
+});
+
 Then('I should see a member with name {string} and email {string}', async function (name, email) {
     let members = await this.driver.$$('table[class="gh-list"] > tbody > tr > a:first-child > div > div');
 
