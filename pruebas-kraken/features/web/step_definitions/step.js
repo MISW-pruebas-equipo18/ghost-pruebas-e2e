@@ -929,6 +929,47 @@ When('I create new pages with title {string} and body {string}', async function 
     await bodyInput.setValue(body);
 });
 
+When('I create a random page with title {kraken-string}', async function (title) {
+    let titleInput = await this.driver.$('textarea.gh-editor-title');
+    await titleInput.setValue(title);
+
+    await this.driver.pause(500);
+    let bodyInput = await this.driver.$('p[data-koenig-dnd-droppable="true"]');
+    bodyInput.click();
+
+    await this.driver.pause(500);
+    await bodyInput.setValue(faker.lorem.paragraph());
+});
+
+When('I delete the page with random title {kraken-string}', async function (title) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+            let parent = await titleElement.$('../..');
+            await parent.click();
+            this.driver.pause(500);
+
+            let settings = await this.driver.$('button[title="Settings"]');
+            await settings.click();
+
+            let deleteButton = await this.driver.$('//span[text()=" Delete "]');
+            await deleteButton.click();
+
+            let confirmButton = await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
+            await confirmButton.click();
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+
+    closeNotification()
+});
+
+
 When('I publish the pages', async function () {
     let publishButton = await this.driver.$(fpages.publishButton)
     await publishButton.click();
@@ -959,6 +1000,40 @@ Then('I validate pages with name {string}', async function (title) {
     expect(found).to.be.true;
 });
 
+Then('I should see a page with random title {kraken-string} and status {string}', async function (title, status) {
+    console.log(`Looking for element with title ${title}`)
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+
+            let statusElement = await titleElement.$('..').$('p:nth-child(3)');
+            statusElement = await statusElement.getText();
+            expect(statusElement).to.contain(status);
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+Then('I should not see a page with random title {kraken-string}', async function (title) {
+    console.log(`Looking for element with title ${title}`)
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.false;
+});
+
 When('I selected pages with name {string}', async function (title) {
     let pagesElements = await this.driver.$$(fpages.pagesElements);
 
@@ -967,6 +1042,21 @@ When('I selected pages with name {string}', async function (title) {
         if (await titlePage.getText() == title) {
             found = true;
             await titlePage.click();
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I click on the page with random title {kraken-string}', async function (title) {
+    let titleElements = await this.driver.$$('h3.gh-content-entry-title');
+
+    let found = false;
+    for (let titleElement of titleElements) {
+        if (await titleElement.getText() == title) {
+            found = true;
+            await titleElement.click();
             break;
         }
     }
