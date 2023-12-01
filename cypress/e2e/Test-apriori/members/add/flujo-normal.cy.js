@@ -1,6 +1,7 @@
 import { registerCommands } from '../../../../support/commands' 
 import memberPage from '../../../../pages/5.73.2/memberPage'
 
+
 registerCommands()
 
 let user = Cypress.config('uservisitor')
@@ -32,6 +33,9 @@ describe('Add members', function(){
         // Given
         cy.visit(urlVisit)
         cy.wait(2000)
+        cy.compareSnapshot('Add new member', 0.0)
+        cy.compareSnapshot('Add new member', 0.1)
+        //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member-1')
         memberPage.addNewMember()
         cy.wait(1000)
         
@@ -48,8 +52,9 @@ describe('Add members', function(){
         cy.visit(urlVisit)
         cy.wait(1000)
         memberPage.visibleMember(userMember)
-        //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
-   
+        //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member-2')
+        cy.compareSnapshot('Add new member', 0.0)
+        cy.compareSnapshot('Add new member', 0.1)
 
     })
     

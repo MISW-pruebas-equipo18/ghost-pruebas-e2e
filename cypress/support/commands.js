@@ -6,6 +6,11 @@ import postPagev2 from '../pages/5.73.2/postPage'
 
 let urlGhostAdmin = Cypress.config('baseUrl')
 let urlGhostAdminv2 = Cypress.config('baseUrlv2')
+
+const compareSnapshotCommand = require('cypress-visual-regression-resemble-js/dist/command');
+compareSnapshotCommand();
+
+
 export function registerCommands(){
 
   Cypress.Commands.add('loginAdmin', (user,passw,version) =>

@@ -50,7 +50,7 @@ describe ('Add members - error email format', function(){
         cy.contains('Dashboard').click()
         cy.contains('Leave').click()
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
-
+        cy.compareSnapshot('Add new member - error email');
     })    
 })
 

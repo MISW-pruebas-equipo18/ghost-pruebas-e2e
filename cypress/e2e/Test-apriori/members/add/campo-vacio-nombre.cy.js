@@ -53,7 +53,7 @@ describe ('Add members - empty inputs', function(){
         cy.wait(1000)
         memberPage.visibleEmailMember(emailMember2)
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
-
+        cy.compareSnapshot('Add new member - empty name input');
     })    
 })
 

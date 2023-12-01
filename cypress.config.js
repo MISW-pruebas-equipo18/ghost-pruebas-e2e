@@ -1,8 +1,24 @@
 const { defineConfig } = require("cypress");
+const getCompareSnapshotsPlugin = require('cypress-visual-regression-resemble-js/dist/plugin');
 
 module.exports = defineConfig({
   projectId: 'seuha9',
   chromeWebSecurity: false,
+  env: {
+    screenshotsFolder: './cypress/snapshots/actual',
+    trashAssetsBeforeRuns: true,
+    video: false,
+    base_url : "http://localhost:3002/",
+    user : 'dejahvuuu@gmail.com',
+    passw:'Gu4c4m4y0.2023',
+    url_staff:'ghost/#/settings/staff',
+    url_settings:'ghost/#/settings',  
+    url_members:'ghost/#/members',
+    url_tags:'ghost/#/tags',
+    url_invite:'/invite',
+    url_dashboard:'ghost/#/dashboard',    
+  },
+
   e2e: {
     baseUrl: 'http://localhost:3002/',
     baseUrlv2: 'http://localhost:3002/',
@@ -13,11 +29,13 @@ module.exports = defineConfig({
     userv2:'albertogalvis@protonmail.com',
     passwv2:'Gu4c4m4y0.2024',
     newPasswv2:'Pruebas123*',
-    uservisitor:'albertogalvis@protonmail.com',
-    passwordvisitor: 'Gu4c4m4y0.2024',
+    uservisitor:'dejahvuuu@gmail.com',
+    passwordvisitor: 'Gu4c4m4y0.2023',
     testIsolation: false,
-    screenShots: false,
+    screenShots: true,
     specPattern: [
+      'cypress/e2e/Test-apriori/members/add/flujo-normal.cy.js',
+      /*
       'cypress/e2e/Test-apriori/post/**',
       'cypress/e2e/Test-apriori/page/**',
       'cypress/e2e/Test-apriori/tag/**',
@@ -95,17 +113,7 @@ module.exports = defineConfig({
     ],
     setupNodeEvents(on, config) {
       // implement node event listeners here
-    }, 
-    env: {
-      "base_url" : "http://localhost:3002/",
-      "user":'dejahvuuu@gmail.com',
-      "passw":'Gu4c4m4y0.2023',
-      "url_staff":'ghost/#/settings/staff',
-      "url_settings":'ghost/#/settings',  
-      "url_members":'ghost/#/members',
-      "url_tags":'ghost/#/tags',
-      "url_invite":'/invite',
-      "url_dashboard":'ghost/#/dashboard',
-    }    
+      getCompareSnapshotsPlugin(on, config);
+    },   
   },
 });
