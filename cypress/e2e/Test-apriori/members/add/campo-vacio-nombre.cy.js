@@ -34,7 +34,6 @@ describe ('Add members - empty inputs', function(){
   
         // Given
         cy.contains('Members').click(),
-        console.log(urlVisit)
         cy.visit(urlVisit, { timeout: 3000})
         cy.wait(1000)
         // When
@@ -53,7 +52,8 @@ describe ('Add members - empty inputs', function(){
         cy.wait(1000)
         memberPage.visibleEmailMember(emailMember2)
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
-        cy.compareSnapshot('Add new member - empty name input');
+        cy.compareSnapshot('empty name input', 0.0)
+        cy.compareSnapshot('empty name input', 0.1)
     })    
 })
 

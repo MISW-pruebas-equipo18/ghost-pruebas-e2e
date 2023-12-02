@@ -34,6 +34,8 @@ describe ('Add members - error email format', function(){
         cy.visit(urlVisit)
         cy.wait(1000)
         memberPage.addNewMember()
+        cy.compareSnapshot('error email format', 0.0)
+        cy.compareSnapshot('error email format', 0.1)
         cy.wait(1000)
         
         // When flujo normal
@@ -50,7 +52,8 @@ describe ('Add members - error email format', function(){
         cy.contains('Dashboard').click()
         cy.contains('Leave').click()
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
-        cy.compareSnapshot('Add new member - error email');
+        cy.compareSnapshot('error email format', 0.0)
+        cy.compareSnapshot('error email format', 0.1)
     })    
 })
 

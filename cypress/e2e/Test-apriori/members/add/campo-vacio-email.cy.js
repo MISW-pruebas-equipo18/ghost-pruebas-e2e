@@ -53,6 +53,8 @@ describe ('Add members - empty inputs', function(){
         cy.contains('Dashboard').click()
         cy.contains('Leave').click()
         //cy.screenshot('5.73.2/members/add-member.cy.js/P1-add-new-member')
+        cy.compareSnapshot('empty email input', 0.0)
+        cy.compareSnapshot('empty email input', 0.1)
 
     })    
 })

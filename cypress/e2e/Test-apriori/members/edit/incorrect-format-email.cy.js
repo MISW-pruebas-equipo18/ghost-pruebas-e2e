@@ -33,6 +33,8 @@ describe ('Edit members', function(){
         cy.visit(urlVisit)
         cy.wait(2000)
         // When
+        cy.compareSnapshot('incorrect format email', 0.0)
+        cy.compareSnapshot('incorrect format email', 0.1)
         memberPage.getMember()
         cy.wait(1000)
         memberPage.clearEmailMember()
@@ -47,6 +49,8 @@ describe ('Edit members', function(){
         cy.contains('Dashboard').click()
         cy.contains('Leave').click()
         //cy.screenshot('5.73.2/members/edit-member.cy.js/P2-edit-current-member')
+        cy.compareSnapshot('incorrect format email', 0.0)
+        cy.compareSnapshot('incorrect format email', 0.1)
 
     })
 

@@ -12,6 +12,23 @@ function imagesTypes(pathFolder){
     fs.readdirSync(pathFolder).forEach((file) => {
         let fullPath = path.join(pathFolder, file);
         fs.readdirSync(fullPath).forEach((files) => {
+            let subDirectory = path.join(fullPath, files);
+            fs.readdirSync(subDirectory).forEach((newfiles) => {
+                let subDirectories = path.join(subDirectory, newfiles);
+                images.push(subDirectories)
+            });
+        });
+    });
+    //console.log(images)
+    return images 
+}
+
+function imagesDiff(pathFolder){
+    const images = [];
+
+    fs.readdirSync(pathFolder).forEach((file) => {
+        let fullPath = path.join(pathFolder, file);
+        fs.readdirSync(fullPath).forEach((files) => {
             console.log(files);
             images.push(fullPath + "/" + files)
         });
@@ -24,7 +41,7 @@ function createReport(){
 
     let baseImages = imagesTypes(baseFolder)
     let actualImages = imagesTypes(actualFolder)
-    let diffImages = imagesTypes(diffFolder)
+    let diffImages = imagesDiff(diffFolder)
     
     return `
     <html>
@@ -47,18 +64,17 @@ function createReport(){
             </div>
             <div class="imgcontainer">
             <h2>Actual images</h2>
-                <span class="imgname">Actual</span>
-                
+                ${actualImages.map(image => `<img class="img2" src="${image}" id="baseImage" label="base"></img>`).join('')}
             </div>
             </div>
             <div class="imgline">
             <div class="imgcontainer">
             <h2>Diff images</h2>
-                <span class="imgname">Diff</span>
-                
+               ${diffImages.map(image => `<img class="img2" src="${image}" id="baseImage" label="base"></img>`).join('')}
             </div>
             </div>
         </div>
+        <h2>Reporte generado con el plugin de resemblejs para Cypress <a href="https://github.com/Andremoniy/cypress-visual-regression-resemble-js">Cypress Visual Regression</a> </h2>
         </body>
     </html>`
 }
