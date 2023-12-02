@@ -107,6 +107,29 @@ Scenario: Escenarios Aleatorios
   And I logout
   And I wait for 5 seconds
 
+  # Eliminar un post creado con datos aleatorios
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  And I go to posts view
+  And I wait for 2 seconds
+  And I go to new post view
+  And I wait for 2 seconds
+  And I write a random post with title "$string_1"
+  And I wait for 2 seconds
+  And I publish the post
+  And I wait for 2 seconds
+  And I go back to editor view
+  And I wait for 2 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  When I delete the post with random title "$$string_1"
+  And I wait for 2 seconds
+  Then I should not see a post with random title "$$string_1"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+
   # Crear un miembro con nombre e email aleatorios
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
@@ -245,6 +268,26 @@ Scenario: Escenarios Aleatorios
   And I logout
   And I wait for 5 seconds
 
+  # Eliminar un miembro creado con datos aleatorios
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I go to members view
+  And I wait for 2 seconds
+  And I click on new member button
+  And I fill a new member with random name "$string_1" and email "$email_1"
+  And I wait for 2 seconds
+  And I save the new member
+  And I wait for 2 seconds
+  When I go to members view
+  And I wait for 2 seconds
+  And I delete the member with random name "$$string_1"
+  And I wait for 2 seconds
+  Then I should not see a member with random name "$$string_1"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+
+
   # Crear un tag con nombre y descripción aleatorias
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
@@ -367,6 +410,25 @@ Scenario: Escenarios Aleatorios
   And I logout
   And I wait for 5 seconds
 
+  # Eliminar un tag creado con datos aleatorios
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I go to list tags view
+  And I wait for 2 seconds
+  And I go to new tags view
+  And I wait for 2 seconds
+  And I create a new random tag with name "$string_1"
+  And I wait for 2 seconds
+  When I go to list tags view
+  And I wait for 2 seconds
+  And I click on the tag with random name "$$string_1"
+  And I wait for 2 seconds
+  And I delete the tag
+  And I wait for 2 seconds
+  Then I should not see a tag with random name "$$string_1"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds  
+
   # Crear y editar una página con título y body aleatorio
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
@@ -466,3 +528,23 @@ Scenario: Escenarios Aleatorios
   And I logout
   And I wait for 5 seconds
 
+  # Eliminar una página creada aleatoriamente
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I go to list pages view
+  And I wait for 2 seconds
+  And I go to new pages view
+  And I wait for 2 seconds
+  And I create a random page with title "$string_1"
+  And I wait for 2 seconds
+  And I publish the pages
+  And I wait for 2 seconds
+  When I go back to editor pages
+  And I wait for 1 seconds
+  And I go back to list pages view
+  And I wait for 2 seconds
+  When I delete the page with random title "$$string_1"
+  And I wait for 2 seconds
+  Then I should not see a page with random title "$$string_1"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
