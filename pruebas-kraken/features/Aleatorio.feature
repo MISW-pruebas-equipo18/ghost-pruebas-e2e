@@ -107,6 +107,29 @@ Scenario: Escenarios Aleatorios
   And I logout
   And I wait for 5 seconds
 
+  # Eliminar un post creado con datos aleatorios
+  Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
+  And I wait for 2 seconds
+  And I go to posts view
+  And I wait for 2 seconds
+  And I go to new post view
+  And I wait for 2 seconds
+  And I write a random post with title "$string_1"
+  And I wait for 2 seconds
+  And I publish the post
+  And I wait for 2 seconds
+  And I go back to editor view
+  And I wait for 2 seconds
+  And I go back to posts view
+  And I wait for 2 seconds
+  When I delete the post with random title "$$string_1"
+  And I wait for 2 seconds
+  Then I should not see a post with random title "$$string_1"
+  And I wait for 5 seconds
+  And I logout
+  And I wait for 5 seconds
+
+
   # Crear un miembro con nombre e email aleatorios
   Given I login to Ghost Admin with "<USERNAME>" user and "<PASSWORD>" password and "<URLLOGIN>" url
   And I wait for 2 seconds
