@@ -511,6 +511,20 @@ Then('I should see a member with random name {kraken-string}', async function (n
     expect(found).to.be.true;
 });
 
+Then('I should not see a member with random name {kraken-string}', async function (name) {
+    let members = await this.driver.$$('table[class="gh-list"] > tbody > tr > a:first-child > div > div');
+
+    let found = false;
+    for (let member of members) {
+        if (await member.$('h3').getText() == name) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.false;
+});
+
 /**************************************************************************************************** INICIO TAGS **/
 When('I go to list tags view', async function () {
     let tagsLink = await this.driver.$(pagesMenu.tags); 
@@ -588,6 +602,21 @@ Then('I validate tag with name {string}', async function (nameTag) {
     for (let name of tagsElements) {
         if (await name.getText() == nameTag) {
             found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+});
+
+When('I click on the tag with random name {kraken-string}', async function (nameTag) {
+    let tagsElements = await this.driver.$$(pageTags.tagsElements);
+
+    let found = false;
+    for (let name of tagsElements) {
+        if (await name.getText() == nameTag) {
+            found = true;
+            await name.click();
             break;
         }
     }
@@ -696,7 +725,7 @@ When('I update tag with new name {string}', async function (newName) {
 
 });
 
-When('I delete tag with name {string}', async function (name) {
+When('I delete the tag', async function () {
     
     let deleteButton =  await this.driver.$(pageTags.deleteButton);
     deleteButton.click();
@@ -715,6 +744,20 @@ Then('I validate delete tag with name {string}', async function (nameTag) {
     let found = false;
 
     
+    for (let name of tagsElements) {
+        if (await name.getText() == nameTag) {
+            found = true;
+            break;
+        }
+    }
+
+    expect(found).to.be.false;
+});
+
+Then('I should not see a tag with random name {kraken-string}', async function (nameTag) {
+    let tagsElements = await this.driver.$$(pageTags.tagsElements);
+    found = false;
+
     for (let name of tagsElements) {
         if (await name.getText() == nameTag) {
             found = true;
@@ -810,6 +853,30 @@ When('I click on the member with random name {kraken-string}', async function (n
     }
 
     expect(found).to.be.true;
+});
+
+When('I delete the member with random name {kraken-string}', async function (name) {
+    let members = await this.driver.$$('table[class="gh-list"] > tbody > tr');
+
+    let found = false;
+    for (let member of members) {
+        if (await member.$('h3').getText() == name) {
+            found = true;
+            await member.click();  
+            break;
+        }
+    }
+
+    expect(found).to.be.true;
+
+    let configButton = await this.driver.$('button[data-test-button="member-actions"]');
+    await configButton.click();
+
+    let deleteButton = await this.driver.$('span[class="red"]');
+    await deleteButton.click();
+
+    let confirmButton = await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');
+    await confirmButton.click();
 });
 
 When('I delete all remaining members', async function () {
