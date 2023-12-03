@@ -268,5 +268,6 @@ La estructura de carpetas generada por la herramienta de regresion es la siguien
 #### 1.1 Reporte
 El reporte se realizo siguiendo el modelo del tutorial de Playwright pero aplicado a Cypress:
 se encuentra como archivo .html en la carpeta results ubicada dentro de la carpeta cypress
-![enter image description here](https://i.postimg.cc/c4786K62/Screenshot-14.png)                                                                                                          |
+
+![enter image description here](https://i.postimg.cc/c4786K62/Screenshot-14.png)                                                                                                       
 
