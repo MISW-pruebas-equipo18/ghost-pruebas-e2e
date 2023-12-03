@@ -105,6 +105,8 @@ Las inconsistencias enconetradas fueron documentadas en la siguiente ubicación:
 
 # Semana 8
 
+Video de la entrega: https://youtu.be/9sOuU8GzNl0
+
 Los escenarios creados para esta semana en Kraken son:
 ### 1. Escenarios aleatorios usando herramienta Kraken
 
