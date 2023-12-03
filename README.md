@@ -251,6 +251,9 @@ Para la ejecución de pruebas en Cypress se hizo uso principalmente de dos estra
 | **PAGINAS - Delete a Page Created with Random Data**                    | Given a user is logged in, when the user creates a new page with random data, and deletes the page, then the page should no longer exist.     
 
 ### 2. Pruebas de regresion visual
+Se uso la siguiente herramienta para integrarla con Cypress:
+https://github.com/Andremoniy/cypress-visual-regression-resemble-js 
+
 Para ejecutar las pruebas de regresion visual hay que usar el siguiente comando del plugin de resemble para cypress:
 
 ```bash
