@@ -38,6 +38,8 @@ module.exports = defineConfig({
       'cypress/e2e/Test-apriori/members/add/correo-sin-formato.cy.js',
       'cypress/e2e/Test-apriori/members/add/campo-vacio-nombre.cy.js',
       'cypress/e2e/Test-apriori/members/add/campo-vacio-email.cy.js',
+      'cypress/e2e/Test-apriori/members/edit/edit-name.cy.js',
+      'cypress/e2e/Test-apriori/members/edit/incorrect-format-email.cy.js',
       /*
       'cypress/e2e/Test-apriori/members/edit/edit-name.cy.js',
       'cypress/e2e/Test-apriori/members/edit/flujo-normal.cy.js',

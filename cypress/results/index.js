@@ -12,11 +12,9 @@ function imagesTypes(pathFolder){
     fs.readdirSync(pathFolder).forEach((file) => {
         let fullPath = path.join(pathFolder, file);
         fs.readdirSync(fullPath).forEach((files) => {
+            console.log(files)
             let subDirectory = path.join(fullPath, files);
-            fs.readdirSync(subDirectory).forEach((newfiles) => {
-                let subDirectories = path.join(subDirectory, newfiles);
-                images.push(subDirectories)
-            });
+            images.push(subDirectory)
         });
     });
     //console.log(images)
