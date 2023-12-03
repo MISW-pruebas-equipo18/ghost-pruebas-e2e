@@ -131,6 +131,12 @@ Los escenarios creados para esta semana en Kraken son:
 | **TAGS - Delete a Tag Created with Random Data**                    | Given a user is logged in, when the user creates a new tag with random data, and deletes the tag, then the tag should no longer exist.                                                                                                               |
 | **PAGINAS - Create and Edit a Page with Random Title and Body**     | Given a user is logged in, when the user creates a new page with a random title and body, then the user edits the page, modifying both the title and body.                                                                                            |
 | **PAGINAS - Create, Edit, and Delete a Page with Random Title and Body** | Given a user is logged in, when the user creates a new page with a random title and body, and deletes the page, then the page should no longer exist.                                                                                                |
-| **PAGINAS - Put a Page as Draft and Publish It with Random Title and Body** | Given a user is logged in, when the user creates a new page with a random title and body, puts the page as a draft, and publishes the draft, then the page should be visible to the public.                                                        |
+| **PAGINAS - Put a Page as Draft and Publish It with Random Title and Body** | Given a user is logged in, when the user creates a new page with a random title and body, puts the page as a draft, and publishes the draft, then the page should be visible to the public.    
+|
 | **PAGINAS - Create, and Unpublish a Page with Random Title and Body**     | Given a user is logged in, when the user creates a new page with a random title and body, and unpublishes the page, then the page should not be visible to the public.                                                                            |
 | **PAGINAS - Delete a Page Created with Random Data**                    | Given a user is logged in, when the user creates a new page with random data, and deletes the page, then the page should no longer exist.     
+
+
+Para ejecutar el grupo de escenarios debe copiar el archivo .feature y ubicarlo en el directorio: ./features
+
+Los escenarios aleatorios e2e desarrollados se realizaron en el framework Kraken. La ejecución de todos los escenarios secuencialmente se puede encontrar en el siguiente video adjunto: https://drive.google.com/file/d/1xLqBC5aKK6-C8QwImMIQPEbU5xX7SkGF/view 
