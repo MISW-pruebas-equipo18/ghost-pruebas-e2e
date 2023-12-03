@@ -268,7 +268,15 @@ La estructura de carpetas generada por la herramienta de regresion es la siguien
 El reporte se realizo siguiendo el modelo del tutorial de Playwright pero aplicado a Cypress:
 se encuentra como archivo .html en la carpeta results ubicada dentro de la carpeta cypress
 
-![enter image description here](https://i.postimg.cc/c4786K62/Screenshot-14.png)                                                                                                       
+![enter image description here](https://i.postimg.cc/c4786K62/Screenshot-14.png) 
+
+Para generar el reporte:
+
+```bash
+
+node index.js
+
+```
 
 ### 3. Escenarios de pruebas de exploración
 Las usamos para iniciar el proceso de exploración de nuevas funcionalidades de la aplicación bajo pruebas, su objetivo es ampliar la cobertura de conocimiento de la aplicación para establecer una línea base de información para la codificación y ejecución de los demás grupos de pruebas, adicionalmente, permiten la validación y verificación de la aplicación y la identificación de unos primeros hallazgos.
