@@ -219,9 +219,9 @@ Para la ejecución de pruebas en Cypress se hizo uso principalmente de dos estra
    
 ![image](https://github.com/MISW-pruebas-equipo18/ghost-pruebas-e2e/assets/142758558/df254072-9edf-4feb-9578-35df7bf9ce02)
 
-## Semana 7
+## Semana 8
 
-## Escenarios aleatorios
+### 1. Escenarios aleatorios usando herramienta Kraken
 
 | Scenario Name                                              | Description                                                                                                                                                                                                                                            |
 |-----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -250,8 +250,7 @@ Para la ejecución de pruebas en Cypress se hizo uso principalmente de dos estra
 | **PAGINAS - Create, and Unpublish a Page with Random Title and Body**     | Given a user is logged in, when the user creates a new page with a random title and body, and unpublishes the page, then the page should not be visible to the public.                                                                            |
 | **PAGINAS - Delete a Page Created with Random Data**                    | Given a user is logged in, when the user creates a new page with random data, and deletes the page, then the page should no longer exist.     
 
-## Semana 8
-#### 1. Pruebas de regresion visual
+### 2. Pruebas de regresion visual
 Para ejecutar las pruebas de regresion visual hay que usar el siguiente comando del plugin de resemble para cypress:
 
 ```bash
@@ -265,9 +264,12 @@ La estructura de carpetas generada por la herramienta de regresion es la siguien
  - **Carpeta snapshots/diff:** para las diferencias en las imagenes encontradas entre una y otra despues de ejecutar el comando de arriba.
 
 ![estructura de las carpetas](https://i.postimg.cc/Y09nRHg1/Screenshot-13.png)
-#### 1.1 Reporte
+#### 2.1 Reporte
 El reporte se realizo siguiendo el modelo del tutorial de Playwright pero aplicado a Cypress:
 se encuentra como archivo .html en la carpeta results ubicada dentro de la carpeta cypress
 
 ![enter image description here](https://i.postimg.cc/c4786K62/Screenshot-14.png)                                                                                                       
 
+### 3. Escenarios de pruebas de exploración
+Las usamos para iniciar el proceso de exploración de nuevas funcionalidades de la aplicación bajo pruebas, su objetivo es ampliar la cobertura de conocimiento de la aplicación para establecer una línea base de información para la codificación y ejecución de los demás grupos de pruebas, adicionalmente, permiten la validación y verificación de la aplicación y la identificación de unos primeros hallazgos.
+[inventario-pruebas-exploratorias.xlsx](https://github.com/MISW-pruebas-equipo18/ghost-pruebas-e2e/files/13537919/inventario-pruebas-exploratorias.xlsx)
