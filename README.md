@@ -221,6 +221,9 @@ Para la ejecución de pruebas en Cypress se hizo uso principalmente de dos estra
 
 ## Semana 8
 
+Video de la entrega: https://youtu.be/9sOuU8GzNl0
+
+
 Importante. Consultar el readme de kraken
 
 ### 2. Pruebas de regresion visual
